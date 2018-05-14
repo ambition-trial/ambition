@@ -27,6 +27,9 @@
     # create database
     mysql -u <user> -p -Bse 'create database ambition character set utf8;'
     
+    # populate timezone table
+    mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p mysql
+    
     # migrate
     python manage.py migrate
     
