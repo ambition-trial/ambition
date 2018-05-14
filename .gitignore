@@ -1,4 +1,8 @@
+notebooks/
 etc/
+transactions/
+run/
+log/
 
 # Swap
 [._]*.s[a-v][a-z]
