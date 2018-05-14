@@ -3,6 +3,8 @@ etc/
 transactions/
 run/
 log/
+crypto_fields/
+media/
 
 # Swap
 [._]*.s[a-v][a-z]
