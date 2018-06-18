@@ -6,6 +6,8 @@ log/
 crypto_fields/
 media/
 
+.Rhistory
+
 # Swap
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]

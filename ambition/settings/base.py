@@ -185,7 +185,6 @@ STATIC_URL = '/static/'
 MAIN_NAVBAR_NAME = APP_NAME
 
 # edc_lab and label
-EDC_LAB_REQUISITION_MODEL = 'ambition_subject.subjectrequisition'
 LABEL_TEMPLATE_FOLDER = os.path.join(BASE_DIR, 'label_templates')
 # edc_sync/sync files
 EDC_SYNC_SERVER_IP = None

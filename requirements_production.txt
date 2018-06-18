@@ -48,6 +48,5 @@ git+https://github.com/clinicedc/edc-rest.git@0.1.1#egg=edc-rest
 git+https://github.com/clinicedc/edc-timepoint.git@0.1.2#egg=edc-timepoint
 git+https://github.com/clinicedc/edc-visit-schedule.git@0.2.6#egg=edc-visit-schedule
 git+https://github.com/clinicedc/edc-visit-tracking.git@0.2.9#egg=edc-visit-tracking
-git+https://github.com/django-lis/getresults-identifier.git@0.1.1#egg=getresults-identifier
 git+https://github.com/erikvw/django-crypto-fields.git@0.1.14#egg=django-crypto-fields
 git+https://github.com/erikvw/django-revision.git@0.1.14#egg=django-revision

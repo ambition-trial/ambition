@@ -50,6 +50,5 @@
 -e /Users/erikvw/source/edc-timepoint  #develop#egg=edc_timepoint
 -e /Users/erikvw/source/edc-visit-schedule  #develop#egg=edc_visit_schedule
 -e /Users/erikvw/source/edc-visit-tracking  #develop#egg=edc_visit_tracking
--e /Users/erikvw/source//getresults-identifier  #develop#egg=getresults_identifier
 -e /Users/erikvw/source/django-crypto-fields  #develop#egg=django_crypto_fields
 -e /Users/erikvw/source/django-revision  #develop#egg=django_revision
