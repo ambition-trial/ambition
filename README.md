@@ -4,6 +4,9 @@
 
 ### Installation
 
+    # see ambition/ubuntu.txt for required ubuntu packages
+
+    # create folders
     mkdir  ~/.venvs
     mkdir  ~/source
     
