@@ -4,9 +4,13 @@
 
 ### Installation
 
+ See ambition/ubuntu.txt for required ubuntu packages
+
 Decide on the user account for the installation. E.g. `django`. 
 
     sudo su django
+
+    # create folders
 
     mkdir  ~/.venvs
     mkdir  ~/source
@@ -149,4 +153,3 @@ For the live server, the settings file places Django's `SECRET_KEY` and `django-
  
     tail -n 25 -f /var/log/ambition.log
 
-    
