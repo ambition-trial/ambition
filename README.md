@@ -11,7 +11,7 @@
     python3 -m venv ~/.venvs/ambition
     
     # activate VENV
-    source ~/.venvs/ambition
+    source ~/.venvs/ambition/bin/activate
     
     # update pip
     pip install -U pip ipython
