@@ -1,3 +1,4 @@
+from ambition_sites import ambition_sites, fqdn
 from datetime import datetime
 from dateutil.relativedelta import MO, TU, WE, TH, FR, SA, SU
 from dateutil.tz import gettz
@@ -20,7 +21,6 @@ from edc_protocol.apps import AppConfig as BaseEdcProtocolAppConfig
 from edc_visit_tracking.apps import AppConfig as BaseEdcVisitTrackingAppConfig
 from edc_visit_tracking.constants import SCHEDULED, UNSCHEDULED, LOST_VISIT
 
-from .sites import ambition_sites, fqdn
 from .system_checks import ambition_check
 
 

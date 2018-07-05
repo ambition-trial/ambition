@@ -1,7 +1,11 @@
-from .base_test import *
+import os
+
+from ambition_sites import get_site_id
+
+from .base_train import *
 
 # site is gaborone
-SITE_ID = 10
+SITE_ID = get_site_id('gaborone')
 
 WSGI_APPLICATION = 'ambition.wsgi.train.application'
 

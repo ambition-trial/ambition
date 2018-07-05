@@ -1,6 +1,17 @@
 import os
+import sys
 
+from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
+
+
+# simple version check
+try:
+    assert sys.version_info >= (3, 6), 'hello'
+    assert sys.version_info < (3, 7)
+except AssertionError:
+    raise ImproperlyConfigured(
+        'Incorrect python version. Expected 3.6. Check your environment.')
 
 BASE_DIR = str(Path(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)))).parent)
@@ -38,8 +49,8 @@ INSTALLED_APPS = [
     'edc_subject_dashboard.apps.AppConfig',
     'edc_lab_dashboard.apps.AppConfig',
     'edc_list_data.apps.AppConfig',
-    'edc_sync.apps.AppConfig',
-    'edc_sync_files.apps.AppConfig',
+    'django_offline.apps.AppConfig',
+    'django_offline_files.apps.AppConfig',
     'edc_pharmacy.apps.AppConfig',
     # 'edc_pharmacy_dashboard.apps.AppConfig',
     'edc_navbar.apps.AppConfig',
@@ -186,11 +197,12 @@ MAIN_NAVBAR_NAME = APP_NAME
 
 # edc_lab and label
 LABEL_TEMPLATE_FOLDER = os.path.join(BASE_DIR, 'label_templates')
-# edc_sync/sync files
+
+# django_offline / django_offline files
 EDC_SYNC_SERVER_IP = None
-EDC_SYNC_FILES_REMOTE_HOST = None
-EDC_SYNC_FILES_USER = None
-EDC_SYNC_FILES_USB_VOLUME = None
+DJANGO_OFFLINE_FILES_REMOTE_HOST = None
+DJANGO_OFFLINE_FILES_USER = None
+DJANGO_OFFLINE_FILES_USB_VOLUME = None
 
 # dashboards
 DASHBOARD_URL_NAMES = {

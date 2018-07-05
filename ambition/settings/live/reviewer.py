@@ -1,13 +1,22 @@
-from ...sites import get_site_id
+from ambition_sites import get_site_id, fqdn
+
 from .base_live import *
 
-# for django.contrib.sites
-SITE_ID = get_site_id('reviewer')
 
-WSGI_APPLICATION = 'ambition.wsgi.reviewer.application'
+SITE_NAME = 'reviewer'
+
+TIME_ZONE = 'Africa/Gaborone'
+
+SITE_ID = get_site_id(f'{SITE_NAME}')
+
+FQDN = fqdn
+
+WSGI_APPLICATION = f'{APP_NAME}.wsgi.{SITE_NAME}.application'
 
 ALLOWED_HOSTS = [
     'localhost', '127.0.0.1',
-    'reviewer.ambition.bhp.org.bw']
+    f'{SITE_NAME}.{FQDN}']
 
-TIME_ZONE = 'Africa/Gaborone'
+# CUPS_SERVERS = {
+#     'bhp.printers.bhp.org.bw': 'bhp.printers.bhp.org.bw',
+#     'localhost': None}

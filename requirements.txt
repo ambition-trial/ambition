@@ -1,4 +1,5 @@
 python-memcached
+git+https://github.com/ambition-trial/ambition-sites.git@develop#egg=ambition_sites
 git+https://github.com/ambition-trial/ambition-ae.git@develop#egg=ambition_ae
 git+https://github.com/ambition-trial/ambition-export.git@develop#egg=ambition_export
 git+https://github.com/ambition-trial/ambition-screening.git@develop#egg=ambition_screening
@@ -32,6 +33,7 @@ git+https://github.com/clinicedc/edc-locator.git@develop#egg=edc_locator
 git+https://github.com/clinicedc/edc-metadata.git@develop#egg=edc_metadata
 git+https://github.com/clinicedc/edc-metadata-rules.git@develop#egg=edc_metadata_rules
 git+https://github.com/clinicedc/edc-model-admin.git@develop#egg=edc_model_admin
+git+https://github.com/clinicedc/edc-model-fields@develop#egg=edc-model-fields
 git+https://github.com/clinicedc/edc-model-wrapper.git@develop#egg=edc_model_wrapper
 git+https://github.com/clinicedc/edc-navbar.git@develop#egg=edc_navbar
 git+https://github.com/clinicedc/edc-offstudy.git@develop#egg=edc_offstudy
@@ -46,11 +48,11 @@ git+https://github.com/clinicedc/edc-reports@develop#egg=edc-reports
 git+https://github.com/clinicedc/edc-reportable.git@develop#egg=edc_reportable
 git+https://github.com/clinicedc/edc-search.git@develop#egg=edc_search
 git+https://github.com/clinicedc/edc-subject-dashboard.git@develop#egg=edc_subject_dashboard
-git+https://github.com/clinicedc/edc-sync-files.git@develop#egg=edc_sync_files
-git+https://github.com/clinicedc/edc-sync.git@develop#egg=edc_sync
 git+https://github.com/clinicedc/edc-rest.git@develop#egg=edc_rest
 git+https://github.com/clinicedc/edc-timepoint.git@develop#egg=edc_timepoint
 git+https://github.com/clinicedc/edc-visit-schedule.git@develop#egg=edc_visit_schedule
 git+https://github.com/clinicedc/edc-visit-tracking.git@develop#egg=edc_visit_tracking
 git+https://github.com/erikvw/django-crypto-fields.git@develop#egg=django_crypto_fields
 git+https://github.com/erikvw/django-revision.git@develop#egg=django_revision
+git+https://github.com/erikvw/django-offline-files@develop#egg=django-offline-files
+git+https://github.com/erikvw/django-offline@develop#egg=django-offline
