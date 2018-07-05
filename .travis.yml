@@ -10,8 +10,6 @@ install:
 - pip install --upgrade pip
 - pip install flake8
 - pip install coveralls
-- pip install mysqlclient
-- pip install -e .
 - pip install -q -r requirements.txt
 before_script:
 - flake8 ambition
@@ -20,6 +18,3 @@ script:
 - coverage run --source=ambition manage.py test
 after_success:
 - coveralls
-notifications:
-  slack:
-    secure: RKZTkl3KQ7YHpAzG+a3xqFkaescLa7kO2CIXiGOYP6AXpLcbS9SjCYkeQPg6VgRUXToChFpbxSHkpj6+sCNCRZm5q6iWeOdOuhyK58h1fVhN1DGOPqfCXu0LqfJH1mw4DTSiEmAQYdzGM4IvL/4JF+PAaWxwfOYNPKjWMlfadUqB0rnBhpu7SjQRiK4u5vRdm3nav9ATZPwXU9qf/nuX3oBvGJxdiCMiOf8wLNZo/cPlFNUwYCBLLBh5GAcHr5d/nzsqGFzJyMzCusc3WjJXAS4+1KPuUAuWCQLBsOkf0Qwm7c7Muly9QbfSTcRYuR0I3+9obL1DiKQaDPKSyVl8fHl0/IikxUm0by/Bo2CUr4APQXEKmU4/kjGgPkkFiImnP59/Tm16Ne/m8BJSnoO++Vb3ujttVT6h5NQZiOhXr6XLY5odcaQIyib6nftjcFyNanTZYp4cWr4nydL+6GNgXE3niORRNFHlLAFIclwnevXstOlhHaQ5FTILN6xlJAVzQyhV9ZYzIoXHcUgjumibps3Y6nAQaqbHKUFur1QBtXqdWV7lNNeHa2VkxS0f7tjLE174PTqXr6qp09uOtrr/fyubTI6+8FoRACodF/0kTey9+MM3+Xc6ePNwzVI31O2lyhvB8p2hteuFyPOkJC++sFKVf6qqi7ZbnZNtT4Wz80I=

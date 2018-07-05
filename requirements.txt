@@ -1,4 +1,4 @@
-python-memcached
+.
 git+https://github.com/ambition-trial/ambition-sites.git@develop#egg=ambition_sites
 git+https://github.com/ambition-trial/ambition-ae.git@develop#egg=ambition_ae
 git+https://github.com/ambition-trial/ambition-export.git@develop#egg=ambition_export
