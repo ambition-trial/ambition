@@ -211,7 +211,6 @@ DASHBOARD_URL_NAMES = {
     'screening_listboard_url': 'ambition_dashboard:screening_listboard_url',
     'subject_dashboard_url': 'ambition_dashboard:subject_dashboard_url',
 }
-LAB_DASHBOARD_URL_NAMES = {}
 DASHBOARD_BASE_TEMPLATES = {
     'listboard_base_template': 'ambition/base.html',
     'dashboard_base_template': 'ambition/base.html',
@@ -219,6 +218,9 @@ DASHBOARD_BASE_TEMPLATES = {
     'subject_listboard_template': 'ambition_dashboard/subject/listboard.html',
     'subject_dashboard_template': 'ambition_dashboard/subject/dashboard.html',
 }
+LAB_DASHBOARD_URL_NAMES = {}
+LAB_DASHBOARD_BASE_TEMPLATES = {}
+LAB_DASHBOARD_REQUISITION_MODEL = 'ambition_subject.subjectrequisition'
 
 # edc_facility
 HOLIDAY_FILE = os.path.join(BASE_DIR, 'holidays.csv')
