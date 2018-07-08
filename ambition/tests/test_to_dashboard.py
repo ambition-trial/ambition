@@ -15,7 +15,7 @@ from edc_selenium.mixins import SeleniumLoginMixin, SeleniumModelFormMixin
 from model_mommy import mommy
 from selenium.webdriver.firefox.webdriver import WebDriver
 
-from ..sites import ambition_sites
+from ambition_sites import ambition_sites
 
 style = color_style()
 
