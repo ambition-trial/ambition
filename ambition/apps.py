@@ -62,6 +62,7 @@ class EdcLabAppConfig(BaseEdcLabAppConfig):
 class EdcBaseAppConfig(BaseEdcBaseAppConfig):
     project_name = 'Ambition'
     institution = 'Botswana-Harvard AIDS Institute'
+    project_repo = 'https://github.com/ambition-trial'
 
 
 class EdcDeviceAppConfig(BaseEdcDeviceAppConfig):
