@@ -1,3 +1,5 @@
+.envs/
+.env
 secrets.json
 notebooks/
 etc/

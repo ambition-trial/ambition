@@ -1,139 +1,147 @@
 # ambition
+
 (P.I. Joe Jarvis)
 
 
-### Installation
+### VENV Installation
 
- See ambition/ubuntu.txt for required ubuntu packages
+See also [docker install](#docker-install)
 
-Decide on the user account for the installation. E.g. `django`. 
+There are three requirements files 
 
-    sudo su django
+    requirements_dev.txt  # installs all in editable mode from your workspace 
+    requirements_production.txt # installs each by tag
+    requirements.txt  # installs each from develop branch (for ci / tests)
 
-    # create folders
+See `ambition/ubuntu.txt` for required ubuntu packages
+
+Decide on the user account for the installation. E.g. ambition. 
+
+    sudo su ambition
+
+create folders
 
     mkdir  ~/.venvs
-    mkdir  ~/source
+    mkdir -p ~/source/ambition/log/
     
-    # create VENV
+create VENV
+
     python3 -m venv ~/.venvs/ambition
     
-    # activate VENV
+activate VENV
+
     source ~/.venvs/ambition/bin/activate
     
-    # update pip
+update pip
+
     pip install -U pip ipython
     
-    # clone main project
-    cd ~/source/
-    git clone https://github.com/ambition-trial/ambition.git
-    
-    # make log folder
-    mkdir ~/source/ambition/log/
-    
-    # install requirements
-    # GOTO section for "Test/UAT setup" or "Production setup", then proceed ...
+clone main project
 
-    # create database
-    # GOTO section on "mysql and settings", then proceed ...
+    cd ~/source/ \
+    && git clone https://github.com/ambition-trial/ambition.git
 
-    # migrate database
-    python manage.py migrate --settings=ambition.settings.yourfile
-    
-    # import required data
-    python manage.py import_randomization_list --settings=ambition.settings.yourfile
-    python manage.py import_holidays --settings=ambition.settings.yourfile
-    
-    # check again
-    python manage.py check --settings=ambition.settings.yourfile
+change to project folder
 
-
-### Test/UAT setup
-
-... continued from Installation above
-    
-    # mysql.conf (see example below)
-    sudo touch /etc/ambition/mysql.conf/uat.conf
-    
-    # install requirements
     cd ~/source/ambition
-    pip install -r requirements.txt
 
-    # make encryption KEY folder
-    sudo mkdir -p /etc/ambition/test/crypto_fields
-        
-    # run check for a gaborone UAT site
-    python manage.py check --settings=ambition.settings.test.gaborone-uat
+copy your .env file into the project root
+
+    cp /some/path/to/.env ~/source/ambition/.env
     
-    # confirm DB credentials
-    cat /etc/
+install requirements, select the require file. See requirements options above.
 
-
-### Production setup
-
-... continued from Installation above
-
-    # install requirements
-    cd ~/source/ambition
+    # pip install -r requirements.txt
+    
     pip install -r requirements_production.txt
+
+ create database and populate timezone table
+
+    mysql -u <user> -p -Bse 'create database ambition character set utf8;' \
+    && mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p mysql
     
-    # make encryption KEY folder
-    sudo mkdir -p /etc/ambition/live/crypto_fields
-            
-    # run check for a gaborone LIVE site
-    python manage.py check --settings=ambition.settings.live.gaborone
+migrate database
 
-### `mysql` and django `settings`
-
-To run several instances of the `ambition` application on a single server, create a folder for the `.conf` files.
-
-    sudo mkdir -p /etc/ambition/mysql.conf/
-
-For each application create a `.conf` file
-
-    sudo touch /etc/ambition/mysql.conf/uat.conf
-    sudo touch /etc/ambition/mysql.conf/live.conf
-    # ...
-
-Your `.conf` file should look something like this:
-
-    [client]
-    host = 127.0.0.1
-    port = 3306
-    database = your_db_name
-    user = your_mysql_user
-    password = your_mysql_password
-    default-character-set = utf8
-
-
-In the application's django settings set the `read_default_file` OPTION of `DATABASES` to the correct mysql `.conf` file.
-
-    MYSQL_DIR = os.path.join('/etc', APP_NAME, 'mysql.conf')
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'OPTIONS': {
-                'read_default_file': os.path.join(MYSQL_DIR, 'uat.conf'),
-            },
-        },
-    }
-
-Create the database. Refer to your `.conf` file for the DB name. Assuming you chose `ambition` as the DB name.
+    python manage.py migrate
     
-    mysql -u <user> -p -Bse 'create database ambition character set utf8;'
+import required data
 
-Populate timezone table.
-
-    mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p mysql
-
-
-
-#### /etc
-
-For the live server, the settings file places Django's `SECRET_KEY` and `django-crypto-fields` encryption keys in `/etc/ambition/live`. The account used to load the system must have read access to these files.
-
+    python manage.py import_randomization_list \
+    && python manage.py import_holidays
     
-### Logging for UAT and Production Servers
+check
+    
+    python manage.py check
+
+
+### Environment variables
+
+Settings variables are store in the environment.
+
+See [django-environ](https://github.com/joke2k/django-environ) and [12-factor-django](http://www.wellfireinteractive.com/blog/easier-12-factor-django/)
+
+Place your .env file in the root of the project.
+
+Available variables are:
+
+#### secure values
+
+    DATABASE_URL= # mysql://user:password@127.0.0.1:3306/database_name
+    DJANGO_SECRET_KEY=
+    MYSQL_ROOT_PASSWORD=
+
+#### review these site specific variables in the django section
+* `DJANGO_COUNTRY`
+* `DJANGO_CUPS_SERVERS`
+* `DJANGO_HOLIDAY_FILE`
+* `DJANGO_LANGUAGES`
+* `DJANGO_SITE_ID`
+* `DJANGO_TIME_ZONE`
+
+#### django and edc
+
+    DJANGO_APP_NAME=
+    DJANGO_ALLOWED_HOSTS= # localhost,127.0.0.1
+    DJANGO_COUNTRY=
+    DJANGO_CSRF_COOKIE_SECURE= # True
+    DJANGO_CUPS_SERVERS=
+    DJANGO_DASHBOARD_BASE_TEMPLATES=
+    DJANGO_DASHBOARD_URL_NAMES=
+    DJANGO_DEBUG=
+    DJANGO_EMAIL_CONTACTS=
+    DJANGO_ETC_DIR=
+    DJANGO_EXPORT_FOLDER=
+    DJANGO_FQDN= # clinicedc.org
+    DJANGO_HOLIDAY_FILE=
+    DJANGO_INDEX_PAGE=
+    DJANGO_KEY_PATH=
+    DJANGO_LAB_DASHBOARD_BASE_TEMPLATES=
+    DJANGO_LAB_DASHBOARD_REQUISITION_MODEL=
+    DJANGO_LAB_DASHBOARD_URL_NAMES=
+    DJANGO_LANGUAGES= # en:English
+    DJANGO_LANGUAGE_CODE= # en-us
+    DJANGO_LABEL_TEMPLATE_FOLDER=
+    DJANGO_LOGIN_REDIRECT_URL= # home_url
+    DJANGO_MAIN_NAVBAR_NAME=
+    DJANGO_OFFLINE_SERVER_IP=
+    DJANGO_OFFLINE_FILES_REMOTE_HOST=
+    DJANGO_OFFLINE_FILES_USER=
+    DJANGO_OFFLINE_FILES_USB_VOLUME=
+    DJANGO_RANDOMIZATION_LIST_FILE=
+    DJANGO_REVIEWER_SITE_ID=
+    DJANGO_SECURE_PROXY_SSL_HEADER= # (HTTP_X_FORWARDED_PROTO,https)
+    DJANGO_SESSION_COOKIE_SECURE= # True
+    DJANGO_SITE_ID=
+    DJANGO_STATIC_ROOT=
+    DJANGO_STATIC_URL= # /static/
+    DJANGO_TIME_ZONE= # Africa/Gaborone
+    DJANGO_USE_I18N= # True
+    DJANGO_USE_L10N= # False
+    DJANGO_USE_TZ= # True
+    MYSQL_DATABASE=
+
+
+### Logging
  
  If logging through syslog is implemented, you need to configure rsyslog.
  
@@ -153,3 +161,4 @@ For the live server, the settings file places Django's `SECRET_KEY` and `django-
  
     tail -n 25 -f /var/log/ambition.log
 
+### Docker Install

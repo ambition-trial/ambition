@@ -1,30 +1,50 @@
+import environ
 import os
 import sys
 
 from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
 
-
 # simple version check
 try:
-    assert sys.version_info >= (3, 6), 'hello'
-    assert sys.version_info < (3, 7)
+    assert (3, 6) <= (sys.version_info.major, sys.version_info.minor) <= (3, 7)
 except AssertionError:
     raise ImproperlyConfigured(
-        'Incorrect python version. Expected 3.6. Check your environment.')
+        'Incorrect python version. Expected 3.6 or 3.7. Check your environment.')
 
 BASE_DIR = str(Path(os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__)))).parent)
+    os.path.dirname(os.path.abspath(__file__)))))
 
-APP_NAME = 'ambition'
+env = environ.Env(
+    DJANGO_DEBUG=(bool, False),
+    DJANGO_AUTO_CREATE_KEYS=(bool, False),
+    DJANGO_CSRF_COOKIE_SECURE=(bool, True),
+    DJANGO_SESSION_COOKIE_SECURE=(bool, True),
+    DJANGO_USE_I18N=(bool, True),
+    DJANGO_USE_L10N=(bool, False),
+    DJANGO_USE_TZ=(bool, True),
+)
 
-REVIEWER_SITE_ID = 1
+# copy your .env file from .envs/ to BASE_DIR
+env.read_env('.env')
 
-MYSQL_DIR = os.path.join('/etc', APP_NAME, 'mysql.conf')
+DEBUG = env('DJANGO_DEBUG')
 
-LOGIN_REDIRECT_URL = 'home_url'
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-# Application definition
+APP_NAME = env('DJANGO_APP_NAME')
+
+ETC_DIR = env.path('DJANGO_ETC_DIR') or os.path.join(BASE_DIR, 'etc')
+
+TEST_DIR = os.path.join(BASE_DIR, APP_NAME, 'tests')
+
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
+
+SITE_ID = env.int('DJANGO_SITE_ID')
+REVIEWER_SITE_ID = env.int('DJANGO_REVIEWER_SITE_ID')
+
+LOGIN_REDIRECT_URL = env.str('DJANGO_LOGIN_REDIRECT_URL')
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -101,7 +121,7 @@ MIDDLEWARE = [
     'edc_lab_dashboard.middleware.DashboardMiddleware',
 ]
 
-ROOT_URLCONF = 'ambition.urls'
+ROOT_URLCONF = f'{APP_NAME}.urls'
 
 TEMPLATES = [
     {
@@ -119,7 +139,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ambition.wsgi.application'
+DATABASES = {'default': env.db()}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:/tmp/memcached.sock',
+    }
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+WSGI_APPLICATION = f'{APP_NAME}.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -143,33 +174,24 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    'django.contrib.auth.hashers.BCryptPasswordHasher',
 ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = env.str('DJANGO_LANGUAGE_CODE')
 
-LANGUAGES = (
-    ('af', 'Afrikaans'),
-    ('ny', 'Chichewa'),
-    ('en', 'English'),
-    ('xh', 'isiXhosa'),
-    ('lg', 'Luganda'),
-    ('rny', 'Runyankore'),
-    ('tn', 'Setswana'),
-    ('sn', 'Shona'))
+LANGUAGES = [x.split(':') for x in env.list(
+    'DJANGO_LANGUAGES')] or (('en', 'English'),)
 
-TIME_ZONE = 'Africa/Gaborone'
+TIME_ZONE = env.str('DJANGO_TIME_ZONE')
 
-USE_I18N = True
+USE_I18N = env('DJANGO_USE_I18N')
 
 # set to False so DATE formats below are used
-USE_L10N = False
+USE_L10N = env('DJANGO_USE_L10N')
 
-USE_TZ = True
+USE_TZ = env('DJANGO_USE_TZ')
 
 DATE_INPUT_FORMATS = ['%Y-%m-%d', '%d/%m/%Y']
 DATETIME_INPUT_FORMATS = [
@@ -188,49 +210,59 @@ SHORT_DATE_FORMAT = 'd/m/Y'
 SHORT_DATETIME_FORMAT = 'd/m/Y H:i'
 
 # static
-STATIC_URL = '/static/'
+STATIC_URL = env.str('DJANGO_STATIC_URL', '/static/')
+STATIC_ROOT = env.path('DJANGO_STATIC_ROOT',
+                       default=os.path.join(BASE_DIR, APP_NAME, 'static'))
 
-# edc app specific settings  ################
+CSRF_COOKIE_SECURE = env.str('DJANGO_CSRF_COOKIE_SECURE')
+SECURE_PROXY_SSL_HEADER = env.tuple('DJANGO_SECURE_PROXY_SSL_HEADER')
+SESSION_COOKIE_SECURE = env.str('DJANGO_SESSION_COOKIE_SECURE')
 
 # edc_base
-MAIN_NAVBAR_NAME = APP_NAME
+MAIN_NAVBAR_NAME = env.str('DJANGO_MAIN_NAVBAR_NAME')
 
 # edc_lab and label
-LABEL_TEMPLATE_FOLDER = os.path.join(BASE_DIR, 'label_templates')
+LABEL_TEMPLATE_FOLDER = env.str(
+    'DJANGO_LABEL_TEMPLATE_FOLDER') or os.path.join(BASE_DIR, 'label_templates')
+CUPS_SERVERS = env.dict('DJANGO_CUPS_SERVERS')
 
 # django_offline / django_offline files
-EDC_SYNC_SERVER_IP = None
-DJANGO_OFFLINE_FILES_REMOTE_HOST = None
-DJANGO_OFFLINE_FILES_USER = None
-DJANGO_OFFLINE_FILES_USB_VOLUME = None
+DJANGO_OFFLINE_SERVER_IP = env.str('DJANGO_OFFLINE_SERVER_IP')
+DJANGO_OFFLINE_FILES_REMOTE_HOST = env.str('DJANGO_OFFLINE_FILES_REMOTE_HOST')
+DJANGO_OFFLINE_FILES_USER = env.str('DJANGO_OFFLINE_FILES_USER')
+DJANGO_OFFLINE_FILES_USB_VOLUME = env.str('DJANGO_OFFLINE_FILES_USB_VOLUME')
 
 # dashboards
-DASHBOARD_URL_NAMES = {
-    'subject_models_url': 'subject_models_url',
-    'subject_listboard_url': 'ambition_dashboard:subject_listboard_url',
-    'screening_listboard_url': 'ambition_dashboard:screening_listboard_url',
-    'subject_dashboard_url': 'ambition_dashboard:subject_dashboard_url',
-}
-DASHBOARD_BASE_TEMPLATES = {
-    'listboard_base_template': 'ambition/base.html',
-    'dashboard_base_template': 'ambition/base.html',
-    'screening_listboard_template': 'ambition_dashboard/screening/listboard.html',
-    'subject_listboard_template': 'ambition_dashboard/subject/listboard.html',
-    'subject_dashboard_template': 'ambition_dashboard/subject/dashboard.html',
-}
-LAB_DASHBOARD_URL_NAMES = {}
-LAB_DASHBOARD_BASE_TEMPLATES = {}
-LAB_DASHBOARD_REQUISITION_MODEL = 'ambition_subject.subjectrequisition'
+DASHBOARD_URL_NAMES = env.dict('DJANGO_DASHBOARD_URL_NAMES')
+DASHBOARD_BASE_TEMPLATES = env.dict('DJANGO_DASHBOARD_BASE_TEMPLATES')
+LAB_DASHBOARD_URL_NAMES = env.dict('DJANGO_LAB_DASHBOARD_URL_NAMES')
+LAB_DASHBOARD_BASE_TEMPLATES = env.dict('DJANGO_LAB_DASHBOARD_BASE_TEMPLATES')
+LAB_DASHBOARD_REQUISITION_MODEL = env.str(
+    'DJANGO_LAB_DASHBOARD_REQUISITION_MODEL')
 
 # edc_facility
-HOLIDAY_FILE = os.path.join(BASE_DIR, 'holidays.csv')
-COUNTRY = 'botswana'
+HOLIDAY_FILE = env.str('DJANGO_HOLIDAY_FILE')
+COUNTRY = env.str('DJANGO_COUNTRY', 'botswana')
 
 # ambition
-EMAIL_CONTACTS = {
-    'ae_reports': 'ambitionreporting@lshtm.ac.uk'}
+EMAIL_CONTACTS = env.dict('DJANGO_EMAIL_CONTACTS', {})
+if DEBUG:
+    RANDOMIZATION_LIST_PATH = os.path.join(
+        TEST_DIR, env.str('DJANGO_RANDOMIZATION_LIST_FILE'))
+else:
+    RANDOMIZATION_LIST_PATH = os.path.join(
+        ETC_DIR, env.str('DJANGO_RANDOMIZATION_LIST_FILE'))
+
 
 # django_revision
 GIT_DIR = BASE_DIR
 
-EXPORT_FOLDER = os.path.expanduser('~/')
+# django_crypto_fields
+if not DEBUG:
+    KEY_PATH = env.path('DJANGO_KEY_PATH')
+AUTO_CREATE_KEYS = env.str('DJANGO_AUTO_CREATE_KEYS')
+
+EXPORT_FOLDER = env.path('DJANGO_EXPORT_FOLDER', os.path.expanduser('~/'))
+
+FQDN = env.str('DJANGO_FQDN')
+INDEX_PAGE = env.str('DJANGO_INDEX_PAGE')
