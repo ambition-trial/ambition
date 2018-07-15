@@ -34,7 +34,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 APP_NAME = env('DJANGO_APP_NAME')
 
-ETC_DIR = env.path('DJANGO_ETC_DIR') or os.path.join(BASE_DIR, 'etc')
+ETC_DIR = env.path('DJANGO_ETC_FOLDER') or os.path.join(BASE_DIR, 'etc')
 
 TEST_DIR = os.path.join(BASE_DIR, APP_NAME, 'tests')
 
@@ -259,7 +259,7 @@ GIT_DIR = BASE_DIR
 
 # django_crypto_fields
 if not DEBUG:
-    KEY_PATH = env.path('DJANGO_KEY_PATH')
+    KEY_PATH = env.path('DJANGO_KEY_FOLDER')
 AUTO_CREATE_KEYS = env.str('DJANGO_AUTO_CREATE_KEYS')
 
 EXPORT_FOLDER = env.path('DJANGO_EXPORT_FOLDER', os.path.expanduser('~/'))
