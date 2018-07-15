@@ -34,7 +34,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 APP_NAME = env('DJANGO_APP_NAME')
 
-ETC_DIR = env.path('DJANGO_ETC_FOLDER') or os.path.join(BASE_DIR, 'etc')
+ETC_DIR = env.path('DJANGO_ETC_FOLDER')
 
 TEST_DIR = os.path.join(BASE_DIR, APP_NAME, 'tests')
 

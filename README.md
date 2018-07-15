@@ -88,7 +88,10 @@ Available variables are:
 
     DATABASE_URL= # mysql://user:password@127.0.0.1:3306/database_name
     DJANGO_SECRET_KEY=
+    MYSQL_DATABASE=
+    MYSQL_PASSWORD=
     MYSQL_ROOT_PASSWORD=
+    MYSQL_USER=
 
 #### review these site specific variables in the django section
 * `DJANGO_COUNTRY`
