@@ -1,5 +1,6 @@
 # Settings for development, e.g. tests, runserver
 
+from django import VERSION as DJANGO_VERSION
 import os
 import sys
 
@@ -10,6 +11,7 @@ DEBUG = True
 ETC_DIR = os.path.join(BASE_DIR, 'etc')
 
 MYSQL_DIR = ETC_DIR
+MYSQL_CONF = MYSQL_CONF
 
 WSGI_APPLICATION = 'ambition.wsgi.wsgi.application'
 
@@ -21,7 +23,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
-            'read_default_file': os.path.join(MYSQL_DIR, 'mysql.conf'),
+            'read_default_file': os.path.join(MYSQL_DIR, MYSQL_CONF),
         },
     },
 }
