@@ -93,7 +93,6 @@ Available variables are:
 #### review these site specific variables in the django section
 * `DJANGO_COUNTRY`
 * `DJANGO_CUPS_SERVERS`
-* `DJANGO_HOLIDAY_FILE`
 * `DJANGO_LANGUAGES`
 * `DJANGO_SITE_ID`
 * `DJANGO_TIME_ZONE`
