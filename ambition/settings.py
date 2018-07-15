@@ -41,6 +41,7 @@ TEST_DIR = os.path.join(BASE_DIR, APP_NAME, 'tests')
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 
 SITE_ID = env.int('DJANGO_SITE_ID')
+
 REVIEWER_SITE_ID = env.int('DJANGO_REVIEWER_SITE_ID')
 
 LOGIN_REDIRECT_URL = env.str('DJANGO_LOGIN_REDIRECT_URL')
@@ -210,9 +211,8 @@ SHORT_DATE_FORMAT = 'd/m/Y'
 SHORT_DATETIME_FORMAT = 'd/m/Y H:i'
 
 # static
-STATIC_URL = env.str('DJANGO_STATIC_URL', '/static/')
-STATIC_ROOT = env.path('DJANGO_STATIC_ROOT',
-                       default=os.path.join(BASE_DIR, APP_NAME, 'static'))
+STATIC_URL = env.str('DJANGO_STATIC_URL')
+STATIC_ROOT = env.path('DJANGO_STATIC_ROOT')
 
 CSRF_COOKIE_SECURE = env.str('DJANGO_CSRF_COOKIE_SECURE')
 SECURE_PROXY_SSL_HEADER = env.tuple('DJANGO_SECURE_PROXY_SSL_HEADER')
@@ -242,7 +242,7 @@ LAB_DASHBOARD_REQUISITION_MODEL = env.str(
 
 # edc_facility
 HOLIDAY_FILE = env.str('DJANGO_HOLIDAY_FILE')
-COUNTRY = env.str('DJANGO_COUNTRY', 'botswana')
+COUNTRY = env.str('DJANGO_COUNTRY')
 
 # ambition
 EMAIL_CONTACTS = env.dict('DJANGO_EMAIL_CONTACTS', {})
@@ -262,7 +262,7 @@ if not DEBUG:
     KEY_PATH = env.path('DJANGO_KEY_FOLDER')
 AUTO_CREATE_KEYS = env.str('DJANGO_AUTO_CREATE_KEYS')
 
-EXPORT_FOLDER = env.path('DJANGO_EXPORT_FOLDER', os.path.expanduser('~/'))
+EXPORT_FOLDER = env.path('DJANGO_EXPORT_FOLDER') or os.path.expanduser('~/')
 
 FQDN = env.str('DJANGO_FQDN')
 INDEX_PAGE = env.str('DJANGO_INDEX_PAGE')

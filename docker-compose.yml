@@ -9,10 +9,14 @@ services:
     container_name: $DB_CONTAINER_NAME
     volumes:
       - /srv/ambition/data:/var/lib/mysql
+      - /srv/ambition/backup:$MYSQL_BACKUP_FOLDER
   web:
     build: .
-    command: sleep infinity
-    # command: python manage.py runserver 0.0.0.0:8000
+    # command: sleep infinity
+    command:
+        bash -c "python manage.py migrate \
+        && python manage.py import_holidays \
+        && python manage.py runserver 0.0.0.0:8000"
     container_name: $WEB_CONTAINER_NAME
     volumes:
       - .:/app
