@@ -188,14 +188,9 @@ checkout the repo
     cd ~/
     git checkout -b develop git https://github.com/ambition-trial/ambition.git app 
 
-make folders for the container volumes
+make folder on host for the container volumes
 
-    sudo mkdir -p /srv/ambition/data \
-        && /srv/ambition/backup \
-        && /srv/ambition/log \
-        && /srv/ambition/export \
-        && /srv/ambition/.etc/crypto_fields \
-        && /srv/ambition/static
+    sudo mkdir -p /srv/ambition/
     
 copy your `.env` file into the app root
 
@@ -226,7 +221,15 @@ build images for `ambition_production` and `mysql` and bring them `up`
     && docker-compose -f compose/local.yml up
     
 >>> Note: if you need to generate keys set DJANGO_AUTO_CREATE_KEYS=True in the `.env`, `docker-compose up`, change back to false and `docker-compose up` again
+
+If needed, copy keys to container (e.g. you are using existing keys)
+
+    docker cp /some/path/to/crypto_keys/ ambition_production:/ambition/.etc/ 
     
+Copy the `randomization_list.csv` file to the container
+
+    docker cp /some/path/to/randomization_list.csv ambition_production:/ambition/.etc/
+
 In another shell, log into the container
 
     docker exec -it ambition_production /bin/bash
