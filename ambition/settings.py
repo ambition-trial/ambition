@@ -34,7 +34,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 APP_NAME = env('DJANGO_APP_NAME')
 
-ETC_DIR = env.path('DJANGO_ETC_FOLDER')
+ETC_DIR = env.str('DJANGO_ETC_FOLDER')
 
 TEST_DIR = os.path.join(BASE_DIR, APP_NAME, 'tests')
 
@@ -212,7 +212,7 @@ SHORT_DATETIME_FORMAT = 'd/m/Y H:i'
 
 # static
 STATIC_URL = env.str('DJANGO_STATIC_URL')
-STATIC_ROOT = env.path('DJANGO_STATIC_ROOT')
+STATIC_ROOT = env.str('DJANGO_STATIC_ROOT')
 
 CSRF_COOKIE_SECURE = env.str('DJANGO_CSRF_COOKIE_SECURE')
 SECURE_PROXY_SSL_HEADER = env.tuple('DJANGO_SECURE_PROXY_SSL_HEADER')
@@ -258,11 +258,11 @@ else:
 GIT_DIR = BASE_DIR
 
 # django_crypto_fields
-if not DEBUG:
-    KEY_PATH = env.path('DJANGO_KEY_FOLDER')
+# if not DEBUG:
+KEY_PATH = env.str('DJANGO_KEY_FOLDER')
 AUTO_CREATE_KEYS = env.str('DJANGO_AUTO_CREATE_KEYS')
 
-EXPORT_FOLDER = env.path('DJANGO_EXPORT_FOLDER') or os.path.expanduser('~/')
+EXPORT_FOLDER = env.str('DJANGO_EXPORT_FOLDER') or os.path.expanduser('~/')
 
 FQDN = env.str('DJANGO_FQDN')
 INDEX_PAGE = env.str('DJANGO_INDEX_PAGE')
