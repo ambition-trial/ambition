@@ -19,8 +19,10 @@ services:
     volumes:
       - .:/app
       - /srv/ambition/export:$DJANGO_EXPORT_FOLDER
-      - /home/ambition/.etc:$DJANGO_ETC_FOLDER
+      - /srv/ambition/.etc:$DJANGO_ETC_FOLDER
       - /srv/ambition/static:$DJANGO_STATIC_ROOT
+      - /srv/ambition/log: $DJANGO_LOG_FOLDER
+      - /srv/ambition/backup:$MYSQL_BACKUP_FOLDER
     ports:
       - 8000:8000
       - 80:80
