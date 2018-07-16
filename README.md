@@ -104,6 +104,7 @@ Available variables are:
 
     DJANGO_APP_NAME=
     DJANGO_ALLOWED_HOSTS= # localhost,127.0.0.1
+    DJANGO_AUTO_CREATE_KEYS=False  # True on initial boot to create keys
     DJANGO_COUNTRY=
     DJANGO_CSRF_COOKIE_SECURE= # True
     DJANGO_CUPS_SERVERS=

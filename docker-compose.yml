@@ -13,10 +13,6 @@ services:
   web:
     build: .
     # command: sleep infinity
-    command:
-        bash -c "python manage.py migrate \
-        && python manage.py import_holidays \
-        && python manage.py runserver 0.0.0.0:8000"
     container_name: $WEB_CONTAINER_NAME
     volumes:
       - .:/app
