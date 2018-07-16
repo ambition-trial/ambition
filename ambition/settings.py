@@ -260,8 +260,8 @@ else:
 GIT_DIR = BASE_DIR
 
 # django_crypto_fields
-# if not DEBUG:
-KEY_PATH = env.str('DJANGO_KEY_FOLDER')
+if not DEBUG:
+    KEY_PATH = env.str('DJANGO_KEY_FOLDER')
 AUTO_CREATE_KEYS = env.str('DJANGO_AUTO_CREATE_KEYS')
 
 EXPORT_FOLDER = env.str('DJANGO_EXPORT_FOLDER') or os.path.expanduser('~/')
