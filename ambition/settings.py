@@ -141,6 +141,8 @@ TEMPLATES = [
 ]
 
 DATABASES = {'default': env.db()}
+# be secure and clear DATABASE_URL since it is no longer needed.
+DATABASE_URL = None
 
 CACHES = {
     'default': {

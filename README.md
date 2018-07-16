@@ -166,41 +166,41 @@ Available variables are:
 
 ### Docker Install
 
+[Install Docker Compose](https://docs.docker.com/compose/install/)
 
-create a docker droplet
+create a droplet for the host
+
+    ...
 
 
-
-log into your droplet and create a user account for the app
+log into your host and create a user account for the app
 
     useradd ambition
     usermod -aG docker ambition
     usermod -aG sudo ambition
 
-log into your droplet as user `ambition`
+log out and log back in as user `ambition`
 
     ssh ambition@example.com
 
-The rest of the steps assume you are log into your droplet as user `ambition`
+The rest of the steps assume you are logged into your host as user `ambition`
 
-checkout the repo
+checkout the main ambition repo into `app`
 
     cd ~/
     git checkout -b develop git https://github.com/ambition-trial/ambition.git app 
 
-make folder on host for the container volumes
+make a folder on your host for the container volumes
 
     sudo mkdir -p /srv/ambition/
     
-copy your `.env` file into the app root
+copy or `scp` your `.env` file into the `app` root
 
-    cp /some/path/to/.env ~/app/ambition/.env
+    cp /some/path/to/.env ~/app/.env
 
-or `scp`
-    
     scp .production ambition@example.com:~/app/.env
 
-edit `~/app/ambition/.env` file as required, for example
+edit `~/app/.env` file as required, for example
 
     # DB and SECRET_KEY
     DATABASE_URL=mysql://user:password@127.0.0.1:3306/ambition_new
@@ -215,7 +215,7 @@ edit `~/app/ambition/.env` file as required, for example
     DJANGO_SITE_ID=
     DJANGO_TIME_ZONE=
     
-build images for `ambition_production` and `mysql` and bring them `up`
+from `app/` build images for `ambition_production` and `mysql` and bring them `up`
     
     docker-compose -f compose/local.yml build \
     && docker-compose -f compose/local.yml up
@@ -224,11 +224,11 @@ build images for `ambition_production` and `mysql` and bring them `up`
 
 If needed, copy keys to container (e.g. you are using existing keys)
 
-    docker cp /some/path/to/crypto_keys/ ambition_production:/ambition/.etc/ 
+    docker cp /some/path/to/crypto_keys/ ambition_production:$DJANGO_KEY_FOLDER
     
 Copy the `randomization_list.csv` file to the container
 
-    docker cp /some/path/to/randomization_list.csv ambition_production:/ambition/.etc/
+    docker cp /some/path/to/randomization_list.csv ambition_production:$DJANGO_ETC_FOLDER
 
 In another shell, log into the container
 

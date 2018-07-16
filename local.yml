@@ -1,5 +1,6 @@
 version: '3'
 
+
 services:
   db:
     image: mysql:5.7
@@ -10,8 +11,10 @@ services:
     volumes:
       - /srv/ambition/data:/var/lib/mysql
       - /srv/ambition/backup:$MYSQL_BACKUP_FOLDER
-  web:
-    build: .
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/Dockerfile
     # command: sleep infinity
     # command: python manage.py migrate
     command: python manage.py runserver 0.0.0.0:8000

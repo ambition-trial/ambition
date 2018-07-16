@@ -8,11 +8,13 @@ RUN apt-get update \
         python3-cups libmariadbclient-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /app
-WORKDIR /app
-ADD requirements.txt /app/
+# Requirements are installed here to ensure they will be cached.
+COPY ./requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-ADD . /app/
+
+# RUN mkdir /app
+WORKDIR /app
+# ADD . /app/
 
 EXPOSE 8000
 EXPOSE 80
