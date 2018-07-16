@@ -13,6 +13,7 @@ services:
   web:
     build: .
     # command: sleep infinity
+    # command: python manage.py migrate
     command: python manage.py runserver 0.0.0.0:8000
     container_name: $WEB_CONTAINER_NAME
     volumes:
