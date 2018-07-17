@@ -30,7 +30,7 @@ style = color_style()
 def post_migrate_update_sites(sender=None, **kwargs):
     from edc_base.sites.utils import add_or_update_django_sites
     add_or_update_django_sites(
-        apps=django_apps, sites=ambition_sites, fqdn=fqdn)
+        apps=django_apps, sites=ambition_sites, fqdn=fqdn, verbose=True)
 
 
 class AppConfig(DjangoAppConfig):
