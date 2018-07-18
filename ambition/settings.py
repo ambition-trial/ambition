@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'django_revision.apps.AppConfig',
     'django_extensions',
     'simple_history',
+    'storages',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
