@@ -5,6 +5,8 @@ import sys
 from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
 
+from .logging import LOGGING  # noqa
+
 # simple version check
 try:
     assert (3, 6) <= (sys.version_info.major, sys.version_info.minor) <= (3, 7)
@@ -267,6 +269,7 @@ EXPORT_FOLDER = env.str('DJANGO_EXPORT_FOLDER') or os.path.expanduser('~/')
 
 FQDN = env.str('DJANGO_FQDN')
 INDEX_PAGE = env.str('DJANGO_INDEX_PAGE')
+DJANGO_LOG_FOLDER = env.str('DJANGO_LOG_FOLDER')
 
 
 # static
