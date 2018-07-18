@@ -1,7 +1,10 @@
 # see http://www.simonkrueger.com/2015/05/27/logging-django-apps-to-syslog.html
+import environ
 import os
 
-from .settings import DJANGO_LOG_FOLDER
+env = environ.Env()
+
+DJANGO_LOG_FOLDER = env.str('DJANGO_LOG_FOLDER')
 
 LOGGING = {
     'version': 1,
