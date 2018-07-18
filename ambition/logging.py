@@ -3,6 +3,7 @@ import environ
 import os
 
 env = environ.Env()
+env.read_env('.env')
 
 DJANGO_LOG_FOLDER = env.str('DJANGO_LOG_FOLDER')
 
