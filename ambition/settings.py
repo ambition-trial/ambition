@@ -310,5 +310,6 @@ if env('AWS_ENABLED'):
                                         AWS_S3_ENDPOINT_URL, AWS_LOCATION)
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 else:
+    # run collectstatic, check nginx LOCATION
     STATIC_URL = env.str('DJANGO_STATIC_URL')
     STATIC_ROOT = env.str('DJANGO_STATIC_ROOT')
