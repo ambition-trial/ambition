@@ -8,7 +8,7 @@ ambition.append_item(
     NavbarItem(
         name='pharmacy',
         label='Pharmacy',
-        fa_icon='fa-medkit',
+        fa_icon='fas fa-medkit',
         url_name=f'home_url'))
 # url_name=f'edc_pharmacy_dashboard:home_url'))
 
@@ -16,21 +16,21 @@ ambition.append_item(
     NavbarItem(
         name='lab',
         label='Specimens',
-        fa_icon='fa-flask',
+        fa_icon='fas fa-flask',
         url_name=lab_dashboard_urls.get('requisition_listboard_url')))
 
 ambition.append_item(
     NavbarItem(
         name='screened_subject',
         label='Screening',
-        fa_icon='fa-user-plus',
+        fa_icon='fas fa-user-plus',
         url_name=settings.DASHBOARD_URL_NAMES.get('screening_listboard_url')))
 
 ambition.append_item(
     NavbarItem(
         name='consented_subject',
         label='Subjects',
-        fa_icon='far fa-user-circle',
+        fa_icon='fas fa-user-circle',
         url_name=settings.DASHBOARD_URL_NAMES.get('subject_listboard_url')))
 
 

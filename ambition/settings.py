@@ -26,6 +26,7 @@ env = environ.Env(
     DJANGO_USE_I18N=(bool, True),
     DJANGO_USE_L10N=(bool, False),
     DJANGO_USE_TZ=(bool, True),
+    DATABASE_USE_SQLITE=(bool, False),
 )
 
 # copy your .env file from .envs/ to BASE_DIR
@@ -144,7 +145,16 @@ TEMPLATES = [
     },
 ]
 
-DATABASES = {'default': env.db()}
+if env('DATABASE_USE_SQLITE'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+
+else:
+    DATABASES = {'default': env.db()}
 # be secure and clear DATABASE_URL since it is no longer needed.
 DATABASE_URL = None
 
@@ -305,7 +315,6 @@ if env('AWS_ENABLED'):
         'CacheControl': 'max-age=86400',
     }
     AWS_LOCATION = env.str('AWS_LOCATION')
-    STATICFILES_DIRS = [env.str('DJANGO_STATIC_ROOT'), ]
     STATIC_URL = 'https://%s.%s/%s/' % (AWS_STORAGE_BUCKET_NAME,
                                         AWS_S3_ENDPOINT_URL, AWS_LOCATION)
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -313,3 +322,17 @@ else:
     # run collectstatic, check nginx LOCATION
     STATIC_URL = env.str('DJANGO_STATIC_URL')
     STATIC_ROOT = env.str('DJANGO_STATIC_ROOT')
+
+if 'test' in sys.argv:
+
+    class DisableMigrations:
+
+        def __contains__(self, item):
+            return True
+
+        def __getitem__(self, item):
+            return None
+
+    MIGRATION_MODULES = DisableMigrations()
+    PASSWORD_HASHERS = ('django.contrib.auth.hashers.MD5PasswordHasher', )
+    DEFAULT_FILE_STORAGE = 'inmemorystorage.InMemoryStorage'
