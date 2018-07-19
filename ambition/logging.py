@@ -5,7 +5,11 @@ import os
 env = environ.Env()
 env.read_env('.env')
 
-DJANGO_LOG_FOLDER = env.str('DJANGO_LOG_FOLDER')
+LOG_FOLDER = env.str('DJANGO_LOG_FOLDER')
+LOGGING_FILE_LEVEL = env.str('DJANGO_LOGGING_FILE_LEVEL')
+LOGGING_SYSLOG_LEVEL = env.str('DJANGO_LOGGING_SYSLOG_LEVEL')
+
+print(LOGGING_SYSLOG_LEVEL)
 
 LOGGING = {
     'version': 1,
@@ -29,18 +33,12 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'DEBUG',
+            'level': LOGGING_FILE_LEVEL,
             'class': 'logging.FileHandler',
-            'filename': os.path.join(DJANGO_LOG_FOLDER, 'ambition.log'),
+            'filename': os.path.join(LOG_FOLDER, 'ambition.log'),
         },
-        #         'console': {
-        #             'level': 'DEBUG',
-        #             'filters': ['require_debug_true'],
-        #             'class': 'logging.StreamHandler',
-        #             'formatter': 'simple'
-        #         },
         'syslog': {
-            'level': 'DEBUG',
+            'level': LOGGING_SYSLOG_LEVEL,
             'class': 'logging.handlers.SysLogHandler',
             'facility': 'local7',
             'address': '/dev/log',
@@ -50,18 +48,18 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'DEBUG',
+            'level': LOGGING_FILE_LEVEL,
             'propagate': True,
         },
         # root logger
         '': {
             'handlers': ['syslog'],
-            'level': 'INFO',
+            'level': LOGGING_SYSLOG_LEVEL,
             'disabled': False
         },
         'ambition': {
             'handlers': ['syslog'],
-            'level': 'DEBUG',
+            'level': LOGGING_SYSLOG_LEVEL,
             'propagate': False,
         },
     },
