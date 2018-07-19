@@ -151,14 +151,18 @@ if env.str('DJANGO_CACHE') == 'redis':
     CACHES = {
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": f"rediss://[:{env.str('DJANGO_REDIS_PASSWORD')}]@127.0.0.1:6379/1",
+            "LOCATION": f"redis://127.0.0.1:6379/1",
             # "LOCATION": "unix://[:{DJANGO_REDIS_PASSWORD}]@/path/to/socket.sock?db=0",
             "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient"
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "PASSWORD": env.str('DJANGO_REDIS_PASSWORD')
             },
             "KEY_PREFIX": f"{APP_NAME}"
         }
     }
+    SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+    SESSION_CACHE_ALIAS = "default"
+
 elif env.str('DJANGO_CACHE') == 'memcached':
     CACHES = {
         'default': {
@@ -166,9 +170,7 @@ elif env.str('DJANGO_CACHE') == 'memcached':
             'LOCATION': 'unix:/tmp/memcached.sock',
         }
     }
-
-
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 WSGI_APPLICATION = f'{APP_NAME}.wsgi.application'
 
