@@ -27,6 +27,7 @@ env = environ.Env(
     DJANGO_USE_L10N=(bool, False),
     DJANGO_USE_TZ=(bool, True),
     DATABASE_USE_SQLITE=(bool, False),
+    LIVE_SYSTEM=(bool, False),
 )
 
 # copy your .env file from .envs/ to BASE_DIR
@@ -37,6 +38,8 @@ DEBUG = env('DJANGO_DEBUG')
 SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
 APP_NAME = env.str('DJANGO_APP_NAME')
+
+LIVE_SYSTEM = env.str('LIVE_SYSTEM')
 
 ETC_DIR = env.str('DJANGO_ETC_FOLDER')
 
