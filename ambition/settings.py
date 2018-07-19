@@ -18,9 +18,10 @@ BASE_DIR = str(Path(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)))))
 
 env = environ.Env(
-    DJANGO_DEBUG=(bool, False),
+    AWS_ENABLED=(bool, True),
     DJANGO_AUTO_CREATE_KEYS=(bool, False),
     DJANGO_CSRF_COOKIE_SECURE=(bool, True),
+    DJANGO_DEBUG=(bool, False),
     DJANGO_SESSION_COOKIE_SECURE=(bool, True),
     DJANGO_USE_I18N=(bool, True),
     DJANGO_USE_L10N=(bool, False),
@@ -162,6 +163,8 @@ if env.str('DJANGO_CACHE') == 'redis':
     }
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
     SESSION_CACHE_ALIAS = "default"
+    DJANGO_REDIS_IGNORE_EXCEPTIONS = True
+    DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
 
 elif env.str('DJANGO_CACHE') == 'memcached':
     CACHES = {
@@ -292,19 +295,20 @@ FQDN = env.str('DJANGO_FQDN')
 INDEX_PAGE = env.str('DJANGO_INDEX_PAGE')
 DJANGO_LOG_FOLDER = env.str('DJANGO_LOG_FOLDER')
 
-
 # static
-# STATIC_URL = env.str('DJANGO_STATIC_URL')
-# STATIC_ROOT = env.str('DJANGO_STATIC_ROOT')
-AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = env.str('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_ENDPOINT_URL = env.str('AWS_S3_ENDPOINT_URL')
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = env.str('AWS_LOCATION')
-STATICFILES_DIRS = [env.str('DJANGO_STATIC_ROOT'), ]
-STATIC_URL = 'https://%s.%s/%s/' % (AWS_STORAGE_BUCKET_NAME,
-                                    AWS_S3_ENDPOINT_URL, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+if env('AWS_ENABLED'):
+    AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = env.str('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_ENDPOINT_URL = env.str('AWS_S3_ENDPOINT_URL')
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+    AWS_LOCATION = env.str('AWS_LOCATION')
+    STATICFILES_DIRS = [env.str('DJANGO_STATIC_ROOT'), ]
+    STATIC_URL = 'https://%s.%s/%s/' % (AWS_STORAGE_BUCKET_NAME,
+                                        AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+else:
+    STATIC_URL = env.str('DJANGO_STATIC_URL')
+    STATIC_ROOT = env.str('DJANGO_STATIC_ROOT')
