@@ -22,7 +22,7 @@ setup(
     long_description=README,
     zip_safe=False,
     keywords='django ambition',
-    install_requires=['boto3', 'django-storages'],
+    install_requires=['boto3', 'django-storages', 'django-redis'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

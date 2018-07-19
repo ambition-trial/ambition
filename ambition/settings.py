@@ -147,12 +147,12 @@ DATABASES = {'default': env.db()}
 # be secure and clear DATABASE_URL since it is no longer needed.
 DATABASE_URL = None
 
-
 if env.str('DJANGO_CACHE') == 'redis':
     CACHES = {
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379/1",
+            "LOCATION": f"rediss://[:{env.str('DJANGO_REDIS_PASSWORD')}]@127.0.0.1:6379/1",
+            # "LOCATION": "unix://[:{DJANGO_REDIS_PASSWORD}]@/path/to/socket.sock?db=0",
             "OPTIONS": {
                 "CLIENT_CLASS": "django_redis.client.DefaultClient"
             },
