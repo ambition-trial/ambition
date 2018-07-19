@@ -216,7 +216,11 @@ DATETIME_FORMAT = 'j N Y H:i'
 SHORT_DATE_FORMAT = 'd/m/Y'
 SHORT_DATETIME_FORMAT = 'd/m/Y H:i'
 
+# CSFR cookies
 CSRF_COOKIE_SECURE = False if DEBUG else env.str('DJANGO_CSRF_COOKIE_SECURE')
+# enforce https if DEBUG=False!
+# Note: will cause "CSRF verification failed. Request aborted"
+#       if DEBUG=False and https not configured.
 SECURE_PROXY_SSL_HEADER = False if DEBUG else env.tuple(
     'DJANGO_SECURE_PROXY_SSL_HEADER')
 SESSION_COOKIE_SECURE = False if DEBUG else env.str(
