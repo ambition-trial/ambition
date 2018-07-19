@@ -9,8 +9,6 @@ LOG_FOLDER = env.str('DJANGO_LOG_FOLDER')
 LOGGING_FILE_LEVEL = env.str('DJANGO_LOGGING_FILE_LEVEL')
 LOGGING_SYSLOG_LEVEL = env.str('DJANGO_LOGGING_SYSLOG_LEVEL')
 
-print(LOGGING_SYSLOG_LEVEL)
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
