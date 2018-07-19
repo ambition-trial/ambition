@@ -32,9 +32,9 @@ env.read_env('.env')
 
 DEBUG = env('DJANGO_DEBUG')
 
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
-APP_NAME = env('DJANGO_APP_NAME')
+APP_NAME = env.str('DJANGO_APP_NAME')
 
 ETC_DIR = env.str('DJANGO_ETC_FOLDER')
 
@@ -147,12 +147,26 @@ DATABASES = {'default': env.db()}
 # be secure and clear DATABASE_URL since it is no longer needed.
 DATABASE_URL = None
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'unix:/tmp/memcached.sock',
+
+if env.str('DJANGO_CACHE') == 'redis':
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379/1",
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient"
+            },
+            "KEY_PREFIX": f"{APP_NAME}"
+        }
     }
-}
+elif env.str('DJANGO_CACHE') == 'memcached':
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': 'unix:/tmp/memcached.sock',
+        }
+    }
+
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
