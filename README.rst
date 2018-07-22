@@ -111,9 +111,8 @@ See django-environ_ and 12-factor-django_.
 
 Place your ``.env`` file in the root of the project.
 
-<div class="warning">
 .. note:: Available variables are listed in env_file.sample_.
-</div>
+
 
 Logging
 =======
