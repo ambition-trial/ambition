@@ -47,8 +47,8 @@
 -e /Users/erikvw/source/edc-reportable  #develop#egg=edc_reportable
 -e /Users/erikvw/source/edc-search  #develop#egg=edc_search
 -e /Users/erikvw/source/edc-subject-dashboard  #develop#egg=edc_subject_dashboard
--e /Users/erikvw/source/django-offline-files  #develop#egg=django-offline-files
--e /Users/erikvw/source/django-offline  #develop#egg=django-offline
+-e /Users/erikvw/source/django-collect-offline-files  #develop#egg=django-collect-offline-files
+-e /Users/erikvw/source/django-collect-offline  #develop#egg=django-collect-offline
 -e /Users/erikvw/source/edc-rest  #develop#egg=edc_rest
 -e /Users/erikvw/source/edc-timepoint  #develop#egg=edc_timepoint
 -e /Users/erikvw/source/edc-visit-schedule  #develop#egg=edc_visit_schedule

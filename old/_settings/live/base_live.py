@@ -43,8 +43,8 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 STATIC_ROOT = os.path.expanduser('~/static/live/')
 
-# django_offline / django_offline files
+# django_collect_offline / django_collect_offline files
 EDC_SYNC_SERVER_IP = None
-DJANGO_OFFLINE_FILES_REMOTE_HOST = None
-DJANGO_OFFLINE_FILES_USER = None
-DJANGO_OFFLINE_FILES_USB_VOLUME = None
+DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST = None
+DJANGO_COLLECT_OFFLINE_FILES_USER = None
+DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = None

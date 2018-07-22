@@ -63,8 +63,8 @@ INSTALLED_APPS = [
     'edc_subject_dashboard.apps.AppConfig',
     'edc_lab_dashboard.apps.AppConfig',
     'edc_list_data.apps.AppConfig',
-    'django_offline.apps.AppConfig',
-    'django_offline_files.apps.AppConfig',
+    'django_collect_offline.apps.AppConfig',
+    'django_collect_offline_files.apps.AppConfig',
     'edc_pharmacy.apps.AppConfig',
     # 'edc_pharmacy_dashboard.apps.AppConfig',
     'edc_navbar.apps.AppConfig',
@@ -223,11 +223,11 @@ LABEL_TEMPLATE_FOLDER = env(
     'DJANGO_LABEL_TEMPLATE_FOLDER', os.path.join(BASE_DIR, 'label_templates'))
 CUPS_SERVERS = env.dict('DJANGO_CUPS_SERVERS')
 
-# django_offline / django_offline files
-DJANGO_OFFLINE_SERVER_IP = env('DJANGO_OFFLINE_SERVER_IP')
-DJANGO_OFFLINE_FILES_REMOTE_HOST = env('DJANGO_OFFLINE_FILES_REMOTE_HOST')
-DJANGO_OFFLINE_FILES_USER = env('DJANGO_OFFLINE_FILES_USER')
-DJANGO_OFFLINE_FILES_USB_VOLUME = env('DJANGO_OFFLINE_FILES_USB_VOLUME')
+# django_collect_offline / django_collect_offline files
+DJANGO_COLLECT_OFFLINE_SERVER_IP = env('DJANGO_COLLECT_OFFLINE_SERVER_IP')
+DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST = env('DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST')
+DJANGO_COLLECT_OFFLINE_FILES_USER = env('DJANGO_COLLECT_OFFLINE_FILES_USER')
+DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = env('DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME')
 
 # dashboards
 DASHBOARD_URL_NAMES = env.dict('DJANGO_DASHBOARD_URL_NAMES')

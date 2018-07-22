@@ -5,8 +5,6 @@ import sys
 from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
 
-from .logging import LOGGING  # noqa
-
 # simple version check
 try:
     assert (3, 6) <= (sys.version_info.major, sys.version_info.minor) <= (3, 7)
@@ -28,6 +26,7 @@ env = environ.Env(
     DJANGO_USE_TZ=(bool, True),
     DATABASE_USE_SQLITE=(bool, False),
     LIVE_SYSTEM=(bool, False),
+    SENTRY_ENABLED=(bool, False),
 )
 
 # copy your .env file from .envs/ to BASE_DIR
@@ -52,6 +51,8 @@ SITE_ID = env.int('DJANGO_SITE_ID')
 REVIEWER_SITE_ID = env.int('DJANGO_REVIEWER_SITE_ID')
 
 LOGIN_REDIRECT_URL = env.str('DJANGO_LOGIN_REDIRECT_URL')
+
+SENTRY_ENABLED = env('SENTRY_ENABLED')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -78,8 +79,8 @@ INSTALLED_APPS = [
     'edc_subject_dashboard.apps.AppConfig',
     'edc_lab_dashboard.apps.AppConfig',
     'edc_list_data.apps.AppConfig',
-    'django_offline.apps.AppConfig',
-    'django_offline_files.apps.AppConfig',
+    'django_collect_offline.apps.AppConfig',
+    'django_collect_offline_files.apps.AppConfig',
     'edc_pharmacy.apps.AppConfig',
     # 'edc_pharmacy_dashboard.apps.AppConfig',
     'edc_navbar.apps.AppConfig',
@@ -116,6 +117,9 @@ INSTALLED_APPS = [
     'ambition.apps.AppConfig',
 ]
 
+if env('SENTRY_ENABLED'):
+    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -124,11 +128,18 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'edc_dashboard.middleware.DashboardMiddleware',
-    'edc_subject_dashboard.middleware.DashboardMiddleware',
-    'edc_lab_dashboard.middleware.DashboardMiddleware',
-]
+    'django.middleware.clickjacking.XFrameOptionsMiddleware']
+
+if env('SENTRY_ENABLED'):
+    MIDDLEWARE.extend(
+        ['raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',
+         'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware']
+    )
+
+MIDDLEWARE.extend(
+    ['edc_dashboard.middleware.DashboardMiddleware',
+     'edc_subject_dashboard.middleware.DashboardMiddleware',
+     'edc_lab_dashboard.middleware.DashboardMiddleware'])
 
 ROOT_URLCONF = f'{APP_NAME}.urls'
 
@@ -248,15 +259,16 @@ DATETIME_FORMAT = 'j N Y H:i'
 SHORT_DATE_FORMAT = 'd/m/Y'
 SHORT_DATETIME_FORMAT = 'd/m/Y H:i'
 
-# CSFR cookies
-CSRF_COOKIE_SECURE = False if DEBUG else env.str('DJANGO_CSRF_COOKIE_SECURE')
 # enforce https if DEBUG=False!
 # Note: will cause "CSRF verification failed. Request aborted"
 #       if DEBUG=False and https not configured.
-SECURE_PROXY_SSL_HEADER = False if DEBUG else env.tuple(
-    'DJANGO_SECURE_PROXY_SSL_HEADER')
-SESSION_COOKIE_SECURE = False if DEBUG else env.str(
-    'DJANGO_SESSION_COOKIE_SECURE')
+if not DEBUG:
+    # CSFR cookies
+    CSRF_COOKIE_SECURE = env.str('DJANGO_CSRF_COOKIE_SECURE')
+    SECURE_PROXY_SSL_HEADER = env.tuple(
+        'DJANGO_SECURE_PROXY_SSL_HEADER')
+    SESSION_COOKIE_SECURE = env.str(
+        'DJANGO_SESSION_COOKIE_SECURE')
 
 # edc_base
 MAIN_NAVBAR_NAME = env.str('DJANGO_MAIN_NAVBAR_NAME')
@@ -266,11 +278,14 @@ LABEL_TEMPLATE_FOLDER = env.str(
     'DJANGO_LABEL_TEMPLATE_FOLDER') or os.path.join(BASE_DIR, 'label_templates')
 CUPS_SERVERS = env.dict('DJANGO_CUPS_SERVERS')
 
-# django_offline / django_offline files
-DJANGO_OFFLINE_SERVER_IP = env.str('DJANGO_OFFLINE_SERVER_IP')
-DJANGO_OFFLINE_FILES_REMOTE_HOST = env.str('DJANGO_OFFLINE_FILES_REMOTE_HOST')
-DJANGO_OFFLINE_FILES_USER = env.str('DJANGO_OFFLINE_FILES_USER')
-DJANGO_OFFLINE_FILES_USB_VOLUME = env.str('DJANGO_OFFLINE_FILES_USB_VOLUME')
+# django_collect_offline / django_collect_offline files
+DJANGO_COLLECT_OFFLINE_SERVER_IP = env.str('DJANGO_COLLECT_OFFLINE_SERVER_IP')
+DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST = env.str(
+    'DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST')
+DJANGO_COLLECT_OFFLINE_FILES_USER = env.str(
+    'DJANGO_COLLECT_OFFLINE_FILES_USER')
+DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = env.str(
+    'DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME')
 
 # dashboards
 DASHBOARD_URL_NAMES = env.dict('DJANGO_DASHBOARD_URL_NAMES')
@@ -325,6 +340,18 @@ else:
     # run collectstatic, check nginx LOCATION
     STATIC_URL = env.str('DJANGO_STATIC_URL')
     STATIC_ROOT = env.str('DJANGO_STATIC_ROOT')
+
+SENTRY_DSN = None
+if SENTRY_ENABLED:
+    import raven  # noqa
+    from .logging.raven import LOGGING  # noqa
+    SENTRY_DSN = env.str('SENTRY_DSN')
+    RAVEN_CONFIG = {
+        'dsn': SENTRY_DSN,
+        'release': raven.fetch_git_sha(BASE_DIR),
+    }
+else:
+    from .logging.standard import LOGGING  # noqa
 
 if 'test' in sys.argv:
 

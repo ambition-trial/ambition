@@ -1,13 +1,14 @@
-.envs/
+.etc/*
+.envs/*
 .env
 secrets.json
-notebooks/
-etc/
-transactions/
-run/
-log/
-crypto_fields/
-media/
+notebooks/*
+etc/*
+transactions/*
+run/*
+log/*
+crypto_fields/*
+media/*
 
 .Rhistory
 

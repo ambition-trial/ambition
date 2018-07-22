@@ -49,5 +49,5 @@ git+https://github.com/clinicedc/edc-visit-schedule.git@0.2.6#egg=edc-visit-sche
 git+https://github.com/clinicedc/edc-visit-tracking.git@0.2.9#egg=edc-visit-tracking
 git+https://github.com/erikvw/django-crypto-fields.git@0.1.14#egg=django-crypto-fields
 git+https://github.com/erikvw/django-revision.git@0.1.14#egg=django-revision
-git+https://github.com/erikvw/django-offline-files.git@0.1.17##egg=django-offline-files
-git+https://github.com/erikvw/django-offline.git@0.2.26#egg=django-offline
+git+https://github.com/erikvw/django-collect-offline-files.git@0.1.17##egg=django-collect-offline-files
+git+https://github.com/erikvw/django-collect-offline.git@0.2.26#egg=django-collect-offline

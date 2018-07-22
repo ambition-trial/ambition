@@ -22,29 +22,33 @@
 
 {{ block.super }}
 
-<div class="container bg-3 text-center">
 
-    <p class="h4">
-      <a href="{% url screening_listboard_url %}" class="btn btn-default btn-lg"><i class="fas fa-user-plus fa-lg"></i> Screening</a>
-    </p> 
-    <p class="h4">
-      <a href="{% url subject_listboard_url %}" class="btn btn-default btn-lg"><i class="fas fa-user-circle fa-lg"></i> Subjects</a>
-    </p> 
-    <p class="h4">
-      <a href="{% url 'ambition_ae:home_url' %}" class="btn btn-default btn-lg"><i class="fas fa-heartbeat fa-lg"></i> Adverse Events</a>
-    </p> 
-    <p class="h4">
-      <a href="{% url 'edc_action_item:home_url' %}" class="btn btn-default btn-lg"><i class="fas fa-bolt fa-lg"></i> Action Items</a>
-    </p> 
-    <p class="h4">
-      <a href="{% url 'django_offline:home_url' %}" class="btn btn-default btn-lg"><i class="fas fa-exchange-alt fa-lg"></i> Synchronization</a>
-    </p> 
+
+
+<div class="container bg-3">
+
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ protocol_name |default:project_name }} {{ request.site.name|title }}</div>
+
+      <div class="list-group">
+        <a href="{% url screening_listboard_url %}" class="list-group-item"><i class="fas fa-user-plus fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Screening</a>
+        <a href="{% url subject_listboard_url %}" class="list-group-item"><i class="fas fa-user-circle fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Subjects</a>
+        <a href="{% url 'ambition_ae:home_url' %}" class="list-group-item"><i class="fas fa-heartbeat fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Adverse Events</a>
+        <a href="{% url 'edc_action_item:home_url' %}" class="list-group-item"><i class="fas fa-bolt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Action Items</a>
+        <a href="{% url 'django_collect_offline:home_url' %}" class="list-group-item"><i class="fas fa-exchange-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Synchronization</a>
+        <a href="/switch_sites/" class="list-group-item"><i class="fas fa-arrows-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Switch sites</a>
+        <a href="{% url 'logout' %}"" class="list-group-item"><i class="fas fa-sign-out-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Log out</a>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4"></div>
 </div>
-<div class="container bg-3 text-center">
-    <p class="h4">
-      <a href="/switch_sites/" class="btn btn-default btn-md">Switch Sites</a>
-    </p> 
 </div>
+
 
 
 {% endblock main %}

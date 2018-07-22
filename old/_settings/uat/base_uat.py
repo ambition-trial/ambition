@@ -9,7 +9,7 @@ DEBUG = False
 
 FQDN = fqdn
 
-ETC_DIR = os.path.join('/etc', APP_NAME, 'train')
+ETC_DIR = os.path.join('/etc', APP_NAME, 'uat')
 
 RANDOMIZATION_LIST_PATH = os.path.join(ETC_DIR, 'test_randomization_list.csv')
 
@@ -33,14 +33,14 @@ CACHES = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
-STATIC_ROOT = '/var/www/ambition/train/static'
+STATIC_ROOT = '/var/www/ambition/uat/static'
 
 CUPS_SERVERS = {
     'bhp.printers.bhp.org.bw': 'bhp.printers.bhp.org.bw',
     'localhost': None}
 
-# django_offline / django_offline files
+# django_collect_offline / django_collect_offline files
 EDC_SYNC_SERVER_IP = None
-DJANGO_OFFLINE_FILES_REMOTE_HOST = None
-DJANGO_OFFLINE_FILES_USER = None
-DJANGO_OFFLINE_FILES_USB_VOLUME = None
+DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST = None
+DJANGO_COLLECT_OFFLINE_FILES_USER = None
+DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = None

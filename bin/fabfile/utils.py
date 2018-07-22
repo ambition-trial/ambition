@@ -162,14 +162,14 @@ def query_tx_task(**kwargs):
 
     # run('brew services restart mysql', quiet=True)
     run('mysql -uroot -p edc -Bse \'select  count(*) '
-        'from django_offline_outgoingtransaction where is_consumed_server=0;\' > /tmp/stats1.txt')
+        'from django_collect_offline_outgoingtransaction where is_consumed_server=0;\' > /tmp/stats1.txt')
     result = run('cat /tmp/stats1.txt')
     if result != '0':
         warn(red(f'{env.host}: pending {result}'))
 
     run(
         'mysql -uroot -p edc -Bse \'select count(*) '
-        'from django_offline_files_history '
+        'from django_collect_offline_files_history '
         'where sent=0;\' > /tmp/stats2.txt')
     result = run('cat /tmp/stats2.txt')
     if result != '0':
@@ -393,14 +393,14 @@ def remove_old_sync_files(verify=None, **kwargs):
 
     with cd('~/static/'):
         if not verify:
-            if exists('django_offline'):
-                run('rm -rf django_offline')
-            if exists('django_offline_files'):
-                run('rm -rf django_offline_files')
+            if exists('django_collect_offline'):
+                run('rm -rf django_collect_offline')
+            if exists('django_collect_offline_files'):
+                run('rm -rf django_collect_offline_files')
         else:
-            if not exists('django_offline') or not exists('django_offline_files'):
+            if not exists('django_collect_offline') or not exists('django_collect_offline_files'):
                 print(
-                    blue('Missing django_offline and django_offline_files,'
+                    blue('Missing django_collect_offline and django_collect_offline_files,'
                          ' folders do not exist.'))
 
 

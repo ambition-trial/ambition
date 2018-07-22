@@ -11,7 +11,7 @@ services:
       - /srv/$DJANGO_APP_NAME/log:$DJANGO_LOG_FOLDER      
       - /srv/$DJANGO_APP_NAME/static:$DJANGO_STATIC_ROOT
     depends_on:
-      - django
+      - edc
 
   db:
     image: mysql:5.7
@@ -24,7 +24,7 @@ services:
       - /srv/$DJANGO_APP_NAME/log:$DJANGO_LOG_FOLDER
       - /srv/$DJANGO_APP_NAME/backup:$MYSQL_BACKUP_FOLDER
 
-  django:
+  edc:
     build:
       context: .
       dockerfile: ./compose/production/Dockerfile
