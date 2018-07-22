@@ -106,12 +106,12 @@ check
 
 Environment variables
 =====================
-
 Settings variables are store in the environment.
-See [django-environ](https://github.com/joke2k/django-environ) and [12-factor-django](http://www.wellfireinteractive.com/blog/easier-12-factor-django/)
+See django-environ_ and 12-factor-django_.
+
 Place your ``.env`` file in the root of the project.
 
-    Available variables are listed in ``env_file.sample``
+    ** Note**: Available variables are listed in env_file.sample_
 
 Logging
 =======
@@ -249,3 +249,8 @@ Start runserver
     
 .. |coverage| image:: https://coveralls.io/repos/github/ambition-trial/ambition/badge.svg?branch=develop
     :target: https://coveralls.io/github/ambition-trial/ambition?branch=develop
+
+.. _django-environ: https://github.com/joke2k/django-environ
+.. _12-factor-django: http://www.wellfireinteractive.com/blog/easier-12-factor-django/
+.. _env_file.sample: https://github.com/ambition-trial/ambition/blob/develop/env.sample
+
