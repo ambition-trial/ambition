@@ -111,7 +111,7 @@ See django-environ_ and 12-factor-django_.
 
 Place your ``.env`` file in the root of the project.
 
-.. note:: Available variables are listed in env_file.sample_
+.. note:: Available variables are listed in env_file.sample_.
 
 Logging
 =======
@@ -199,9 +199,9 @@ from `app/` build images for `ambition_production` and `mysql` and bring them `u
     && docker-compose -f compose/local.yml up
     
 
-.. note:: if you need to generate keys set ``DJANGO_AUTO_CREATE_KEYS=True`` in the ``.env``, ``docker-compose up``, change back to false and ``docker-compose up`` again
-
-If needed, copy keys to container (e.g. you are using existing keys)
+.. note:: if you need to generate keys set ``DJANGO_AUTO_CREATE_KEYS=True`` in the ``.env``,
+          ``docker-compose up``, change back to false and ``docker-compose up`` again.
+          If needed, copy keys to container (e.g. you are using existing keys)
 
 .. code-block:: bash
 
