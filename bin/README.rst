@@ -11,55 +11,38 @@ Copy the service files to ``systemd``
 
 	$ sudo cp -R ~/ambition/bin/systemd/* /etc/systemd/system/
 
-Start each service
+Create the sockets
 
 .. code-block:: bash
 
-	$ sudo systemctl start gunicorn.blantyre \
-  	    && sudo systemctl start gunicorn.capetown \
-	    && sudo systemctl start gunicorn.gaborone \
-	    && sudo systemctl start gunicorn.harare \
-	    && sudo systemctl start gunicorn.kampala \
-	    && sudo systemctl start gunicorn.lilongwe
+	$ sudo systemctl start gunicorn.blantyre.socket \
+	    && sudo systemctl start gunicorn.capetown.socket \
+	    && sudo systemctl start gunicorn.gaborone.socket \
+	    && sudo systemctl start gunicorn.harare.socket \
+	    && sudo systemctl start gunicorn.kampala.socket \
+	    && sudo systemctl start gunicorn.lilongwe.socket
 
-``No output unless you are copying over existing services``
-
-.. code-block:: bash
-
-	Warning: The unit file, source configuration file or drop-ins of gunicorn.blantyre.service changed on disk. Run 'systemctl daemon-reload' to reload units.
-	Warning: The unit file, source configuration file or drop-ins of gunicorn.capetown.service changed on disk. Run 'systemctl daemon-reload' to reload units.
-	Warning: The unit file, source configuration file or drop-ins of gunicorn.gaborone.service changed on disk. Run 'systemctl daemon-reload' to reload units.
-	Warning: The unit file, source configuration file or drop-ins of gunicorn.harare.service changed on disk. Run 'systemctl daemon-reload' to reload units.
-	Warning: The unit file, source configuration file or drop-ins of gunicorn.kampala.service changed on disk. Run 'systemctl daemon-reload' to reload units.
-	Warning: The unit file, source configuration file or drop-ins of gunicorn.lilongwe.service changed on disk. Run 'systemctl daemon-reload' to reload units.
-
-if so, run:
+Enable the sockets
 
 .. code-block:: bash
 
-	$ sudo systemctl daemon-reload
+	$ sudo systemctl enable gunicorn.blantyre.socket \
+	    && sudo systemctl enable gunicorn.capetown.socket \
+	    && sudo systemctl enable gunicorn.gaborone.socket \
+	    && sudo systemctl enable gunicorn.harare.socket \
+	    && sudo systemctl enable gunicorn.kampala.socket \
+	    && sudo systemctl enable gunicorn.lilongwe.socket
 
-Enable each service
-
-.. code-block:: bash
-
-	$ sudo systemctl enable gunicorn.blantyre \
-	    && sudo systemctl enable gunicorn.capetown \
-	    && sudo systemctl enable gunicorn.gaborone \
-	    && sudo systemctl enable gunicorn.harare \
-	    && sudo systemctl enable gunicorn.kampala \
-	    && sudo systemctl enable gunicorn.lilongwe
-
-``Output, if done for the first time.``
+``Output``
 
 .. code-block:: bash
 
-	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.blantyre.service → /etc/systemd/system/gunicorn.blantyre.service.
-	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.capetown.service → /etc/systemd/system/gunicorn.capetown.service.
-	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.gaborone.service → /etc/systemd/system/gunicorn.gaborone.service.
-	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.harare.service → /etc/systemd/system/gunicorn.harare.service.
-	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.kampala.service → /etc/systemd/system/gunicorn.kampala.service.
-	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.lilongwe.service → /etc/systemd/system/gunicorn.lilongwe.service.
+	Created symlink /etc/systemd/system/sockets.target.wants/gunicorn.blantyre.socket → /etc/systemd/system/gunicorn.blantyre.socket.
+	Created symlink /etc/systemd/system/sockets.target.wants/gunicorn.capetown.socket → /etc/systemd/system/gunicorn.capetown.socket.
+	Created symlink /etc/systemd/system/sockets.target.wants/gunicorn.gaborone.socket → /etc/systemd/system/gunicorn.gaborone.socket.
+	Created symlink /etc/systemd/system/sockets.target.wants/gunicorn.harare.socket → /etc/systemd/system/gunicorn.harare.socket.
+	Created symlink /etc/systemd/system/sockets.target.wants/gunicorn.kampala.socket → /etc/systemd/system/gunicorn.kampala.socket.
+	Created symlink /etc/systemd/system/sockets.target.wants/gunicorn.lilongwe.socket → /etc/systemd/system/gunicorn.lilongwe.socket.
 
 
 If you wish, you can check the status of each:
@@ -73,8 +56,21 @@ If you wish, you can check the status of each:
 	$ sudo systemctl status gunicorn.kampala
 	$ sudo systemctl status gunicorn.lilongwe
 
-``Output, for each should be something like this``
+``Output, inactive (first time)``
 
+
+	● gunicorn.blantyre.service - gunicorn daemon
+	   Loaded: loaded (/etc/systemd/system/gunicorn.blantyre.service; enabled; vendor preset: enabled)
+	   Active: inactive (dead) since Mon 2018-07-23 17:57:25 UTC; 2min 56s ago
+	 Main PID: 22953 (code=exited, status=0/SUCCESS)
+
+Try accessing:
+
+.. code-block:: bash
+
+	curl --unix-socket /run/gunicorn.blantyre.sock localhost
+
+``Output now shows active``
 
 .. code-block:: bash
 
@@ -108,8 +104,8 @@ If the code base changes:
 
 .. code-block:: bash
 
-	$ sudo systemctl restart gunicorn
 	$ sudo systemctl daemon-reload
+	$ sudo systemctl restart gunicorn
 
 If needed, stop each service
 
@@ -122,6 +118,17 @@ If needed, stop each service
 	    && sudo systemctl stop gunicorn.kampala \
 	    && sudo systemctl stop gunicorn.lilongwe \
 	    && sudo systemctl daemon-reload
+
+then start each service
+
+.. code-block:: bash
+
+	$ sudo systemctl start gunicorn.blantyre \
+  	    && sudo systemctl start gunicorn.capetown \
+	    && sudo systemctl start gunicorn.gaborone \
+	    && sudo systemctl start gunicorn.harare \
+	    && sudo systemctl start gunicorn.kampala \
+	    && sudo systemctl start gunicorn.lilongwe
 
 
 Nginx
