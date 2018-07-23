@@ -35,7 +35,7 @@ Enable each service
 	    && sudo systemctl enable gunicorn.kampala \
 	    && sudo systemctl enable gunicorn.lilongwe
 
-``Output``
+``Output, if done for the first time.``
 
 .. code-block:: bash
 
@@ -70,6 +70,19 @@ If the code base changes:
 
 	$ sudo systemctl restart gunicorn
 	$ sudo systemctl daemon-reload
+
+If needed, stop each service
+
+.. code-block:: bash
+
+	$ sudo systemctl stop gunicorn.blantyre \
+  	    && sudo systemctl stop gunicorn.capetown \
+	    && sudo systemctl stop gunicorn.gaborone \
+	    && sudo systemctl stop gunicorn.harare \
+	    && sudo systemctl stop gunicorn.kampala \
+	    && sudo systemctl stop gunicorn.lilongwe \
+	    && sudo systemctl daemon-reload
+
 
 Nginx
 =====
