@@ -105,7 +105,12 @@ If the code base changes:
 .. code-block:: bash
 
 	$ sudo systemctl daemon-reload
-	$ sudo systemctl restart gunicorn
+	$ sudo systemctl restart gunicorn.blantyre \
+  	    && sudo systemctl restart gunicorn.capetown \
+	    && sudo systemctl restart gunicorn.gaborone \
+	    && sudo systemctl restart gunicorn.harare \
+	    && sudo systemctl restart gunicorn.kampala \
+	    && sudo systemctl restart gunicorn.lilongwe
 
 If needed, stop each service and start over ...
 

@@ -1,12 +1,17 @@
 [Unit]
 Description=gunicorn daemon
+Requires=gunicorn.kampala.socket
 After=network.target
 
 [Service]
 User=ambition
 Group=www-data
 WorkingDirectory=/home/ambition/ambition
-ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn_kampala.sock ambition.wsgi.kampala:application
+ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
+    --access-logfile - \
+    --workers 3 \
+    --bind unix:/run/gunicorn.kampala.sock \
+    ambition.wsgi.kampala:application
 
 [Install]
 WantedBy=multi-user.target

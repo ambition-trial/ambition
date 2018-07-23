@@ -1,12 +1,17 @@
 [Unit]
 Description=gunicorn daemon
+Requires=gunicorn.lilongwe.socket
 After=network.target
 
 [Service]
 User=ambition
 Group=www-data
 WorkingDirectory=/home/ambition/ambition
-ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn_lilongwe.sock ambition.wsgi.lilongwe:application
+ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
+    --access-logfile - \
+    --workers 3 \
+    --bind unix:/run/gunicorn.lilongwe.sock \
+    ambition.wsgi.lilongwe:application
 
 [Install]
 WantedBy=multi-user.target
