@@ -1,0 +1,126 @@
+Ambition deployment
+-------------------
+
+
+Gunicorn
+========
+
+.. code-block:: bash
+
+	$ sudo cp ~/ambition/bin/systemd /etc/systemd/system/
+
+.. code-block:: bash
+
+	$ sudo systemctl start gunicorn.blantyre \
+	  && sudo systemctl start gunicorn.capetown \
+	  && sudo systemctl start gunicorn.gaborone \
+	  && sudo systemctl start gunicorn.harare \
+	  && sudo systemctl start gunicorn.kampala \
+	  && sudo systemctl start gunicorn.lilongwe
+
+.. code-block:: bash
+
+	$ sudo systemctl enable gunicorn.blantyre \
+	  && sudo systemctl enable gunicorn.capetown \
+	  && sudo systemctl enable gunicorn.gaborone \
+	  && sudo systemctl enable gunicorn.harare \
+	  && sudo systemctl enable gunicorn.kampala \
+	  && sudo systemctl enable gunicorn.lilongwe
+
+.. code-block:: bash
+
+	$ sudo systemctl status gunicorn.blantyre \
+	  && sudo systemctl status gunicorn.capetown \
+	  && sudo systemctl status gunicorn.gaborone \
+	  && sudo systemctl status gunicorn.harare \
+	  && sudo systemctl status gunicorn.kampala \ 
+	  && sudo systemctl status gunicorn.lilongwe
+
+if there are any problems check:
+	
+.. code-block:: bash
+
+	$ sudo journalctl -u gunicorn.blantyre   # etc
+
+If the code base changes:
+
+.. code-block:: bash
+
+	$ sudo systemctl restart gunicorn
+	$ sudo systemctl daemon-reload
+
+Nginx
+=====
+
+.. code-block:: bash
+
+	$ sudo cp ~/ambition/bin/nginx /etc/nginx/sites-available
+
+
+.. code-block:: bash
+
+	$ sudo ln -s /etc/nginx/sites-available/blantyre /etc/nginx/sites-enabled \
+	    && sudo ln -s /etc/nginx/sites-available/capetown /etc/nginx/sites-enabled \
+	    && sudo ln -s /etc/nginx/sites-available/gaborone /etc/nginx/sites-enabled \
+	    && sudo ln -s /etc/nginx/sites-available/harare /etc/nginx/sites-enabled \
+	    && sudo ln -s /etc/nginx/sites-available/kampala /etc/nginx/sites-enabled \
+	    && sudo ln -s /etc/nginx/sites-available/lilongwe /etc/nginx/sites-enabled
+
+
+.. code-block:: bash
+
+	$ sudo nginx -t
+
+.. code-block:: bash
+
+	$ sudo systemctl restart nginx
+
+Firewall
+========
+
+Check ``ufw`` to open ``openSSH``, ``http``, ``https``, ``631``
+
+Also check cloud firewall to ensure these ports are open
+
+
+Certificates
+============
+
+The Nginx configurations make reference to certificates for the HTTPS redirect.
+
+Generate certificates
++++++++++++++++++++++
+
+If certificates do not exist, you can create then like this. 
+
+Install certbot:
+
+.. code-block:: bash
+
+	$ sudo apt-get update
+	$ sudo apt-get install software-properties-common
+	$ sudo add-apt-repository ppa:certbot/certbot
+	$ sudo apt-get update
+	$ sudo apt-get install python-certbot-nginx 
+
+
+then 
+
+.. code-block:: bash
+
+  sudo certbot certonly --manual --preferred-challenges=dns \
+    --email=ew2789@gmail.com \
+    --server=https://acme-v02.api.letsencrypt.org/directory \
+    --agree-tos \
+    -d *.clinicedc.org
+
+follow the instructions. You will need to update the dns TXT record.
+
+
+Setup auto-renew
+++++++++++++++++
+
+TODO
+
+
+

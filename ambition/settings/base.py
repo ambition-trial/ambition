@@ -13,7 +13,7 @@ except AssertionError:
         'Incorrect python version. Expected 3.6 or 3.7. Check your environment.')
 
 BASE_DIR = str(Path(os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__)))))
+    os.path.dirname(os.path.abspath(__file__)))).parent)
 
 env = environ.Env(
     AWS_ENABLED=(bool, True),
@@ -30,7 +30,7 @@ env = environ.Env(
 )
 
 # copy your .env file from .envs/ to BASE_DIR
-env.read_env('.env')
+env.read_env(os.path.join(BASE_DIR, '.env'))
 
 DEBUG = env('DJANGO_DEBUG')
 
@@ -344,14 +344,14 @@ else:
 SENTRY_DSN = None
 if SENTRY_ENABLED:
     import raven  # noqa
-    from .logging.raven import LOGGING  # noqa
+    from ..logging.raven import LOGGING  # noqa
     SENTRY_DSN = env.str('SENTRY_DSN')
     RAVEN_CONFIG = {
         'dsn': SENTRY_DSN,
         'release': raven.fetch_git_sha(BASE_DIR),
     }
 else:
-    from .logging.standard import LOGGING  # noqa
+    from ..logging.standard import LOGGING  # noqa
 
 if 'test' in sys.argv:
 
