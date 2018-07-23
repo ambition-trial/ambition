@@ -1,5 +1,5 @@
 [Unit]
-Description=gunicorn socket
+Description=gunicorn socket (kampala)
 
 [Socket]
 ListenStream=/run/gunicorn.kampala.sock

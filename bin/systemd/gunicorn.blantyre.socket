@@ -1,5 +1,5 @@
 [Unit]
-Description=gunicorn socket
+Description=gunicorn socket (blantyre)
 
 [Socket]
 ListenStream=/run/gunicorn.blantyre.sock

@@ -1,5 +1,5 @@
 [Unit]
-Description=gunicorn socket
+Description=gunicorn socket (lilongwe)
 
 [Socket]
 ListenStream=/run/gunicorn.lilongwe.sock
