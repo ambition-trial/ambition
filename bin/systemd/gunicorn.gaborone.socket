@@ -2,7 +2,7 @@
 Description=gunicorn socket (gaborone)
 
 [Socket]
-ListenStream=/run/gunicorn-gaborone.sock
+ListenStream=/run/gunicorn-gaborone.socket
 
 [Install]
 WantedBy=sockets.target

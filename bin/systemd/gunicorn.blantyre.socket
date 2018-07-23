@@ -2,7 +2,7 @@
 Description=gunicorn socket (blantyre)
 
 [Socket]
-ListenStream=/run/gunicorn-blantyre.sock
+ListenStream=/run/gunicorn-blantyre.socket
 
 [Install]
 WantedBy=sockets.target

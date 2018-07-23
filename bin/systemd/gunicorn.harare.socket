@@ -2,7 +2,7 @@
 Description=gunicorn socket (harare)
 
 [Socket]
-ListenStream=/run/gunicorn-harare.sock
+ListenStream=/run/gunicorn-harare.socket
 
 [Install]
 WantedBy=sockets.target

@@ -2,7 +2,7 @@
 Description=gunicorn socket (kampala)
 
 [Socket]
-ListenStream=/run/gunicorn-kampala.sock
+ListenStream=/run/gunicorn-kampala.socket
 
 [Install]
 WantedBy=sockets.target
