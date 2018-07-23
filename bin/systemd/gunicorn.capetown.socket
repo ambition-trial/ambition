@@ -2,7 +2,7 @@
 Description=gunicorn socket (capetown)
 
 [Socket]
-ListenStream=/run/gunicorn.capetown.sock
+ListenStream=/run/gunicorn-capetown.sock
 
 [Install]
 WantedBy=sockets.target

@@ -1,6 +1,6 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn.gaborone.socket
+Requires=gunicorn-gaborone.socket
 After=network.target
 
 [Service]
@@ -10,7 +10,7 @@ WorkingDirectory=/home/ambition/ambition
 ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --access-logfile - \
     --workers 3 \
-    --bind unix:/run/gunicorn.gaborone.sock \
+    --bind unix:/run/gunicorn-gaborone.sock \
     ambition.wsgi.gaborone:application
 
 [Install]

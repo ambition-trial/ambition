@@ -1,6 +1,6 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn.capetown.socket
+Requires=gunicorn-capetown.socket
 After=network.target
 
 [Service]
@@ -10,7 +10,7 @@ WorkingDirectory=/home/ambition/ambition
 ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --access-logfile - \
     --workers 3 \
-    --bind unix:/run/gunicorn.capetown.sock \
+    --bind unix:/run/gunicorn-capetown.sock \
     ambition.wsgi.capetown:application
 
 [Install]
