@@ -8,4 +8,4 @@ COUNTRY = 'south africa'
 # LANGUAGES =
 SITE_ID = get_site_id(TOWN)
 # TIME_ZONE =
-ALLOWED_HOSTS = [f'{TOWN}.edcdev.clinicedc.org']
+ALLOWED_HOSTS = [f'.{TOWN}.edcdev.clinicedc.org']

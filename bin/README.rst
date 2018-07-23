@@ -107,9 +107,16 @@ If the code base changes:
 	$ sudo systemctl daemon-reload
 	$ sudo systemctl restart gunicorn
 
-If needed, stop each service
+If needed, stop each service and start over ...
 
 .. code-block:: bash
+
+	$ sudo systemctl stop gunicorn.blantyre.socket \
+  	    && sudo systemctl stop gunicorn.capetown.socket \
+	    && sudo systemctl stop gunicorn.gaborone.socket \
+	    && sudo systemctl stop gunicorn.harare.socket \
+	    && sudo systemctl stop gunicorn.kampala.socket \
+	    && sudo systemctl stop gunicorn.lilongwe.socket
 
 	$ sudo systemctl stop gunicorn.blantyre \
   	    && sudo systemctl stop gunicorn.capetown \
@@ -118,17 +125,6 @@ If needed, stop each service
 	    && sudo systemctl stop gunicorn.kampala \
 	    && sudo systemctl stop gunicorn.lilongwe \
 	    && sudo systemctl daemon-reload
-
-then start each service
-
-.. code-block:: bash
-
-	$ sudo systemctl start gunicorn.blantyre \
-  	    && sudo systemctl start gunicorn.capetown \
-	    && sudo systemctl start gunicorn.gaborone \
-	    && sudo systemctl start gunicorn.harare \
-	    && sudo systemctl start gunicorn.kampala \
-	    && sudo systemctl start gunicorn.lilongwe
 
 
 Nginx
