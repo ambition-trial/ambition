@@ -6,7 +6,7 @@ After=network.target
 User=ambition
 Group=www-data
 WorkingDirectory=/home/ambition/ambition
-ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ambition/ambition/gunicorn.kampala.sock ambition.kampala.wsgi:application
+ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ambition/ambition/gunicorn.kampala.sock ambition.wsgi.kampala:application
 
 [Install]
 WantedBy=multi-user.target

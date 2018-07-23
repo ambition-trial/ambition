@@ -22,7 +22,22 @@ Start each service
 	    && sudo systemctl start gunicorn.kampala \
 	    && sudo systemctl start gunicorn.lilongwe
 
-``No output``
+``No output unless you are copying over existing services``
+
+.. code-block:: bash
+
+	Warning: The unit file, source configuration file or drop-ins of gunicorn.blantyre.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+	Warning: The unit file, source configuration file or drop-ins of gunicorn.capetown.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+	Warning: The unit file, source configuration file or drop-ins of gunicorn.gaborone.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+	Warning: The unit file, source configuration file or drop-ins of gunicorn.harare.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+	Warning: The unit file, source configuration file or drop-ins of gunicorn.kampala.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+	Warning: The unit file, source configuration file or drop-ins of gunicorn.lilongwe.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+
+if so, run:
+
+.. code-block:: bash
+
+	$ sudo systemctl daemon-reload
 
 Enable each service
 
