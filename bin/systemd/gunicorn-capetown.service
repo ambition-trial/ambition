@@ -1,6 +1,6 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-capetown.socket
+Requires=gunicorn-capetown.sock
 After=network.target
 
 [Service]

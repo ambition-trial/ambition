@@ -1,6 +1,6 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-gaborone.socket
+Requires=gunicorn-gaborone.sock
 After=network.target
 
 [Service]

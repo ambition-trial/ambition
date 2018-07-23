@@ -1,6 +1,6 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-harare.socket
+Requires=gunicorn-harare.sock
 After=network.target
 
 [Service]
