@@ -5,13 +5,15 @@ Ambition deployment
 Gunicorn
 ========
 
-.. code-block:: bash
-
-	$ sudo cp ~/ambition/bin/systemd /etc/systemd/system/
+Copy the service files to ``systemd``
 
 .. code-block:: bash
 
-	$ sudo systemctl start gunicorn.blantyre \
+	$ sudo cp -R ~/ambition/bin/systemd/ /etc/systemd/system/
+
+.. code-block:: bash
+
+	$ sudo systemctl start gunicorn.blantyre.socket \
 	  && sudo systemctl start gunicorn.capetown \
 	  && sudo systemctl start gunicorn.gaborone \
 	  && sudo systemctl start gunicorn.harare \
