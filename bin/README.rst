@@ -9,34 +9,54 @@ Copy the service files to ``systemd``
 
 .. code-block:: bash
 
-	$ sudo cp -R ~/ambition/bin/systemd/ /etc/systemd/system/
+	$ sudo cp -R ~/ambition/bin/systemd/* /etc/systemd/system/
+
+Start each service
 
 .. code-block:: bash
 
-	$ sudo systemctl start gunicorn.blantyre.socket \
-	  && sudo systemctl start gunicorn.capetown \
-	  && sudo systemctl start gunicorn.gaborone \
-	  && sudo systemctl start gunicorn.harare \
-	  && sudo systemctl start gunicorn.kampala \
-	  && sudo systemctl start gunicorn.lilongwe
+	$ sudo systemctl start gunicorn.blantyre \
+  	    && sudo systemctl start gunicorn.capetown \
+	    && sudo systemctl start gunicorn.gaborone \
+	    && sudo systemctl start gunicorn.harare \
+	    && sudo systemctl start gunicorn.kampala \
+	    && sudo systemctl start gunicorn.lilongwe
+
+``No output``
+
+Enable each service
 
 .. code-block:: bash
 
 	$ sudo systemctl enable gunicorn.blantyre \
-	  && sudo systemctl enable gunicorn.capetown \
-	  && sudo systemctl enable gunicorn.gaborone \
-	  && sudo systemctl enable gunicorn.harare \
-	  && sudo systemctl enable gunicorn.kampala \
-	  && sudo systemctl enable gunicorn.lilongwe
+	    && sudo systemctl enable gunicorn.capetown \
+	    && sudo systemctl enable gunicorn.gaborone \
+	    && sudo systemctl enable gunicorn.harare \
+	    && sudo systemctl enable gunicorn.kampala \
+	    && sudo systemctl enable gunicorn.lilongwe
+
+``Output``
+
+.. code-block:: bash
+
+	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.blantyre.service → /etc/systemd/system/gunicorn.blantyre.service.
+	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.capetown.service → /etc/systemd/system/gunicorn.capetown.service.
+	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.gaborone.service → /etc/systemd/system/gunicorn.gaborone.service.
+	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.harare.service → /etc/systemd/system/gunicorn.harare.service.
+	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.kampala.service → /etc/systemd/system/gunicorn.kampala.service.
+	Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.lilongwe.service → /etc/systemd/system/gunicorn.lilongwe.service.
+
+
+If you wish, you can check the status of each:
 
 .. code-block:: bash
 
 	$ sudo systemctl status gunicorn.blantyre \
-	  && sudo systemctl status gunicorn.capetown \
-	  && sudo systemctl status gunicorn.gaborone \
-	  && sudo systemctl status gunicorn.harare \
-	  && sudo systemctl status gunicorn.kampala \ 
-	  && sudo systemctl status gunicorn.lilongwe
+	    && sudo systemctl status gunicorn.capetown \
+	    && sudo systemctl status gunicorn.gaborone \
+	    && sudo systemctl status gunicorn.harare \
+	    && sudo systemctl status gunicorn.kampala \ 
+	    && sudo systemctl status gunicorn.lilongwe
 
 if there are any problems check:
 	
