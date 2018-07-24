@@ -9,7 +9,7 @@ Copy the service files to ``systemd``
 
 .. code-block:: bash
 
-	$ sudo cp -R ~/ambition/bin/systemd/* /etc/systemd/system/
+	$ sudo cp -R ~/app/bin/systemd/* /etc/systemd/system/
 
 Create the sockets
 
@@ -66,14 +66,14 @@ Try accessing:
 	 Main PID: 6839 (gunicorn)
 	    Tasks: 4 (limit: 2361)
 	   CGroup: /system.slice/gunicorn.service
-	           ├─6839 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ambition/
-	           ├─6889 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ambition/
-	           ├─6897 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ambition/
-	           └─6908 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ambition/
+	           ├─6839 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/
+	           ├─6889 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/
+	           ├─6897 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/
+	           └─6908 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/
 
 	Jul 23 16:09:01 edc2 systemd[1]: Started gunicorn daemon.
 	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6839] [INFO] Starting gunicorn 19.9.0
-	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6839] [INFO] Listening at: unix:/home/ambition/ambition/gunicorn.sock (6839)
+	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6839] [INFO] Listening at: unix:/run/gunicorn.sock (6839)
 	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6839] [INFO] Using worker: sync
 	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6889] [INFO] Booting worker with pid: 6889
 	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6897] [INFO] Booting worker with pid: 6897
@@ -113,7 +113,7 @@ Copy the configurations to ``/etc/nginx/sites-available``
 
 .. code-block:: bash
 
-	$ sudo cp -R ~/ambition/bin/nginx/* /etc/nginx/sites-available/
+	$ sudo cp -R ~/app/bin/nginx/* /etc/nginx/sites-available/
 
 
 Enable each site:

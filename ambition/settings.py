@@ -14,7 +14,7 @@ except AssertionError:
         'Incorrect python version. Expected 3.6 or 3.7. Check your environment.')
 
 BASE_DIR = str(Path(os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__)))).parent)
+    os.path.dirname(os.path.abspath(__file__)))))
 
 env = environ.Env(
     AWS_ENABLED=(bool, True),
@@ -48,7 +48,7 @@ TEST_DIR = os.path.join(BASE_DIR, APP_NAME, 'tests')
 ALLOWED_HOSTS = ["*"]  # env.list('DJANGO_ALLOWED_HOSTS')
 
 # get site ID from more familiar town name
-TOWN = env.int('DJANGO_TOWN')
+TOWN = env.str('DJANGO_TOWN')
 if TOWN:
     SITE_ID = get_site_id(TOWN)
 else:
@@ -351,7 +351,7 @@ else:
 SENTRY_DSN = None
 if SENTRY_ENABLED:
     import raven  # noqa
-    from ..logging.raven import LOGGING  # noqa
+    from .logging.raven import LOGGING  # noqa
     SENTRY_DSN = env.str('SENTRY_DSN')
     RAVEN_CONFIG = {
         'dsn': SENTRY_DSN,
