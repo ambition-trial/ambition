@@ -1,7 +1,6 @@
 import os
 import sys
 
-from ambition_rando.import_randomization_list import import_randomization_list
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management.color import color_style
@@ -11,12 +10,12 @@ from django.urls.exceptions import NoReverseMatch
 from edc_appointment.constants import IN_PROGRESS_APPT, SCHEDULED_APPT
 from edc_appointment.models.appointment import Appointment
 from edc_base.tests.site_test_case_mixin import SiteTestCaseMixin
-from edc_facility.import_holidays import import_holidays
 from edc_lab_dashboard.dashboard_urls import dashboard_urls
 from edc_selenium.mixins import SeleniumLoginMixin, SeleniumModelFormMixin
 from model_mommy import mommy
 from selenium.webdriver.firefox.webdriver import WebDriver
-from ambition.sites import ambition_sites
+
+from ambition_sites import ambition_sites
 
 style = color_style()
 
@@ -44,8 +43,6 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
 
     def setUp(self):
         super().setUp()
-        import_randomization_list()
-        import_holidays()
         url_names = (self.extra_url_names
                      + list(settings.DASHBOARD_URL_NAMES.values())
                      + list(settings.LAB_DASHBOARD_URL_NAMES.values())
@@ -66,6 +63,7 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
                 self.selenium.get('%s%s' % (self.live_server_url, url))
                 self.selenium.implicitly_wait(2)
 
+    @tag('1')
     def test_subject_screening_to_subject_dashboard(self):
         self.login()
 

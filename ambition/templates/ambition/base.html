@@ -1,19 +1,9 @@
 {% extends 'edc_base/base.html' %}
 
-{% load staticfiles %}
+{% load static %}
 
 {% block extra-scripts %}
 {{ block.super }}
-<script>
-
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-    $("#success-alert").fadeTo(1000, 500).slideUp(500, function(){
-        $("#success-alert").slideUp(500);
-    });    
-});
-
-</script>
 {% endblock extra-scripts %} 
 
 {% block extra-styles %}

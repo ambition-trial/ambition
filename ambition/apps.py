@@ -1,3 +1,4 @@
+from ambition_sites import ambition_sites, fqdn
 from datetime import datetime
 from dateutil.relativedelta import MO, TU, WE, TH, FR, SA, SU
 from dateutil.tz import gettz
@@ -20,7 +21,6 @@ from edc_protocol.apps import AppConfig as BaseEdcProtocolAppConfig
 from edc_visit_tracking.apps import AppConfig as BaseEdcVisitTrackingAppConfig
 from edc_visit_tracking.constants import SCHEDULED, UNSCHEDULED, LOST_VISIT
 
-from .sites import ambition_sites, fqdn
 from .system_checks import ambition_check
 
 
@@ -30,7 +30,7 @@ style = color_style()
 def post_migrate_update_sites(sender=None, **kwargs):
     from edc_base.sites.utils import add_or_update_django_sites
     add_or_update_django_sites(
-        apps=django_apps, sites=ambition_sites, fqdn=fqdn)
+        apps=django_apps, sites=ambition_sites, fqdn=fqdn, verbose=True)
 
 
 class AppConfig(DjangoAppConfig):
@@ -55,13 +55,14 @@ class EdcProtocolAppConfig(BaseEdcProtocolAppConfig):
 
 
 class EdcLabAppConfig(BaseEdcLabAppConfig):
-    requisition_model = 'ambition_subject.subjectrequisition'
+    # requisition_model = 'ambition_subject.subjectrequisition'
     result_model = 'edc_lab.result'
 
 
 class EdcBaseAppConfig(BaseEdcBaseAppConfig):
     project_name = 'Ambition'
-    institution = 'Botswana-Harvard AIDS Institute'
+    institution = ''
+    project_repo = 'https://github.com/ambition-trial'
 
 
 class EdcDeviceAppConfig(BaseEdcDeviceAppConfig):

@@ -1,5 +1,6 @@
 from ambition_ae.action_items import AE_INITIAL_ACTION
-from ambition_rando.import_randomization_list import import_randomization_list
+from ambition_rando.randomization_list_importer import RandomizationListImporter
+from ambition_sites import ambition_sites
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -25,6 +26,7 @@ style = color_style()
 class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMixin,
                       StaticLiveServerTestCase):
 
+    default_sites = ambition_sites
     appointment_model = 'edc_appointment.appointment'
     subject_screening_model = 'ambition_screening.subjectscreening'
     subject_consent_model = 'ambition_subject.subjectconsent'
@@ -34,6 +36,8 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        RandomizationListImporter()
+        import_holidays()
         site_list_data.autodiscover()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
@@ -44,14 +48,12 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
         super().tearDownClass()
 
     def setUp(self):
-        super().setUp()
-        import_randomization_list()
-        import_holidays()
         url_names = (self.extra_url_names
                      + list(settings.DASHBOARD_URL_NAMES.values())
                      + list(settings.LAB_DASHBOARD_URL_NAMES.values())
                      + list(dashboard_urls.values()))
         self.url_names = list(set(url_names))
+        super().setUp()
 
     def go_to_subject_dashboard(self):
 
@@ -125,7 +127,8 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
             **{'screening_identifier': screening_model_obj.screening_identifier,
                'dob': screening_model_obj.estimated_dob,
                'gender': screening_model_obj.gender})
-        consent_model_obj.initials = f'{consent_model_obj.first_name[0]}{consent_model_obj.last_name[0]}'
+        consent_model_obj.initials = (
+            f'{consent_model_obj.first_name[0]}{consent_model_obj.last_name[0]}')
         consent_model_obj.save()
         return consent_model_obj.subject_identifier
 
@@ -175,7 +178,8 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
         obj = mommy.prepare_recipe(action_item.reference_model)
         self.fill_form(
             model=action_item.reference_model,
-            obj=obj, exclude=['subject_identifier', 'action_identifier', 'tracking_identifier'])
+            obj=obj, exclude=[
+                'subject_identifier', 'action_identifier', 'tracking_identifier'])
 
         assert f'actionitem-{action_item.action_identifier}' not in self.selenium.page_source
 
