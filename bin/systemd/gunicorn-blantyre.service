@@ -1,6 +1,6 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-blantyre.sock
+Requires=gunicorn-blantyre.socket
 After=network.target
 
 [Service]

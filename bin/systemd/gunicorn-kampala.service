@@ -1,6 +1,6 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-kampala.sock
+Requires=gunicorn-kampala.socket
 After=network.target
 
 [Service]
