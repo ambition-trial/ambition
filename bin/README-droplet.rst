@@ -10,6 +10,8 @@ Log in as ``ambition``
 
 Update the repo
 
+.. code-block:: bash
+
   $ cd ~/app $ git pull
 
 Check .env to update the following variables:
