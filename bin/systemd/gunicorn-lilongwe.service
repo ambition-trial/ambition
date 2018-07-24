@@ -1,6 +1,6 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-lilongwe.sock
+Requires=gunicorn-lilongwe.socket
 After=network.target
 
 [Service]

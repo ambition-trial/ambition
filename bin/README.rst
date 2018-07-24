@@ -118,7 +118,7 @@ If the code base changes:
 	    && sudo systemctl restart gunicorn-kampala \
 	    && sudo systemctl restart gunicorn-lilongwe
 
-If needed, stop each service and start over ...
+If needed to reset ...
 
 .. code-block:: bash
 
@@ -136,6 +136,13 @@ If needed, stop each service and start over ...
 	    && sudo systemctl stop gunicorn-kampala \
 	    && sudo systemctl stop gunicorn-lilongwe \
 	    && sudo systemctl daemon-reload
+
+	$ sudo systemctl disable gunicorn-blantyre.socket \
+	    && sudo systemctl disable gunicorn-capetown.socket \
+	    && sudo systemctl disable gunicorn-gaborone.socket \
+	    && sudo systemctl disable gunicorn-harare.socket \
+	    && sudo systemctl disable gunicorn-kampala.socket \
+	    && sudo systemctl disable gunicorn-lilongwe.socket
 
 
 Nginx
