@@ -1,6 +1,7 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-blantyre.socket
+Requires=gunicorn-blantyre.sock
+Before=nginx.service
 After=network.target
 
 [Service]
@@ -12,6 +13,9 @@ ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --workers 3 \
     --bind unix:/run/gunicorn-blantyre.sock \
     ambition.wsgi.blantyre:application
+SyslogIdentifier=gunicorn-blantyre
+Restart=always
+
 
 [Install]
 WantedBy=multi-user.target

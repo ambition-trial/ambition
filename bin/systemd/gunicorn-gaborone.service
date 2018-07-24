@@ -1,6 +1,7 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-gaborone.socket
+Requires=gunicorn-gaborone.sock
+Before=nginx.service
 After=network.target
 
 [Service]
@@ -12,6 +13,8 @@ ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --workers 3 \
     --bind unix:/run/gunicorn-gaborone.sock \
     ambition.wsgi.gaborone:application
+SyslogIdentifier=gunicorn-gaborone
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

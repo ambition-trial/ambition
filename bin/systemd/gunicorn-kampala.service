@@ -1,6 +1,7 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-kampala.socket
+Requires=gunicorn-kampala.sock
+Before=nginx.service
 After=network.target
 
 [Service]
@@ -12,6 +13,8 @@ ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --workers 3 \
     --bind unix:/run/gunicorn-kampala.sock \
     ambition.wsgi.kampala:application
+SyslogIdentifier=gunicorn-kampala
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

@@ -1,6 +1,7 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-capetown.socket
+Requires=gunicorn-capetown.sock
+Before=nginx.service
 After=network.target
 
 [Service]
@@ -12,6 +13,8 @@ ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --workers 3 \
     --bind unix:/run/gunicorn-capetown.sock \
     ambition.wsgi.capetown:application
+SyslogIdentifier=gunicorn-capetown
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
