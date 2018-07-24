@@ -26,7 +26,7 @@ env = environ.Env(
     DJANGO_USE_L10N=(bool, False),
     DJANGO_USE_TZ=(bool, True),
     DATABASE_USE_SQLITE=(bool, False),
-    LIVE_SYSTEM=(bool, False),
+    DJANGO_LIVE_SYSTEM=(bool, False),
     SENTRY_ENABLED=(bool, False),
 )
 

@@ -1,8 +1,8 @@
 [Unit]
-Description=gunicorn socket (blantyre)
+Description=gunicorn socket
 
 [Socket]
-ListenStream=/run/gunicorn-blantyre.sock
+ListenStream=/run/gunicorn.sock
 
 [Install]
 WantedBy=sockets.target

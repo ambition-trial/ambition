@@ -120,13 +120,14 @@ Enable each site:
 
 .. code-block:: bash
 
-	$ sudo ln -s /etc/nginx/sites-available/blantyre.conf /etc/nginx/sites-enabled \
-	    && sudo ln -s /etc/nginx/sites-available/capetown.conf /etc/nginx/sites-enabled \
-	    && sudo ln -s /etc/nginx/sites-available/gaborone.conf /etc/nginx/sites-enabled \
-	    && sudo ln -s /etc/nginx/sites-available/harare.conf /etc/nginx/sites-enabled \
-	    && sudo ln -s /etc/nginx/sites-available/kampala.conf /etc/nginx/sites-enabled \
-	    && sudo ln -s /etc/nginx/sites-available/lilongwe.conf /etc/nginx/sites-enabled
+	$ sudo ln -s /etc/nginx/sites-available/ambition.conf /etc/nginx/sites-enabled
 
+
+Disable the default site:
+
+.. code-block:: bash
+	
+	$ sudo unlink /etc/nginx/sites-enabled/default
 
 .. code-block:: bash
 
@@ -144,45 +145,11 @@ Check ``ufw`` to open ``openSSH``, ``http``, ``https``, ``631``
 Also check cloud firewall to ensure these ports are open
 
 
-Certificates
-============
+Certificates and HTTPS configuration
+====================================
 
-The Nginx configurations make reference to certificates for the HTTPS redirect.
+see  https://certbot.eff.org 
 
-Generate certificates
-+++++++++++++++++++++
-
-If certificates do not exist, you can create then like this. 
-
-Install certbot:
-
-.. code-block:: bash
-
-	$ sudo apt-get update
-	$ sudo apt-get install software-properties-common
-	$ sudo add-apt-repository ppa:certbot/certbot
-	$ sudo apt-get update
-	$ sudo apt-get install python-certbot-nginx 
-
-
-then 
-
-.. code-block:: bash
-
-  sudo certbot certonly --manual --preferred-challenges=dns \
-    --email=ew2789@gmail.com \
-    --server=https://acme-v02.api.letsencrypt.org/directory \
-    --agree-tos \
-    -d clinicedc.org
-    -d "*.clinicedc.org"
-
-follow the instructions. You will need to update the dns TXT record.
-
-
-Setup auto-renew
-++++++++++++++++
-
-TODO
 
 
 
