@@ -1,17 +1,19 @@
+# confirm the working directory
+
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn-capetown.socket
+Requires=gunicorn.socket
 After=network.target
 
 [Service]
 User=ambition
 Group=www-data
-WorkingDirectory=/home/ambition/ambition
+WorkingDirectory=/home/ambition/app
 ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --access-logfile - \
     --workers 3 \
-    --bind unix:/run/gunicorn-capetown.sock \
-    ambition.wsgi.capetown:application
+    --bind unix:/run/gunicorn.sock \
+    ambition.wsgi:application
 
 [Install]
 WantedBy=multi-user.target

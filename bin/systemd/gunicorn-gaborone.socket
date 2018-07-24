@@ -1,8 +1,0 @@
-[Unit]
-Description=gunicorn socket (gaborone)
-
-[Socket]
-ListenStream=/run/gunicorn-gaborone.sock
-
-[Install]
-WantedBy=sockets.target

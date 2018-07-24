@@ -1,8 +1,0 @@
-[Unit]
-Description=gunicorn socket (lilongwe)
-
-[Socket]
-ListenStream=/run/gunicorn-lilongwe.sock
-
-[Install]
-WantedBy=sockets.target

@@ -4,6 +4,7 @@ import sys
 
 from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
+from ambition_sites.get_site_id import get_site_id
 
 # simple version check
 try:
@@ -44,9 +45,15 @@ ETC_DIR = env.str('DJANGO_ETC_FOLDER')
 
 TEST_DIR = os.path.join(BASE_DIR, APP_NAME, 'tests')
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
+ALLOWED_HOSTS = ["*"]  # env.list('DJANGO_ALLOWED_HOSTS')
 
-SITE_ID = env.int('DJANGO_SITE_ID')
+# get site ID from more familiar town name
+TOWN = env.int('DJANGO_TOWN')
+if TOWN:
+    SITE_ID = get_site_id(TOWN)
+else:
+    SITE_ID = env.int('DJANGO_SITE_ID')
+
 
 REVIEWER_SITE_ID = env.int('DJANGO_REVIEWER_SITE_ID')
 

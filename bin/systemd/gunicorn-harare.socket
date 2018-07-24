@@ -1,8 +1,0 @@
-[Unit]
-Description=gunicorn socket (harare)
-
-[Socket]
-ListenStream=/run/gunicorn-harare.sock
-
-[Install]
-WantedBy=sockets.target
