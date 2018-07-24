@@ -12,8 +12,6 @@ ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --workers 3 \
     --bind unix:/run/gunicorn-blantyre.sock \
     ambition.wsgi.blantyre:application
-Restart=always
-
 
 [Install]
 WantedBy=multi-user.target

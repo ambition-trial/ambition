@@ -12,7 +12,6 @@ ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --workers 3 \
     --bind unix:/run/gunicorn-harare.sock \
     ambition.wsgi.harare:application
-Restart=always
 
 [Install]
 WantedBy=multi-user.target
