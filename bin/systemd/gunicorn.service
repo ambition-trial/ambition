@@ -12,6 +12,7 @@ WorkingDirectory=/home/ambition/app
 ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --access-logfile - \
     --workers 3 \
+    --timeout=300 \
     --bind unix:/run/gunicorn.sock \
     ambition.wsgi:application
 
