@@ -151,5 +151,49 @@ Certificates and HTTPS configuration
 see  https://certbot.eff.org 
 
 
+Configure droplet from base
+---------------------------
 
+Base droplet snapshot is ``ambgab``. Once the new droplet is created some config needs to be changed.
+
+For both acount ``ambition`` and ``uat``:
+
+Check .env to update the following variables:
+
+- DJANGO_ALLOWED_HOSTS
+- DJANGO_CUPS_SERVERS
+- DJANGO_LANGUAGES
+- DJANGO_SITE_ID
+- DJANGO_TIME_ZONE
+- DJANGO_TOWN
+
+Reset the nginx configuration to listen on 80 only. certbot will add an HTTPS server block.
+
+Unlink uat.conf
+
+.. code-block:: bash
+
+	$ sudo unlink /etc/nginx/sites-enabled/ambition.conf
+	$ sudo unlink /etc/nginx/sites-enabled/uat.conf
+	$ sudo unlink /etc/nginx/sites-enabled/ambition-uat.conf
+
+Copy original ``conf`` files from the repo
+
+.. code-block:: bash
+
+	$ sudo cp -R ~/app/bin/nginx/* /etc/nginx/sites-available/
+
+Update the ``server_name``
+
+	$ sudo nano /etc/nginx/sites-available/ambition.conf
+
+	$ sudo nano /etc/nginx/sites-available/ambition_uat.conf
+
+Enable each site:
+
+.. code-block:: bash
+
+	$ sudo ln -s /etc/nginx/sites-available/ambition.conf /etc/nginx/sites-enabled
+
+	$ sudo ln -s /etc/nginx/sites-available/ambition-uat.conf /etc/nginx/sites-enabled
 
