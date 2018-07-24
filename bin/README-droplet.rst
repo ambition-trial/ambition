@@ -14,7 +14,7 @@ Update the repo
 
   $ cd ~/app $ git pull
 
-Check .env to update the following variables:
+Check ``.env`` to update the following variables:
 
 - DJANGO_ALLOWED_HOSTS
 - DJANGO_CUPS_SERVERS
@@ -23,18 +23,18 @@ Check .env to update the following variables:
 - DJANGO_TIME_ZONE
 - DJANGO_TOWN
 
-Repeat the above for the ``uat`` account.
+**Repeat** the above for the ``uat`` account.
 
 Update web services
 +++++++++++++++++++
 
-Log in as ``ambition``
-
 These changes can be done from one account.
+
+Log in as ``ambition``
 
 Reset the nginx configuration to listen on 80 only. certbot will add an HTTPS server block.
 
-Unlink uat.conf
+Unlink ``uat.conf``
 
 .. code-block:: bash
 
@@ -57,7 +57,7 @@ Update the ``server_name``:
   $ sudo nano /etc/nginx/sites-available/ambition-uat.conf
 
 
-Enable each site:
+Enable each available site:
 
 .. code-block:: bash
 
@@ -72,14 +72,13 @@ Get new certificates and configure for HTTPS:
   $ certbot --nginx
 
 
-Apply to both sites and selected to redirect all traffic to HTTPS.
+Configure for both ``xxx.ambition.clinicedc.org`` and xxx.uat.ambition.clinicedc.org``and selected to redirect all traffic to HTTPS.
 
 Check the files
   
 .. code-block:: bash
 
   $ sudo nginx -t
-
 
 Restart nginx
 
