@@ -12,7 +12,6 @@ ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --workers 3 \
     --bind unix:/run/gunicorn-lilongwe.sock \
     ambition.wsgi.lilongwe:application
-SyslogIdentifier=gunicorn-lilongwe
 Restart=always
 
 [Install]
