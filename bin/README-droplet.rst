@@ -44,7 +44,7 @@ Update the repo
 
   $ cd ~/app && git pull
 
-Check .env to update the following variables:
+Check ``.env`` to update the following variables:
 
 Note that the base image is ``gaborone``.
 
@@ -81,9 +81,9 @@ Login as ``uat`` and **repeat** the above steps.
 Update web services
 ===================
 
-Log in as ``ambition``
-
 These changes can be done from one account.
+
+Log in as ``ambition``
 
 Since the repo may have updated, restart ``gunicorn``:
 
@@ -93,9 +93,10 @@ Since the repo may have updated, restart ``gunicorn``:
 
   $ sudo systemctl restart gunicorn
 
-Reset the nginx configuration to listen on 80 only. We will use ``certbot`` to add back the HTTPS server block.
 
-Unlink uat.conf
+Reset the nginx configuration to listen on 80 only. certbot will add an HTTPS server block.
+
+Unlink ``uat.conf``
 
 .. code-block:: bash
 
@@ -138,14 +139,13 @@ Get new certificates and configure for HTTPS:
   $ sudo certbot --nginx
 
 
-Apply to both sites and selected to redirect all traffic to HTTPS.
+Configure for both ``xxx.ambition.clinicedc.org`` and xxx.uat.ambition.clinicedc.org``and selected to redirect all traffic to HTTPS.
 
 Check the files
   
 .. code-block:: bash
 
   $ sudo nginx -t
-
 
 Restart nginx
 
