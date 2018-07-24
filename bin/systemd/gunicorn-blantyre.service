@@ -1,7 +1,6 @@
 [Unit]
 Description=gunicorn daemon
 Requires=gunicorn-blantyre.sock
-Before=nginx.service
 After=network.target
 
 [Service]
