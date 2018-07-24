@@ -21,7 +21,7 @@ If copying new files, you may be asked to run:
 
 .. code-block:: bash
 
-	sudo systemctl daemon-reload
+	$ sudo systemctl daemon-reload
 
 Enable the sockets
 
@@ -97,13 +97,13 @@ If needed to reset ...
 
 .. code-block:: bash
 
-	$ sudo systemctl stop gunicorn.socket
+	$ sudo systemctl stop gunicorn.socket &&
+		&& sudo systemctl stop gunicorn \
+		&& sudo systemctl disable gunicorn.socket
 
-	$ sudo systemctl stop gunicorn
-
-	$ sudo systemctl disable gunicorn.socket
-
-	$ sudo systemctl daemon-reload
+	$ sudo systemctl stop gunicorn-uat.socket &&
+		&& sudo systemctl stop gunicorn-uat \
+		&& sudo systemctl disable gunicorn-uat.socket
 
 
 Nginx
@@ -156,7 +156,14 @@ Configure droplet from base
 
 Base droplet snapshot is ``ambgab``. Once the new droplet is created some config needs to be changed.
 
-For both acount ``ambition`` and ``uat``:
+Update env
+++++++++++
+
+Log in as ``ambition``
+
+Update the repo
+
+	$ cd ~/app $ git pull
 
 Check .env to update the following variables:
 
@@ -166,6 +173,16 @@ Check .env to update the following variables:
 - DJANGO_SITE_ID
 - DJANGO_TIME_ZONE
 - DJANGO_TOWN
+
+Repeat the above for the ``uat`` account.
+
+
+Update web services
++++++++++++++++++++
+
+Log in as ``ambition``
+
+These changes can be done from one account.
 
 Reset the nginx configuration to listen on 80 only. certbot will add an HTTPS server block.
 
@@ -183,11 +200,14 @@ Copy original ``conf`` files from the repo
 
 	$ sudo cp -R ~/app/bin/nginx/* /etc/nginx/sites-available/
 
-Update the ``server_name``
+Update the ``server_name``:
+
+.. code-block:: bash
 
 	$ sudo nano /etc/nginx/sites-available/ambition.conf
 
-	$ sudo nano /etc/nginx/sites-available/ambition_uat.conf
+	$ sudo nano /etc/nginx/sites-available/ambition-uat.conf
+
 
 Enable each site:
 
@@ -197,3 +217,25 @@ Enable each site:
 
 	$ sudo ln -s /etc/nginx/sites-available/ambition-uat.conf /etc/nginx/sites-enabled
 
+
+Get new certificates and configure for HTTPS:
+
+.. code-block:: bash
+
+	$ certbot --nginx
+
+
+Apply to both sites and selected to redirect all traffic to HTTPS.
+
+Check the files
+	
+.. code-block:: bash
+
+	$ sudo nginx -t
+
+
+Restart nginx
+
+.. code-block:: bash
+
+	$ sudo systemctl restart nginx
