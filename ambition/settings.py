@@ -17,7 +17,7 @@ BASE_DIR = str(Path(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)))))
 
 env = environ.Env(
-    AWS_ENABLED=(bool, True),
+    AWS_ENABLED=(bool, False),
     DJANGO_AUTO_CREATE_KEYS=(bool, False),
     DJANGO_CSRF_COOKIE_SECURE=(bool, True),
     DJANGO_DEBUG=(bool, False),
@@ -358,7 +358,7 @@ if SENTRY_ENABLED:
         'release': raven.fetch_git_sha(BASE_DIR),
     }
 else:
-    from ..logging.standard import LOGGING  # noqa
+    from .logging.standard import LOGGING  # noqa
 
 if 'test' in sys.argv:
 
