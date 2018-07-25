@@ -11,9 +11,11 @@ Clone the repo, if required:
 
 .. code-block:: bash
 
-	$ sudo cp ambition/bin/nginx/index.html /var/www/html
+	cd $REPO
 
-	$ sudo cp ambition/bin/nginx/ambition-sites.conf /etc/nginx/sites-available/ambition-sites.conf
+	$ sudo cp bin/nginx/index.html /var/www/html
+
+	$ sudo cp bin/nginx/ambition-sites.conf /etc/nginx/sites-available/ambition-sites.conf
 
 (if no longer required, delete the repo)
 
