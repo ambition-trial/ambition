@@ -3,11 +3,19 @@ Setting up the project home page
 --------------------------------
 
 
+Clone the repo, if required:
+
 .. code-block:: bash
 
-	$ sudo wget https://github.com/ambition-trial/ambition/blob/develop/bin/nginx/index.html /var/www/html
+	$ git clone https://github.com/ambition-trial/ambition.git
 
-	$ sudo wget https://github.com/ambition-trial/ambition/blob/develop/bin/nginx/ambition-sites.conf /etc/nginx/sites-available
+.. code-block:: bash
+
+	$ sudo cp ambition/bin/nginx/index.html /var/www/html
+
+	$ sudo cp ambition/bin/nginx/ambition-sites.conf /etc/nginx/sites-available/ambition-sites.conf
+
+(if no longer required, delete the repo)
 
 Unlink default
 
