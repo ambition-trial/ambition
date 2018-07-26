@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     'django_collect_offline_files.apps.AppConfig',
     'edc_pharmacy.apps.AppConfig',
     # 'edc_pharmacy_dashboard.apps.AppConfig',
+    'edc_auth.apps.AppConfig',
     'edc_navbar.apps.AppConfig',
     'edc_reference.apps.AppConfig',
     'edc_consent.apps.AppConfig',
@@ -328,6 +329,7 @@ EXPORT_FOLDER = env.str('DJANGO_EXPORT_FOLDER') or os.path.expanduser('~/')
 
 FQDN = env.str('DJANGO_FQDN')
 INDEX_PAGE = env.str('DJANGO_INDEX_PAGE')
+INDEX_PAGE_LABEL = env.str('DJANGO_INDEX_PAGE_LABEL')
 DJANGO_LOG_FOLDER = env.str('DJANGO_LOG_FOLDER')
 
 # static
