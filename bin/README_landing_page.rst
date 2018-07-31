@@ -1,6 +1,6 @@
 
-Setting up the project home page
---------------------------------
+Setting up the project landing page
+-----------------------------------
 
 
 Clone the repo, if required:
