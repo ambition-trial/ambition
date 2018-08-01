@@ -17,6 +17,7 @@ django-collect-offline-files
 django-crypto-fields
 django-revision
 edc-action-item
+edc-auth
 edc-appointment
 edc-base
 edc-consent
