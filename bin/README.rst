@@ -1,16 +1,21 @@
 
+.. contents:: Contents
+   :depth: 2
+   :backlinks: top
 
-sudo apt-get update
 
 Basic local/development
 ------------------------
-deploy using runserver (DEBUG=True)
 
+*deploy using runserver (DEBUG=True)*
 
-# ENV copy to a file, edit, source
+On your new droplet log in a root and create a new file ``env-setup`` with these variables.
+The ``env-setup`` file will be deleted once the install is complete.
+Update the values as required, e.g. fill in the correct password for ``MYSQL_USER_PASSWORD``. 
 
-On your new droplet log in a root and create a new file ``env_setup`` with these variables.
-Fill in the correct password for ``MYSQL_USER_PASSWORD``
+.. code-block:: bash
+
+	$ nano $HOME/env-setup
 
 .. code-block:: bash
 
@@ -34,7 +39,7 @@ Source the file ``env_setup``.
 
 .. code-block:: bash
 	
-	$ source env_setup
+	$ source $HOME/env-setup
 	$ echo $APP_FOLDER
 	
 	#output 
@@ -64,6 +69,178 @@ Login as non-root account ``ambition`` and install dependencies.
 	sudo apt-get -y upgrade
 	sudo apt-get -y install mysql-server-5.7 # if needed
 	sudo apt-get -y install mysql-client-5.7 libmysqlclient-dev libcups2-dev ipython3 python3-pip python3-dev python3-venv python3-cups python3-venv redis-server nginx curl
+
+
+Prepare mysql
++++++++++++++
+
+secure MySQL installation::
+
+	sudo mysql_secure_installation
+
+load timezones into MySQL::
+
+	mysql_tzinfo_to_sql /usr/share/zoneinfo | sudo mysql mysql
+
+create a MySQL database for the app::
+
+	echo "CREATE DATABASE $MYSQL_DATABASE CHARACTER SET utf8;" | sudo mysql
+	echo "CREATE DATABASE $MYSQL_DATABASE CHARACTER SET utf8;" | mysql -u root -p
+
+create a MySQL account, other than root, to be used by django::
+
+	echo "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_USER_PASSWORD';FLUSH PRIVILEGES;" | sudo mysql
+	echo "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_USER_PASSWORD';FLUSH PRIVILEGES;" | mysql -u root -p
+	echo "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'localhost' WITH GRANT OPTION;" | sudo mysql
+	echo "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'localhost' WITH GRANT OPTION;" | mysql -u root -p
+
+Note: if on docker localhost will not work so use the docker IP or '%'
+
+
+confirm new account can login to new DB::
+
+	echo "mysql -u $MYSQL_USER -p $MYSQL_DATABASE"
+
+if you delete any user don't forget to FLUSH PRIVILEGES;
+
+
+Prepare the app and the virtualenv
+++++++++++++++++++++++++++++++++++
+
+login as non-root account ``ambition``
+
+create and source the virtualenv `ambition`::
+
+	python3 -m venv ~/.venvs/$VENV
+
+activate the environment::
+
+	source ~/.venvs/$VENV/bin/activate
+
+**Important:** Confirm you are in your new virtualenv before continuing.
+
+Now ``git pull`` the app::
+
+	cd ~/ && git clone $REPO $APP_FOLDER
+
+Install requirements into the virtualenv::
+
+	cd ~/app \
+	&& pip install --no-cache-dir -r requirements/stable.txt \
+	&& pip install --no-cache-dir -e .
+
+This seems to not get installed from edc-base, so run it separately::
+
+	pip install --no-cache-dir django[argon2]
+
+
+Now install the ``.env`` file. The ``.env`` file is not part of the REPO. Open another terminal and copy the apps `.env` file to the app root
+assumed coming from your machine, for example::
+
+	echo "scp ~/source/ambition/.envs/.local $APP_USER@$APP_HOST:~/app/.env"
+	scp ~/source/ambition/.envs/.local <app_user>@<app_host>:~/app/.env
+
+There is also a sample .env file in the repo. To use that::
+
+	cp $HOME/$APP_FOLDER/env.sample $HOME/$APP_FOLDER/.env
+
+Edit the ``.env`` file as needed::
+	
+	nano ~/app/.env
+
+Set permissions::
+
+	chmod 600 ~/app/.env
+
+**IMPORTANT:** inspect the .env variables and edit as required
+
+  **NOTE:** ``DATABASE_URL`` password needs to be escaped if it contains special characters.::
+
+  >>> import urllib
+  >>> urllib.parse.quote('my_password$@')
+  Output::
+	
+	'my_password%24%40'
+
+  See https://github.com/joke2k/django-environ/blob/develop/README.rst#tips::
+
+Create the export and static folders::
+	
+	# check the values
+	echo "DJANGO_ETC_FOLDER=$DJANGO_ETC_FOLDER" \
+	&& echo "DJANGO_EXPORT_FOLDER=$DJANGO_EXPORT_FOLDER" \
+	&& echo "DJANGO_KEY_FOLDER=$DJANGO_KEY_FOLDER" \
+	&& echo "DJANGO_LOG_FOLDER=$DJANGO_LOG_FOLDER" \
+	&& echo "DJANGO_STATIC_FOLDER=$DJANGO_STATIC_FOLDER"
+
+	# create the folders
+	mkdir -p $DJANGO_ETC_FOLDER \
+	&& mkdir -p $DJANGO_EXPORT_FOLDER \
+	&& mkdir -p $DJANGO_KEY_FOLDER \
+	&& mkdir -p $DJANGO_LOG_FOLDER \
+	&& mkdir -p $DJANGO_STATIC_FOLDER
+
+
+Copy encryption keys into ``DJANGO_KEY_FOLDER`` . These are also not included in the REPO and are assumed to come from you.
+(or if just testing set ``DJANGO_AUTO_CREATE_KEYS=True``)::
+
+	echo "scp user* ambition@$APP_HOST:$DJANGO_KEY_FOLDER/"
+
+**Note:** If you are setting up a test environment and you set ``DJANGO_AUTO_CREATE_KEYS=False`` in ``.env`` to create test keys, you need to set it to ``False``.
+	
+Check::
+
+	cd ~/app \
+	&& python manage.py check
+
+Output::
+
+	django.db.utils.ProgrammingError: (1146, "Table 'ambition.edc_lab_boxtype' doesn't exist")
+
+Which is expected since you have not migrated the DB yet.
+
+  **Note:** Check the database server IP and the firewall config on both your server and the DB server if you get:::
+
+    ERROR! (2003, "Can't connect to MySQL server on '10.131.71.175' (110)")
+
+  See also the README on database setup.
+
+
+Now migrate (takes a while ...)::
+
+	python manage.py migrate
+
+Collect static, note that if ``AWS_ENABLED``, will test the connection::
+
+	python manage.py collectstatic
+
+Import the holiday file, check the ``.env`` to make sure this is correct::
+
+	python manage.py import_holidays
+
+Import randomization list file, **check the .env to make sure this is correct!!**
+Note, you need to manually copy a randomization list to ``DJANGO_ETC_FOLDER`` where the file name is the same as ``DJANGO_RANDOMIZATION_LIST`` in `.env`.::
+
+	python manage.py import_randomization_list
+
+Now if you run check again there should not be any errors.::
+	
+	python manage.py check
+
+Output::
+
+	"System check identified no issues (0 silenced)."
+
+Create a super user::
+
+	python manage.py createsuperuser
+
+Now try runserver. be sure PORT 8000 is open on your server. If you get "Invalid HTTP_HOST header: ..." check the ``.env`` file ``DJANGO_ALLOWED_HOSTS``
+and add your DOMAIN or IP.::
+
+	python manage.py runserver 0.0.0.0:8000
+
+**IMPORTANT:** If you plan to continue with the next section, don't enter any data.
 
 
 Reference
