@@ -244,8 +244,8 @@ Start runserver
     
 
 
-.. |pypi| image:: https://img.shields.io/pypi/v/ambition.svg
-    :target: https://pypi.python.org/pypi/ambition
+.. |pypi| image:: https://img.shields.io/pypi/v/ambition-edc.svg
+    :target: https://pypi.python.org/pypi/ambition-edc
     
 .. |travis| image:: https://travis-ci.com/ambition-trial/ambition.svg?branch=develop
     :target: https://travis-ci.com/ambition-trial/ambition
