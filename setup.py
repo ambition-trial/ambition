@@ -13,7 +13,7 @@ with open(os.path.join(os.path.dirname(__file__), 'VERSION')) as f:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='ambition',
+    name='ambition-edc',
     version=VERSION,
     author=u'Erik van Widenfelt',
     author_email='ew2789@gmail.com',
@@ -21,7 +21,7 @@ setup(
     include_package_data=True,
     url='https://github.com/ambition-trial/ambition',
     license='GPL license, see LICENSE',
-    description='Ambition (https://doi.org/10.1186/ISRCTN72509687)',
+    description='Ambition Trial EDC (https://doi.org/10.1186/ISRCTN72509687)',
     long_description=README,
     zip_safe=False,
     keywords='django ambition',
