@@ -40,8 +40,8 @@ def handler500(request):
 
 
 urlpatterns = [
-    path('accounts/', include('edc_base.auth.urls')),
-    path('admin/', include('edc_base.auth.urls')),
+    path('accounts/', include('edc_auth.urls')),
+    path('admin/', include('edc_auth.urls')),
     path('admin/', admin.site.urls),
     path('admin/', edc_appointment_admin.urls),
     path('admin/', ambition_subject_admin.urls),

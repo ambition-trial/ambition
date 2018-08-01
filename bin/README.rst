@@ -1,151 +1,95 @@
-Ambition deployment
--------------------
 
 
-Gunicorn
-========
+sudo apt-get update
 
-Copy the service files to ``systemd``
+Basic local/development
+------------------------
+deploy using runserver (DEBUG=True)
 
-.. code-block:: bash
 
-	$ sudo cp -R ~/app/bin/systemd/* /etc/systemd/system/
+# ENV copy to a file, edit, source
 
-Create the sockets
-
-.. code-block:: bash
-
-	$ sudo systemctl start gunicorn.socket
-
-If copying new files, you may be asked to run:
+On your new droplet log in a root and create a new file ``env_setup`` with these variables.
+Fill in the correct password for ``MYSQL_USER_PASSWORD``
 
 .. code-block:: bash
 
-	$ sudo systemctl daemon-reload
-
-Enable the sockets
-
-.. code-block:: bash
-
-	$ sudo systemctl enable gunicorn.socket
-
-``Output``
-
-.. code-block:: bash
-
-	Created symlink /etc/systemd/system/sockets.target.wants/gunicorn.socket → /etc/systemd/system/gunicorn.socket.
-
-
-If you wish, you can check the status of each:
-
-.. code-block:: bash
-
-	$ sudo systemctl status gunicorn
-
-``Output, inactive (first time)``
+	export APP_HOST=gaborone.uat.ambition.clinicedc.org
+	export APP_NAME=ambition
+	export APP_USER=ambition
+	export APP_FOLDER=app
+	export DJANGO_EXPORT_FOLDER=/home/$APP_USER/export
+	export DJANGO_ETC_FOLDER=/home/$APP_USER/.etc/$APP_NAME
+	export DJANGO_KEY_FOLDER=$DJANGO_ETC_FOLDER/crypto_fields
+	export DJANGO_LOG_FOLDER=/home/$APP_USER/log
+	export DJANGO_STATIC_FOLDER=/home/$APP_USER/static
+	export MYSQL_DATABASE=ambition
+	export MYSQL_USER=edc
+	export MYSQL_USER_PASSWORD=password  # need a password
+	export REPO=https://github.com/ambition-trial/ambition.git $APP_FOLDER
+	export VENV=ambition
 
 
-	● gunicorn.service - gunicorn daemon
-	   Loaded: loaded (/etc/systemd/system/gunicorn.service; enabled; vendor preset: enabled)
-	   Active: inactive (dead) since Mon 2018-07-23 17:57:25 UTC; 2min 56s ago
-	 Main PID: 22953 (code=exited, status=0/SUCCESS)
-
-Try accessing:
-
-.. code-block:: bash
-
-	curl --unix-socket /run/gunicorn.sock localhost
-
-``Output now shows active``
-
-.. code-block:: bash
-
-	● gunicorn.service - gunicorn daemon
-	   Loaded: loaded (/etc/systemd/system/gunicorn.service; enabled; vendor preset: enabled)
-	   Active: active (running) since Mon 2018-07-23 16:09:01 UTC; 14s ago
-	 Main PID: 6839 (gunicorn)
-	    Tasks: 4 (limit: 2361)
-	   CGroup: /system.slice/gunicorn.service
-	           ├─6839 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/
-	           ├─6889 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/
-	           ├─6897 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/
-	           └─6908 /home/ambition/.venvs/ambition/bin/python3 /home/ambition/.venvs/ambition/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/
-
-	Jul 23 16:09:01 edc2 systemd[1]: Started gunicorn daemon.
-	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6839] [INFO] Starting gunicorn 19.9.0
-	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6839] [INFO] Listening at: unix:/run/gunicorn.sock (6839)
-	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6839] [INFO] Using worker: sync
-	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6889] [INFO] Booting worker with pid: 6889
-	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6897] [INFO] Booting worker with pid: 6897
-	Jul 23 16:09:03 edc2 gunicorn[6839]: [2018-07-23 16:09:03 +0000] [6908] [INFO] Booting worker with pid: 6908
-
-
-if there are any problems check:
-	
-.. code-block:: bash
-
-	$ sudo journalctl -u gunicorn   # etc
-
-If the code base changes:
-
-.. code-block:: bash
-
-	$ sudo systemctl daemon-reload
-	$ sudo systemctl restart gunicorn
-
-If needed to reset ...
-
-.. code-block:: bash
-
-	$ sudo systemctl stop gunicorn.socket &&
-		&& sudo systemctl stop gunicorn \
-		&& sudo systemctl disable gunicorn.socket
-
-	$ sudo systemctl stop gunicorn-uat.socket &&
-		&& sudo systemctl stop gunicorn-uat \
-		&& sudo systemctl disable gunicorn-uat.socket
-
-
-Nginx
-=====
-
-Copy the configurations to ``/etc/nginx/sites-available``
-
-.. code-block:: bash
-
-	$ sudo cp -R ~/app/bin/nginx/* /etc/nginx/sites-available/
-
-
-Enable each site:
-
-.. code-block:: bash
-
-	$ sudo ln -s /etc/nginx/sites-available/ambition.conf /etc/nginx/sites-enabled
-
-
-Disable the default site:
+Source the file ``env_setup``.
 
 .. code-block:: bash
 	
-	$ sudo unlink /etc/nginx/sites-enabled/default
+	$ source env_setup
+	$ echo $APP_FOLDER
+	
+	#output 
+	app
+
+As root, create the non-root account and setup keys for key-based authentication:
 
 .. code-block:: bash
 
-	$ sudo nginx -t
+	# as root, create a non-root account and set up keys
+	adduser $APP_USER
+	# add to sudo
+	usermod -aG sudo $APP_USER
+	# copy keys to the new account
+	mkdir /home/$APP_USER/.ssh
+	cp .ssh/authorized_keys /home/$APP_USER/.ssh
+	chown $APP_USER:$APP_USER -R /home/$APP_USER/.ssh
+	chmod 700 /home/$APP_USER/.ssh
+	chmod 600 /home/$APP_USER/.ssh/authorized_keys
+
+
+Login as non-root account ``ambition`` and install dependencies.
 
 .. code-block:: bash
 
-	$ sudo systemctl restart nginx
-
-Firewall
-========
-
-Check ``ufw`` to open ``openSSH``, ``http``, ``https``, ``631``
-
-Also check cloud firewall to ensure these ports are open
+	sudo apt-get update
+	sudo apt-get -y upgrade
+	sudo apt-get -y install mysql-server-5.7 # if needed
+	sudo apt-get -y install mysql-client-5.7 libmysqlclient-dev libcups2-dev ipython3 python3-pip python3-dev python3-venv python3-cups python3-venv redis-server nginx curl
 
 
-Certificates and HTTPS configuration
-====================================
+Reference
+---------
 
-see  https://certbot.eff.org 
+Deploy onto an Ubuntu 18.04 server
+
+* https://www.digitalocean.com/community/tutorials/systemd-essentials-working-with-services-units-and-the-journal
+* https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-1604
+* https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04
+* https://github.com/joke2k/django-environ/blob/develop/README.rst
+* https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-18-04
+* https://www.digitalocean.com/community/tutorials/how-to-set-up-object-storage-with-django
+* https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04
+* https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04
+* https://certbot.eff.org/docs/install.html#docker-user
+* https://certbot-dns-digitalocean.readthedocs.io/en/latest/
+* https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04
+* https://realpython.com/caching-in-django-with-redis/
+* https://realpython.com/caching-in-django-with-redis/
+* https://niwinz.github.io/django-redis/latest/
+* https://micropyramid.com/blog/how-to-monitor-django-application-live-events-with-sentry/
+* https://docs.sentry.io/clients/python/integrations/django/
+
+Misc
+
+* https://www.digitalocean.com/community/tutorials/how-to-use-sshfs-to-mount-remote-file-systems-over-ssh
+* https://www.digitalocean.com/community/tutorials/how-to-configure-custom-connection-options-for-your-ssh-client
+

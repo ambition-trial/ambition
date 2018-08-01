@@ -1,3 +1,8 @@
+
+.. contents:: Contents
+   :depth: 2
+   :backlinks: top
+
 Configure droplet from base
 ---------------------------
 
@@ -9,9 +14,11 @@ Update the DB
 Configure access to mysql on the db droplet
 +++++++++++++++++++++++++++++++++++++++++++
 
+To allow the new droplet to access the database, you need to confugre both the firewall and the ``mysql`` database permissions.
+
 Log in to the ``db`` droplet
 
-Update mysql USER and privilege
+Update ``mysql`` USER and privileges
 
 .. code-block:: bash
 
@@ -21,39 +28,29 @@ Update mysql USER and privilege
   mysql> GRANT ALL PRIVILEGES ON *.* TO 'edc'@'x.x.x.x' WITH GRANT OPTION;
   Query OK, 0 rows affected (0.00 sec)
 
-Confirm that you can connect to mysql:
+
+Open the DO firewall on the ``db`` to allow access from this droplet on its private IP.
+
+Switch back to your new droplet and confirm that you can connect to mysql:
 
 .. code-block:: bash
 
   $ mysql
 
-Configure the db firewall to allow this droplet
-+++++++++++++++++++++++++++++++++++++++++++++++
-
-Open the firewall on the ``db`` to allow access from this droplet on its private IP.
 
 
 Update ``.env``
 ===============
 
-Log in as ``ambition``
+On your new droplet, log in as ``ambition``
 
-Update the repo
+Update the repo:
 
 .. code-block:: bash
 
   $ cd ~/app && git pull
 
 Check ``.env`` to update the following variables:
-
-Note that the base image is ``gaborone``.
-
-.. code-block:: bash
-
-  $ sed -i -e 's/gaborone/capetown/g' .env
-  $ sed -i -e 's/Gaborone/Johannesburg/g' .env  # for timezone
-
-**Note:** If not ``capetown`` change to the correct town.
 
 - DJANGO_ALLOWED_HOSTS
 - DJANGO_CUPS_SERVERS
@@ -62,7 +59,16 @@ Note that the base image is ``gaborone``.
 - DJANGO_TIME_ZONE
 - DJANGO_TOWN
 
-Check your changes on each account
+Since the base image is ``gaborone``, you can search and replace for any that mention ``gaborone``:
+
+.. code-block:: bash
+
+  $ sed -i -e 's/gaborone/capetown/g' .env
+  $ sed -i -e 's/Gaborone/Johannesburg/g' .env  # for timezone
+
+**Note:** If not ``capetown`` change to the correct town.
+
+Check your changes on each account (``ambition`` and ``uat``)
 
 .. code-block:: bash
 
@@ -81,9 +87,9 @@ Login as ``uat`` and **repeat** the above steps.
 Update web services
 ===================
 
-These changes can be done from one account.
+These changes can be done from one account on your new droplet.
 
-Log in as ``ambition``
+Log in as ``ambition`` on your new droplet
 
 Since the repo may have updated, restart ``gunicorn``:
 
@@ -152,4 +158,5 @@ Restart nginx
 .. code-block:: bash
 
   $ sudo systemctl reload nginx
+
 
