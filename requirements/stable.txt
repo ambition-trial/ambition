@@ -1,9 +1,3 @@
-boto3
-django-storages
-django-redis
-gunicorn
-raven
-
 ambition-ae
 ambition-export
 ambition-dashboard
