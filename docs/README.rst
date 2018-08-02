@@ -318,7 +318,7 @@ As user ``uat`` create a new virtualenv in the same way as above::
 Use the `.env`` variables to configure a system as a UAT server. Copy the .env from the LIVE server and edit::
 
 	sed -i -e s/DJANGO_LIVE_SYSTEM=True/DJANGO_LIVE_SYSTEM=False/g .env
-	sed -i -e s/MYSQL_DATABASE=ambition_production/MYSQL_DATABASE=ambition_uat/g .env
+	sed -i -e s/ambition_production/ambition_uat/g .env
 	sed -i -e 's/\/home\/ambition/home\/uat/g' .env
 	sed -i -e s/DJANGO_RANDOMIZATION_LIST_FILE=randomization_list.csv/DJANGO_RANDOMIZATION_LIST_FILE=test_randomization_list.csv/g .env
 	sed -i -e 's/AWS_LOCATION=ambition\/static/AWS_LOCATION=ambition_uat\/static/g' .env
