@@ -2,9 +2,9 @@ import environ
 import os
 import sys
 
+from ambition_sites.get_site_id import get_site_id
 from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
-from ambition_sites.get_site_id import get_site_id
 
 # simple version check
 try:
@@ -113,16 +113,16 @@ INSTALLED_APPS = [
     'ambition_prn.apps.AppConfig',
     'ambition_export.apps.AppConfig',
     'ambition_screening.apps.AppConfig',
-    'ambition.apps.EdcAppointmentAppConfig',
-    'ambition.apps.EdcBaseAppConfig',
-    'ambition.apps.EdcDeviceAppConfig',
-    'ambition.apps.EdcIdentifierAppConfig',
-    'ambition.apps.EdcLabAppConfig',
-    'ambition.apps.EdcMetadataAppConfig',
-    'ambition.apps.EdcProtocolAppConfig',
-    'ambition.apps.EdcVisitTrackingAppConfig',
-    'ambition.apps.EdcFacilityAppConfig',
-    'ambition.apps.AppConfig',
+    'ambition_edc.apps.EdcAppointmentAppConfig',
+    'ambition_edc.apps.EdcBaseAppConfig',
+    'ambition_edc.apps.EdcDeviceAppConfig',
+    'ambition_edc.apps.EdcIdentifierAppConfig',
+    'ambition_edc.apps.EdcLabAppConfig',
+    'ambition_edc.apps.EdcMetadataAppConfig',
+    'ambition_edc.apps.EdcProtocolAppConfig',
+    'ambition_edc.apps.EdcVisitTrackingAppConfig',
+    'ambition_edc.apps.EdcFacilityAppConfig',
+    'ambition_edc.apps.AppConfig',
 ]
 
 if env('SENTRY_ENABLED'):
@@ -232,7 +232,6 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    'django.contrib.auth.hashers.BCryptPasswordHasher',
 ]
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

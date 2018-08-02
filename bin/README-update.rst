@@ -12,11 +12,18 @@ Log in to the server as ``ambition``
 
 	$ source ~/.venvs/ambition/bin/activate
 
+	$ pip install --no-cache-dir -U pip
+
 	$ pip install --no-cache-dir -U -r requirements/stable.txt
 
 	$ python manage.py check
 
 Resolve any issues before continuing.
+
+Run migrate::
+
+	$ python manage.py check
+
 
 Restart gunicorn
 

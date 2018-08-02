@@ -34,11 +34,11 @@ def post_migrate_update_sites(sender=None, **kwargs):
 
 
 class AppConfig(DjangoAppConfig):
-    name = 'ambition'
+    name = 'ambition_edc'
 
     def ready(self):
         from ambition_rando.system_checks import randomization_list_check
-        register(randomization_list_check)(['ambition'])
+        register(randomization_list_check)(['ambition_edc'])
         register(ambition_check)
         post_migrate.connect(post_migrate_update_sites, sender=self)
 

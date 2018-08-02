@@ -243,6 +243,56 @@ and add your DOMAIN or IP.::
 **IMPORTANT:** If you plan to continue with the next section, don't enter any data.
 
 
+Basic production deploy
+----------------------------------------------------------
+
+using NGINX/GUNICORN (DEBUG=False)
+
+Deploy onto an Ubuntu 18.04 server
+
+(continued from above)
+
+Since ``DEBUG=True`` above, some variables from the ``.env`` file were ignored.
+
+Now set ``DEBUG=False`` in the ``.env`` file
+
+With ``DEBUG=False``, the app now looks for the encryption keys in ``DJANGO_KEY_FOLDER``. 
+
+create ``DJANGO_KEY_FOLDER``::
+
+	mkdir -p $DJANGO_KEY_FOLDER
+
+Copy your production keys to the ``DJANGO_KEY_FOLDER``. Echo command to use to copy keys to this host::
+
+	echo "scp user* $APP_USER@$APP_HOST:$DJANGO_KEY_FOLDER"
+
+Open another terminal and use the above SCP command to copy encryption keys to this folder from your encryption key folder
+
+for example::
+
+	scp user* ambition@206.189.16.89:~/.etc/ambition/crypto_fields
+
+If you run runserver now, the pages will be rendered without static files as expected.::
+
+	python manage.py runserver 0.0.0.0:8000
+
+Notice that the app created django_crypto_fields file::
+
+	ls -la $DJANGO_ETC_FOLDER
+
+
+Set up gunicorn
+---------------
+
+See separate document README_deploy.rst.
+
+
+Set up NGINX
+------------
+
+See separate document README_deploy.rst.
+
+
 Reference
 ---------
 
