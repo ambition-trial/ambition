@@ -14,7 +14,7 @@ ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
     --workers 2 \
     --timeout=300 \
     --bind unix:/run/gunicorn-uat.sock \
-    ambition.wsgi:application
+    ambition_edc.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
