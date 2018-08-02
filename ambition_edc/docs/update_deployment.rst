@@ -1,6 +1,6 @@
 
-Update a server
----------------
+Update a deployment
+-------------------
 
 Each server runs two instances of the Edc --one on the ``ambition`` account and the other on the ``uat`` account. The code base on these may not be at the same point in development so update accordingly.
 

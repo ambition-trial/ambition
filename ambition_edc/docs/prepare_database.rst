@@ -1,5 +1,5 @@
 
-Prepare a droplet for mysql-server
+Prepare a server for mysql-server
 ==================================
 
 
