@@ -116,6 +116,16 @@ Copy the configurations to ``/etc/nginx/sites-available``
 	$ sudo cp -R ~/app/bin/nginx/* /etc/nginx/sites-available/
 
 
+Replace town referred to in server name
+
+.. code-block:: bash
+
+	# for example
+	$ sudo sed -i -e s/gaborone/blantyre/g /etc/nginx/sites-available/ambition.conf
+
+	# for example
+	$ sudo sed -i -e s/gaborone/blantyre/g /etc/nginx/sites-available/ambition-uat.conf
+
 Enable each site:
 
 .. code-block:: bash
@@ -149,3 +159,15 @@ Certificates and HTTPS configuration
 ====================================
 
 see  https://certbot.eff.org 
+
+.. code-block:: bash
+
+	$ sudo certbot --nginx
+
+.. code-block:: bash
+
+	$ sudo nginx -t
+
+.. code-block:: bash
+
+	$ sudo systemctl restart nginx

@@ -16,6 +16,8 @@ Log in to the server as ``ambition``
 
 	$ pip install --no-cache-dir -U -r requirements/stable.txt
 
+	$ pip install -e .
+
 	$ python manage.py check
 
 Resolve any issues before continuing.
