@@ -332,6 +332,10 @@ Check ``DATABASE_URL`` points to ``ambition_uat``::
 	
 	cat .env | grep DATABASE_URL
 
+Copy keys from LIVE::
+
+	cp /home/ambition/.etc/ambition/crypto_fields/user* /home/uat/.etc/ambition/crypto_fields/
+
 Check::
 
 	python manage.py check
