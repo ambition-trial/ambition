@@ -97,11 +97,11 @@ If needed to reset ...
 
 .. code-block:: bash
 
-	$ sudo systemctl stop gunicorn.socket &&
+	$ sudo systemctl stop gunicorn.socket \
 		&& sudo systemctl stop gunicorn \
 		&& sudo systemctl disable gunicorn.socket
 
-	$ sudo systemctl stop gunicorn-uat.socket &&
+	$ sudo systemctl stop gunicorn-uat.socket \
 		&& sudo systemctl stop gunicorn-uat \
 		&& sudo systemctl disable gunicorn-uat.socket
 

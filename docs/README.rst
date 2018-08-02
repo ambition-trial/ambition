@@ -301,7 +301,7 @@ Deploy onto an Ubuntu 18.04 server
 
 (continued from Local / Development deploy)
 
-Log in as user ``uat``.
+Log in as user ``uat``.::
 
 	ssh uat@....
 
@@ -319,10 +319,10 @@ Use the `.env`` variables to configure a system as a UAT server. Copy the .env f
 
 	sed -i -e s/DJANGO_LIVE_SYSTEM=True/DJANGO_LIVE_SYSTEM=False/g .env
 	sed -i -e s/MYSQL_DATABASE=ambition_production/MYSQL_DATABASE=ambition_uat/g .env
-	sed -i -e 's/\/home\/ambition/\/home\/uat\//g' .env
+	sed -i -e 's/\/home\/ambition/home\/uat/g' .env
 	sed -i -e s/DJANGO_RANDOMIZATION_LIST_FILE=randomization_list.csv/DJANGO_RANDOMIZATION_LIST_FILE=test_randomization_list.csv/g .env
 	sed -i -e 's/AWS_LOCATION=ambition\/static/AWS_LOCATION=ambition_uat\/static/g' .env
-	sed -i -e 's/capetown.ambition.clinicedc.org/capetown.uat.ambition.clinicedc.org/g' .env
+	sed -i -e 's/\.ambition\.clinicedc\.org/\.uat\.ambition\.clinicedc\.org/g' .env
 	
 Diff::
 
