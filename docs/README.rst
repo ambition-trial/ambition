@@ -4,7 +4,7 @@
    :backlinks: top
 
 
-Basic local/development
+Local / Development deploy
 ------------------------
 
 *deploy using runserver (DEBUG=True)*
@@ -243,8 +243,8 @@ and add your DOMAIN or IP.::
 **IMPORTANT:** If you plan to continue with the next section, don't enter any data.
 
 
-Basic production deploy
-----------------------------------------------------------
+Production / Live deploy
+------------------------
 
 using NGINX/GUNICORN (DEBUG=False)
 
@@ -280,7 +280,6 @@ Notice that the app created django_crypto_fields file::
 
 	ls -la $DJANGO_ETC_FOLDER
 
-
 Set up gunicorn
 ---------------
 
@@ -291,6 +290,53 @@ Set up NGINX
 ------------
 
 See separate document README_deploy.rst.
+
+
+UAT / Testing deploy
+--------------------
+
+using NGINX/GUNICORN (DEBUG=True)
+
+Deploy onto an Ubuntu 18.04 server
+
+(continued from Local / Development deploy)
+
+Log in as user ``uat``.
+
+	ssh uat@....
+
+As user ``uat`` create a new virtualenv in the same way as above::
+
+	python3 -m venv ~/.venvs/uat
+
+	source ~/.venvs/uat/bin/activate
+
+	cd ~/app \
+	&& pip install --no-cache-dir -r requirements/stable.txt \
+	&& pip install --no-cache-dir -e .
+
+Use the `.env`` variables to configure a system as a UAT server. Copy the .env from the LIVE server and edit::
+
+	sed -i -e s/DJANGO_LIVE_SYSTEM=True/DJANGO_LIVE_SYSTEM=False/g .env
+	sed -i -e s/MYSQL_DATABASE=ambition_production/MYSQL_DATABASE=ambition_uat/g .env
+	sed -i -e 's/\/home\/ambition/\/home\/uat\//g' .env
+	sed -i -e s/DJANGO_RANDOMIZATION_LIST_FILE=randomization_list.csv/DJANGO_RANDOMIZATION_LIST_FILE=test_randomization_list.csv/g .env
+	sed -i -e 's/AWS_LOCATION=ambition\/static/AWS_LOCATION=ambition_uat\/static/g' .env
+	sed -i -e 's/capetown.ambition.clinicedc.org/capetown.uat.ambition.clinicedc.org/g' .env
+	
+Diff::
+
+	diff -y /home/uat/app/.env /home/ambition/app/.env
+
+Check ``DATABASE_URL`` points to ``ambition_uat``::
+	
+	cat .env | grep DATABASE_URL
+
+Check::
+
+	python manage.py check
+
+If you followed all the steps to setup the LIVE system, then restarting gunicorn and nginx should be all that is necessary
 
 
 Reference
