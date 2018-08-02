@@ -8,8 +8,8 @@ After=network.target
 [Service]
 User=uat
 Group=www-data
-WorkingDirectory=/home/ambition/app
-ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
+WorkingDirectory=/home/uat/app
+ExecStart=/home/uat/.venvs/ambition/bin/gunicorn \
     --access-logfile - \
     --workers 2 \
     --timeout=300 \

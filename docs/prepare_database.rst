@@ -22,6 +22,7 @@ The next steps use the following environment variables.
 	export MYSQL_DATABASE=ambition_production
 	export MYSQL_USER=edc
 	export MYSQL_USER_PASSWORD=password
+	export HOST=localhost
 
 
 Secure MySQL installation
@@ -46,14 +47,14 @@ Create a MySQL account, other than root, to be used by django
 
 .. code-block:: bash
 
-	$ echo "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_USER_PASSWORD';FLUSH PRIVILEGES;" | mysql
-	$ echo "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'localhost' WITH GRANT OPTION;" | mysql
+	$ echo "CREATE USER '$MYSQL_USER'@'$HOST' IDENTIFIED BY '$MYSQL_USER_PASSWORD';FLUSH PRIVILEGES;" | mysql
+	$ echo "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'$HOST' WITH GRANT OPTION;" | mysql
 
 Confirm new account can login to new DB
 
 .. code-block:: bash
 
-	$ echo " -u $MYSQL_USER -p $MYSQL_USER_PASSWORD $MYSQL_DATABASE" | mysql
+	$ echo "mysql -u $MYSQL_USER -p $MYSQL_DATABASE"
 
 Enable ``ufw``, expose 22, 3306
 
