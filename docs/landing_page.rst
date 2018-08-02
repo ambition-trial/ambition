@@ -13,7 +13,7 @@ Clone the repo, if required:
 
 	cd $REPO
 
-	$ sudo cp bin/nginx/index.html /var/www/html
+	$ sudo cp bin/index.html /var/www/html
 
 	$ sudo cp bin/nginx/ambition-sites.conf /etc/nginx/sites-available/ambition-sites.conf
 
