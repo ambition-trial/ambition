@@ -307,13 +307,13 @@ Log in as user ``uat``.::
 
 As user ``uat`` create a new virtualenv in the same way as above::
 
-	python3 -m venv ~/.venvs/uat
+	python3 -m venv ~/.venvs/ambition
 
-	source ~/.venvs/uat/bin/activate
+	source ~/.venvs/ambition/bin/activate
 
 	cd ~/app \
 	&& pip install --no-cache-dir -r requirements/stable.txt \
-	&& pip install --no-cache-dir -e .
+	&& pip install -e .
 
 Use the `.env`` variables to configure a system as a UAT server. Copy the .env from the LIVE server and edit::
 
@@ -339,7 +339,7 @@ Check::
 If you followed all the steps to setup the LIVE system, then restarting gunicorn and nginx should be all that is necessary::
 
 	sudo systemctl daemon-reload \
-	&& sudo systemctl restart gunicorn
+	&& sudo systemctl restart gunicorn-uat
 
 
 Reference
