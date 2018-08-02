@@ -336,7 +336,10 @@ Check::
 
 	python manage.py check
 
-If you followed all the steps to setup the LIVE system, then restarting gunicorn and nginx should be all that is necessary
+If you followed all the steps to setup the LIVE system, then restarting gunicorn and nginx should be all that is necessary::
+
+	sudo systemctl daemon-reload \
+	&& sudo systemctl restart gunicorn
 
 
 Reference
