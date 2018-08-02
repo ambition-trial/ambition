@@ -133,7 +133,17 @@ Enable each site:
 	$ sudo ln -s /etc/nginx/sites-available/ambition.conf /etc/nginx/sites-enabled
 
 
-Disable the default site:
+Inspect::
+
+	$ ls -la /etc/nginx/sites-enabled
+
+Output::
+
+	ambition-uat.conf -> /etc/nginx/sites-available/ambition-uat.conf
+	ambition.conf -> /etc/nginx/sites-available/ambition.conf
+
+
+Disable the default site, if enabled:
 
 .. code-block:: bash
 	
@@ -171,3 +181,11 @@ see  https://certbot.eff.org
 .. code-block:: bash
 
 	$ sudo systemctl restart nginx
+
+Now check that the DB server will allow access
+
+* check the firewall (under DO)
+* check mysql user for this account (edc@privateIP)
+
+See document ``prepare_database``
+
