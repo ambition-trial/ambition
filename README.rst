@@ -19,7 +19,7 @@ There are three requirements files
 * requirements_production.txt # installs each by tag
 * requirements.txt  # installs each from develop branch (for ci / tests)
 
-See ``ambition/ubuntu.txt`` for required ubuntu packages
+See ``ambition-edc/ubuntu.txt`` for required ubuntu packages
 
 Decide on the user account for the installation. E.g. ambition. 
 
@@ -33,7 +33,7 @@ create folders
 .. code-block:: bash
 
     mkdir  ~/.venvs
-    mkdir -p ~/source/ambition/log/
+    mkdir -p ~/source/ambition-edc/log/
     
 create VENV
 
@@ -58,19 +58,19 @@ clone main project
 .. code-block:: bash
 
     cd ~/source/ \
-    && git clone https://github.com/ambition-trial/ambition.git
+    && git clone https://github.com/ambition-trial/ambition-edc.git
 
 change to project folder
 
 .. code-block:: bash
 
-    cd ~/source/ambition
+    cd ~/source/ambition-edc
 
 copy your .env file into the project root
 
 .. code-block:: bash
 
-    cp /some/path/to/.env ~/source/ambition/.env
+    cp /some/path/to/.env ~/source/ambition-edc/.env
 
     
 install requirements, select the require file. See requirements options above.
@@ -244,8 +244,8 @@ Start runserver
     
 
 
-.. |pypi| image:: https://img.shields.io/pypi/v/ambition.svg
-    :target: https://pypi.python.org/pypi/ambition
+.. |pypi| image:: https://img.shields.io/pypi/v/ambition-edc.svg
+    :target: https://pypi.python.org/pypi/ambition-edc
     
 .. |travis| image:: https://travis-ci.com/ambition-trial/ambition.svg?branch=develop
     :target: https://travis-ci.com/ambition-trial/ambition
