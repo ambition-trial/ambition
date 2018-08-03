@@ -212,6 +212,9 @@ WSGI_APPLICATION = f'{APP_NAME}.wsgi.application'
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
+AUTHENTICATION_BACKENDS = [
+    'edc_auth.backends.ModelBackendWithSite']
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
