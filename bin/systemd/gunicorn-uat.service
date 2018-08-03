@@ -8,13 +8,13 @@ After=network.target
 [Service]
 User=uat
 Group=www-data
-WorkingDirectory=/home/ambition/app
-ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
+WorkingDirectory=/home/uat/app
+ExecStart=/home/uat/.venvs/ambition/bin/gunicorn \
     --access-logfile - \
     --workers 2 \
     --timeout=300 \
     --bind unix:/run/gunicorn-uat.sock \
-    ambition.wsgi:application
+    ambition_edc.wsgi:application
 
 [Install]
 WantedBy=multi-user.target

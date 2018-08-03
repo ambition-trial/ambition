@@ -19,33 +19,33 @@ There are three requirements files
 * requirements_production.txt # installs each by tag
 * requirements.txt  # installs each from develop branch (for ci / tests)
 
-See ``ambition/ubuntu.txt`` for required ubuntu packages
+See ``ambition-edc/ubuntu.txt`` for required ubuntu packages
 
-Decide on the user account for the installation. E.g. ambition. 
+Decide on the user account for the installation. E.g. edc. 
 
 
 .. code-block:: bash
 
-    sudo su ambition
+    sudo su edc
 
 create folders
 
 .. code-block:: bash
 
     mkdir  ~/.venvs
-    mkdir -p ~/source/ambition/log/
+    mkdir -p ~/source/ambition-edc/log/
     
 create VENV
 
 .. code-block:: bash
 
-    python3 -m venv ~/.venvs/ambition
+    python3 -m venv ~/.venvs/ambition-edc
     
 activate VENV
 
 .. code-block:: bash
 
-    source ~/.venvs/ambition/bin/activate
+    source ~/.venvs/ambition-edc/bin/activate
     
 update pip
 
@@ -58,29 +58,30 @@ clone main project
 .. code-block:: bash
 
     cd ~/source/ \
-    && git clone https://github.com/ambition-trial/ambition.git
+    && git clone https://github.com/ambition-trial/ambition-edc.git
 
 change to project folder
 
 .. code-block:: bash
 
-    cd ~/source/ambition
+    cd ~/source/ambition-edc
 
 copy your .env file into the project root
 
 .. code-block:: bash
 
-    cp /some/path/to/.env ~/source/ambition/.env
+    cp /some/path/to/.env ~/source/ambition-edc/.env
 
     
 install requirements, select the require file. See requirements options above.
 
 .. code-block:: bash
 
-    # pip install -r requirements.txt
-    
-    pip install -r requirements_production.txt
+    # choose one
+    pip install -r requirements/stable.txt
 
+    pip install -r requirements/production.txt
+ 
  create database and populate timezone table
 
     mysql -u <user> -p -Bse 'create database ambition character set utf8;' \
@@ -108,45 +109,21 @@ check
 
 Environment variables
 =====================
+
 Settings variables are store in the environment.
+
 See django-environ_ and 12-factor-django_.
 
 Place your ``.env`` file in the root of the project.
 
-.. note:: Available variables are listed in env_file.sample_.
+.. note:: Available variables are listed in env.sample_.
 
 
-Logging
-=======
- 
-If logging through syslog is implemented, you need to configure rsyslog.
- 
-.. code-block:: bash
-
-    nano /etc/rsyslog.d/30-ambition.conf
- 
- add this to the file
- 
-.. code-block:: bash
-
-    # /etc/rsyslog.d/30-ambition.conf
-    local7.*                                             /var/log/ambition.log
-    & ~  # This stops local7.* from going anywhere else.
-
- restart rsyslog
- 
-.. code-block:: bash
-
-    sudo service rsyslog restart
- 
- view the log
- 
-.. code-block:: bash
-
-    tail -n 25 -f /var/log/ambition.log
 
 Docker Install
 ==============
+
+Work in progress....
 
 Install Docker_ Compose.
 
@@ -244,16 +221,17 @@ Start runserver
     
 
 
-.. |pypi| image:: https://img.shields.io/pypi/v/ambition.svg
-    :target: https://pypi.python.org/pypi/ambition
+
+.. |pypi| image:: https://img.shields.io/pypi/v/ambition-edc.svg
+    :target: https://pypi.python.org/pypi/ambition-edc
     
-.. |travis| image:: https://travis-ci.com/ambition-trial/ambition.svg?branch=develop
-    :target: https://travis-ci.com/ambition-trial/ambition
+.. |travis| image:: https://travis-ci.com/ambition-trial/ambition-edc.svg?branch=develop
+    :target: https://travis-ci.com/ambition-trial/ambition-edc
     
-.. |coverage| image:: https://coveralls.io/repos/github/ambition-trial/ambition/badge.svg?branch=develop
-    :target: https://coveralls.io/github/ambition-trial/ambition?branch=develop
+.. |coverage| image:: https://coveralls.io/repos/github/ambition-trial/ambition-edc/badge.svg?branch=develop
+    :target: https://coveralls.io/github/ambition-trial/ambition-edc?branch=develop
 
 .. _django-environ: https://github.com/joke2k/django-environ
 .. _12-factor-django: http://www.wellfireinteractive.com/blog/easier-12-factor-django/
-.. _env_file.sample: https://github.com/ambition-trial/ambition/blob/develop/env.sample
+.. _env.sample: https://github.com/ambition-trial/ambition/blob/develop/env.sample
 .. _Docker: https://docs.docker.com/compose/install/
