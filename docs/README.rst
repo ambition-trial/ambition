@@ -158,6 +158,9 @@ Set permissions::
 
   >>> import urllib
   >>> urllib.parse.quote('my_password$@')
+
+  $ python -c 'from urllib import parse; print(parse.quote("my_password$@"))'
+  
   Output::
 	
 	'my_password%24%40'
