@@ -1,0 +1,197 @@
+Update ambition DB - July 2018
+-----------------------------------
+
+
+Makemigrations
+++++++++++++++
+
+make sure the current environment and repo are up-to-date.
+
+.. code-block:: bash
+
+	python manage.py makemigrations
+
+
+Update lab profile name
++++++++++++++++++++++++
+
+The lab_profile name in ``ambition_labs`` has changed.
+
+.. code-block:: python
+
+	from edc_lab.models import Panel
+	Panel.objects.update(lab_profile_name='subject_lab_profile')
+
+
+UserProfile table
++++++++++++++++++
+
+The ``userprofile`` table is now in ``edc_auth``. ``edc_auth`` has one migration for this table.
+Copy the same table from ``edc_base`` and fake the ``edc_auth`` migration.
+
+.. code-block:: sql
+
+	$ mysql ambition_production
+	
+	CREATE TABLE edc_auth_userprofile LIKE edc_base_userprofile; 
+
+	INSERT edc_auth_userprofile SELECT * FROM edc_base_userprofile;
+
+
+.. code-block:: bash
+
+	python manage.py migrate edc_auth 0001 --fake
+
+	python manage.py migrate edc_auth
+
+
+Fix ambition_subject migration history
+++++++++++++++++++++++++++++++++++++++
+
+
+.. code-block:: python
+
+	python manage.py showmigrations ambition_subject
+
+Output::
+
+	ambition_subject
+	 [X] 0001_initial
+	 [X] 0002_auto_20180119_1312
+	 [X] 0003_auto_20180121_1456
+	 [X] 0004_auto_20180123_2352
+	 [X] 0005_auto_20180129_0908
+	 [X] 0006_auto_20180227_0953
+	 [X] 0007_auto_20180227_1004
+	 [X] 0008_auto_20180409_1213
+	 [X] 0009_auto_20180409_1806
+	 [X] 0010_auto_20180512_1248  (# id = 152)
+	 ... 
+
+
+Delete migration history after ``0010``
+
+.. code-block:: sql
+	
+	$ mysql ambition_production
+
+	# review migrations
+	select id, app, name from django_migrations where app='ambition_subject';
+
+	# delete all after 0010
+	delete from django_migrations where app='ambition_subject' and id>152;
+
+Apply migrate 0011 (this is for edc_action changes)
+
+.. code-block:: bash
+
+	python manage.py migrate ambition_subject 0011
+
+now, fake the 0011, 0012, and 0013. These apply changes already in the schema)
+
+.. code-block:: bash
+
+	python manage.py migrate ambition_subject --fake 
+	
+Migrations in the other Ambition modules
+++++++++++++++++++++++++++++++++++++++++
+
+Fake ``ambition_screening`` ``0002`` migration.
+
+.. code-block:: bash
+
+	python manage.py showmigrations ambition_screening
+	
+Output::
+
+	ambition_screening
+	 [X] 0001_initial
+	 [ ] 0002_auto_20180706_1519
+	"""
+
+.. code-block:: bash
+
+	python manage.py migrate ambition_screening 0002_auto_20180706_1519 --fake
+
+**ambition_rando**
+
+.. code-block:: bash
+
+	python manage.py showmigrations ambition_rando
+
+Output::
+
+	ambition_rando
+	 [X] 0001_initial
+	 [ ] 0002_auto_20180706_1519
+
+.. code-block:: bash
+
+	python manage.py migrate ambition_rando
+
+
+**ambition_prn**
+
+.. code-block:: bash
+
+	python manage.py showmigrations ambition_prn
+
+Output::
+	
+	ambition_prn
+	 [X] 0001_initial
+	 [X] 0002_auto_20180119_1312
+	 [X] 0003_auto_20180121_1411
+	 [X] 0004_auto_20180409_1213
+	 [ ] 0005_auto_20180708_0925
+
+.. code-block:: bash
+
+	python manage.py migrate ambition_prn
+
+
+**ambition_export**
+
+.. code-block:: bash
+
+	python manage.py showmigrations ambition_export
+
+Output::
+	
+	ambition_export
+	 [X] 0001_initial
+	 [X] 0002_auto_20180327_1743
+	 [X] 0003_auto_20180330_2112
+	 [ ] 0004_auto_20180706_1519
+
+.. code-block:: bash
+
+	python manage.py migrate ambition_export
+
+
+**ambition_ae**
+
+.. code-block:: bash
+
+	python manage.py showmigrations ambition_ae
+
+Output::
+
+	ambition_ae
+	 [X] 0001_initial
+	 [X] 0002_auto_20180409_1213
+	 [ ] 0003_auto_20180707_2155
+
+.. code-block:: bash
+
+	python manage.py migrate ambition_ae
+
+
+Migrate the rest safely
++++++++++++++++++++++++
+
+All::
+
+	python manage.py showmigrations
+	
+	python manage.py migrate
