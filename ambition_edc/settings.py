@@ -21,6 +21,7 @@ env = environ.Env(
     DJANGO_AUTO_CREATE_KEYS=(bool, False),
     DJANGO_CSRF_COOKIE_SECURE=(bool, True),
     DJANGO_DEBUG=(bool, False),
+    DJANGO_EMAIL_USE_TLS=(bool, True),
     DJANGO_SESSION_COOKIE_SECURE=(bool, True),
     DJANGO_USE_I18N=(bool, True),
     DJANGO_USE_L10N=(bool, False),
@@ -236,6 +237,15 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
+
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+     'OPTIONS': {
+         'min_length': 20,
+     }},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'}]
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -309,8 +319,13 @@ LAB_DASHBOARD_REQUISITION_MODEL = env.str(
 HOLIDAY_FILE = env.str('DJANGO_HOLIDAY_FILE')
 COUNTRY = env.str('DJANGO_COUNTRY')
 
-# ambition
 EMAIL_CONTACTS = env.dict('DJANGO_EMAIL_CONTACTS', {})
+EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
+EMAIL_PORT = env.int('DJANGO_EMAIL_PORT')
+EMAIL_HOST_USER = env.str('DJANGO_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.str('DJANGO_EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = env('DJANGO_EMAIL_USE_TLS')
+
 if DEBUG:
     RANDOMIZATION_LIST_PATH = os.path.join(
         TEST_DIR, env.str('DJANGO_RANDOMIZATION_LIST_FILE'))
