@@ -6,6 +6,15 @@
 Backup using Duplicity
 ----------------------
 
+**IMPORTANT**
+
+  If using duplicity BE ABSOLUTELY SURE you backup the ``gnupg`` keys.
+
+  Best to backup the entire ``~/.gnupg`` folder.
+
+  Backup the ``~/.duplicity`` folder as well.
+
+
 Config mysql to backup and transfer with Duplicity
 ++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -45,13 +54,19 @@ Setup ``Duplicity``
 
   $ mkdir ~/.duplicity
 
-Generate GPG Keys
+*or restore the ``.duplicity`` folder from your archive.*
+
+Either generate GPG Keys OR restore the .gnugp folder from you backup
+
+generate ...
 
 .. code-block:: bash
   
   $ gpg --version
 
   $ gpg --gen-key
+
+*or copy your archived .gnupg folder into the account.*
 
 Take note of ``your-GPG-public-key-id``
 
@@ -144,13 +159,62 @@ A restore file may look like this:
   $ chmod 0700 ~/.duplicity/.restore.sh
 
 
-ref: https://www.digitalocean.com/community/tutorials/how-to-use-duplicity-with-gpg-to-back-up-data-to-digitalocean-spaces
+check timestamp on last record in admin log, for example::
+  
+  select * from django_admin_log order by action_time desc LIMIT 1\G;
 
 
-Test backup
-+++++++++++
+Restore single file
++++++++++++++++++++
+
+create a ``restore_file.sh``::
+
+  nano restore_file.sh
+
+.. code-block:: bash
+
+  . "$HOME/.duplicity/.env_variables.conf"
+
+  # note will fail if file exists
+  duplicity --verbosity info \
+   --encrypt-sign-key=$GPG_KEY \
+   --log-file $HOME/.duplicity/info.log \
+   --file-to-restore $FILE_TO_RESTORE \
+   $AWS_ENDPOINT/$AWS_BUCKET \
+   $HOME/$FILE_TO_RESTORE
+
+  unset AWS_ACCESS_KEY_ID
+  unset AWS_SECRET_ACCESS_KEY
+  unset AWS_ENDPOINT
+  unset AWS_BUCKET
+  unset GPG_KEY
+  unset PASSPHRASE
+  unset DB_NAME
+  unset DB_DATE
+  unset DB_FILE
+  unset BACKUP_DIR
+  unset FILE_TO_RESTORE
 
 
-Test restore
-++++++++++++
+list files in the backup::
+
+  source "$HOME/.duplicity/.env_variables.conf"
+
+  duplicity list-current-files $AWS_ENDPOINT/$AWS_BUCKET
+
+for file ``ambition_production-20180806160001.sql``::
+
+set $FILE_TO_RESTORE::
+
+  export FILE_TO_RESTORE=ambition_production-20180806160001.sql
+
+restore::
+
+  sudo sh restore_file.sh
+
+References
+++++++++++
+
+* https://www.digitalocean.com/community/tutorials/how-to-use-duplicity-with-gpg-to-back-up-data-to-digitalocean-spaces
+* https://help.ubuntu.com/community/DuplicityBackupHowto#List_Archived_Files
 
