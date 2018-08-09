@@ -55,7 +55,6 @@ class EdcProtocolAppConfig(BaseEdcProtocolAppConfig):
 
 
 class EdcLabAppConfig(BaseEdcLabAppConfig):
-    # requisition_model = 'ambition_subject.subjectrequisition'
     result_model = 'edc_lab.result'
 
 
