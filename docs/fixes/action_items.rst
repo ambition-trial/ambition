@@ -257,3 +257,78 @@ Delete cancelled action-items
 	from edc_action_item_actionitem as a
 	left join edc_action_item_actiontype as t on t.id=a.action_type_id
 	order by a.created;
+
+
+Update linked_to_reference
+++++++++++++++++++++++++++
+
+
+.. code-block:: python
+
+    from django.apps import apps as django_apps
+    from django.db.models import ObjectDoesNotExist
+    from edc_action_item.models import ActionItem
+    from edc_constants.constants import OPEN, CLOSED, CANCELLED
+
+
+    model_classes=[]
+
+    for model_cls in django_apps.get_models():
+        if model_cls._meta.app_label != 'edc_action_item':
+            try:
+                model_cls.action_identifier
+            except AttributeError:
+                pass
+            else:
+                if 'historical' not in model_cls._meta.label_lower:
+                    model_classes.append(model_cls)
+    
+    for model_cls in model_classes:
+        for obj in model_cls.objects.all():
+            try:
+                action_item = ActionItem.objects.get(
+                    action_identifier=obj.action_identifier,
+                    status__in=[OPEN, CLOSED],
+                    linked_to_reference=False)
+            except ObjectDoesNotExist as e:
+                pass
+            else:
+                print(action_item, action_item.linked_to_reference)
+                action_item.linked_to_reference = True
+                action_item.save()
+
+
+.. code-block:: python
+
+    from edc_action_item.models import ActionItem
+    from django.db.models import ObjectDoesNotExist
+
+    for action_item in ActionItem.objects.filter(
+            parent_reference_identifier__isnull=False).exclude(
+                parent_reference_identifier__startswith='AC'):
+        parent_reference_model_cls = django_apps.get_model(
+            action_item.parent_reference_model)
+        try:
+            parent_action_identifier = parent_reference_model_cls.objects.get(
+                tracking_identifier=action_item.parent_reference_identifier)
+        except ObjectDoesNotExist as e:
+            print(action_item.parent_reference_identifier, e)
+        else:
+            action_item.parent_reference_identifier = parent_action_identifier
+            # action_item.save()
+            print('saved parent_reference_identifier', action_item)
+
+    for action_item in ActionItem.objects.filter(
+            related_reference_identifier__isnull=False).exclude(
+                related_reference_identifier__startswith='AC'):
+        related_reference_model_cls = django_apps.get_model(
+            action_item.parent_reference_model)
+        try:
+            related_action_identifier = related_reference_model_cls.objects.get(
+                tracking_identifier=action_item.related_reference_identifier)
+        except ObjectDoesNotExist as e:
+            print(action_item.parent_reference_identifier, e)
+        else:
+            action_item.related_reference_identifier = related_action_identifier
+            # action_item.save()
+            print('saved related_reference_identifier', action_item)

@@ -1,18 +1,3 @@
--e .
--e /Users/erikvw/source/ambition-ae  #develop#egg=ambition-ae
--e /Users/erikvw/source/ambition-dashboard  #develop#egg=ambition-dashboard
--e /Users/erikvw/source/ambition-export
--e /Users/erikvw/source/ambition-labs  #develop#egg=ambition-labs
--e /Users/erikvw/source/ambition-metadata-rules  #develop#egg=ambition-metadata-rules
--e /Users/erikvw/source/ambition-prn  #develop#egg=ambition-prn
--e /Users/erikvw/source/ambition-pharmacy  #develop#egg=ambition-pharmacy
--e /Users/erikvw/source/ambition-rando  #develop#egg=ambition-rando
--e /Users/erikvw/source/ambition-reference  #develop#egg=ambition-reference
--e /Users/erikvw/source/ambition-screening  #develop#egg=ambition-screening
--e /Users/erikvw/source/ambition-sites
--e /Users/erikvw/source/ambition-subject  #develop#egg=ambition-subject
--e /Users/erikvw/source/ambition-validators  #develop#egg=ambition-validators
--e /Users/erikvw/source/ambition-visit-schedule  #develop#egg=ambition-visit-schedule
 -e /Users/erikvw/source/edc-appointment  #develop#egg=edc-appointment
 -e /Users/erikvw/source/edc-action-item  #develop#egg=edc-action-item
 -e /Users/erikvw/source/edc-auth  #develop#egg=edc-auth
@@ -56,3 +41,18 @@
 -e /Users/erikvw/source/edc-visit-tracking  #develop#egg=edc-visit-tracking
 -e /Users/erikvw/source/django-crypto-fields  #develop#egg=django-crypto-fields
 -e /Users/erikvw/source/django-revision  #develop#egg=django-revision
+-e /Users/erikvw/source/ambition-ae  #develop#egg=ambition-ae
+-e /Users/erikvw/source/ambition-dashboard  #develop#egg=ambition-dashboard
+-e /Users/erikvw/source/ambition-export
+-e /Users/erikvw/source/ambition-labs  #develop#egg=ambition-labs
+-e /Users/erikvw/source/ambition-metadata-rules  #develop#egg=ambition-metadata-rules
+-e /Users/erikvw/source/ambition-prn  #develop#egg=ambition-prn
+-e /Users/erikvw/source/ambition-pharmacy  #develop#egg=ambition-pharmacy
+-e /Users/erikvw/source/ambition-rando  #develop#egg=ambition-rando
+-e /Users/erikvw/source/ambition-reference  #develop#egg=ambition-reference
+-e /Users/erikvw/source/ambition-screening  #develop#egg=ambition-screening
+-e /Users/erikvw/source/ambition-sites
+-e /Users/erikvw/source/ambition-subject  #develop#egg=ambition-subject
+-e /Users/erikvw/source/ambition-validators  #develop#egg=ambition-validators
+-e /Users/erikvw/source/ambition-visit-schedule  #develop#egg=ambition-visit-schedule
+-e .
