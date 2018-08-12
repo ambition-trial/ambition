@@ -361,7 +361,7 @@ if env('AWS_ENABLED'):
     }
     AWS_LOCATION = env.str('AWS_LOCATION')
     if env('CDN_ENABLED'):
-        STATIC_URL = f'{env.str("CDN_ZONE_URL")}/{AWS_LOCATION}/'
+        STATIC_URL = f'{env.str("CDN_ZONE_URL")}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/'
     else:
         STATIC_URL = 'https://%s.%s/%s/' % (AWS_STORAGE_BUCKET_NAME,
                                             AWS_S3_ENDPOINT_URL, AWS_LOCATION)
