@@ -18,6 +18,7 @@ BASE_DIR = str(Path(os.path.dirname(
 
 env = environ.Env(
     AWS_ENABLED=(bool, False),
+    CDN_ENABLED=(bool, False),
     DJANGO_AUTO_CREATE_KEYS=(bool, False),
     DJANGO_CSRF_COOKIE_SECURE=(bool, True),
     DJANGO_DEBUG=(bool, False),
@@ -359,8 +360,11 @@ if env('AWS_ENABLED'):
         'CacheControl': 'max-age=86400',
     }
     AWS_LOCATION = env.str('AWS_LOCATION')
-    STATIC_URL = 'https://%s.%s/%s/' % (AWS_STORAGE_BUCKET_NAME,
-                                        AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+    if env('CDN_ENABLED'):
+        STATIC_URL = f'{env.str("CDN_ZONE_URL")}/{AWS_LOCATION}/'
+    else:
+        STATIC_URL = 'https://%s.%s/%s/' % (AWS_STORAGE_BUCKET_NAME,
+                                            AWS_S3_ENDPOINT_URL, AWS_LOCATION)
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 else:
     # run collectstatic, check nginx LOCATION
