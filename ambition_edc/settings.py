@@ -360,12 +360,13 @@ if env('AWS_ENABLED'):
         'CacheControl': 'max-age=86400',
     }
     AWS_LOCATION = env.str('AWS_LOCATION')
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     if env('CDN_ENABLED'):
-        STATIC_URL = f'{env.str("CDN_ZONE_URL")}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/'
+        CDN_ZONE_URL = env.str("CDN_ZONE_URL")
+        STATIC_URL = f'https://{CDN_ZONE_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/'
     else:
         STATIC_URL = 'https://%s.%s/%s/' % (AWS_STORAGE_BUCKET_NAME,
                                             AWS_S3_ENDPOINT_URL, AWS_LOCATION)
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 else:
     # run collectstatic, check nginx LOCATION
     STATIC_URL = env.str('DJANGO_STATIC_URL')
