@@ -43,6 +43,7 @@ edc-model-wrapper
 edc-navbar
 edc-offstudy
 edc-pdutils
+edc-permissions
 edc-pharmacy
 edc-pharmacy-dashboard
 edc-prn
