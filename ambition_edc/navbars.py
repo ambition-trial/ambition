@@ -9,6 +9,7 @@ navbar.append_item(
         name='pharmacy',
         label='Pharmacy',
         fa_icon='fas fa-medkit',
+        permission_codename='nav_pharmacy',
         url_name=f'home_url'))
 
 navbar.append_item(
@@ -16,6 +17,7 @@ navbar.append_item(
         name='lab',
         label='Specimens',
         fa_icon='fas fa-flask',
+        permission_codename='nav_lab_section',
         url_name=lab_dashboard_urls.get('requisition_listboard_url')))
 
 navbar.append_item(
