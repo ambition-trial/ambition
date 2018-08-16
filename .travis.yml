@@ -15,7 +15,7 @@ services:
 - mysql
 install:
 - pip install --upgrade pip
-- pip install flake8
+- pip install flake8 edc-selenium
 - pip install coveralls
 - pip install -e .
 - pip install -q -r requirements/stable.txt
