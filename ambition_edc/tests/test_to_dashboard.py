@@ -15,7 +15,9 @@ from edc_selenium.mixins import SeleniumLoginMixin, SeleniumModelFormMixin
 from model_mommy import mommy
 from selenium.webdriver.firefox.webdriver import WebDriver
 
+from ambition_rando.randomization_list_importer import RandomizationListImporter
 from ambition_sites import ambition_sites
+from edc_facility.import_holidays import import_holidays
 
 style = color_style()
 
@@ -33,6 +35,8 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        RandomizationListImporter()
+        import_holidays()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(3)
 
@@ -57,7 +61,8 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
             try:
                 url = reverse(url_name)
             except NoReverseMatch:
-                sys.stdout.write(style.ERROR(f'NoReverseMatch: {url_name}\n'))
+                sys.stdout.write(style.ERROR(
+                    f'NoReverseMatch: {url_name} without kwargs.\n'))
             else:
                 sys.stdout.write(style.SUCCESS(f'{url_name} {url}\n'))
                 self.selenium.get('%s%s' % (self.live_server_url, url))
