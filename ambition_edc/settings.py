@@ -22,18 +22,24 @@ env = environ.Env(
     DJANGO_AUTO_CREATE_KEYS=(bool, False),
     DJANGO_CSRF_COOKIE_SECURE=(bool, True),
     DJANGO_DEBUG=(bool, False),
+    DJANGO_EMAIL_ENABLED=(bool, False),
     DJANGO_EMAIL_USE_TLS=(bool, True),
+    DJANGO_LOGGING_ENABLED=(bool, True),
     DJANGO_SESSION_COOKIE_SECURE=(bool, True),
     DJANGO_USE_I18N=(bool, True),
     DJANGO_USE_L10N=(bool, False),
     DJANGO_USE_TZ=(bool, True),
-    DATABASE_USE_SQLITE=(bool, False),
+    DATABASE_SQLITE_ENABLED=(bool, False),
     DJANGO_LIVE_SYSTEM=(bool, False),
     SENTRY_ENABLED=(bool, False),
 )
 
 # copy your .env file from .envs/ to BASE_DIR
-env.read_env(os.path.join(BASE_DIR, '.env'))
+if 'test' in sys.argv:
+    env.read_env(os.path.join(BASE_DIR, '.env-tests'))
+    print(f"Reading env from {os.path.join(BASE_DIR, '.env-tests')}")
+else:
+    env.read_env(os.path.join(BASE_DIR, '.env'))
 
 DEBUG = env('DJANGO_DEBUG')
 
@@ -169,7 +175,7 @@ TEMPLATES = [
     },
 ]
 
-if env('DATABASE_USE_SQLITE'):
+if env('DATABASE_SQLITE_ENABLED'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -320,12 +326,13 @@ LAB_DASHBOARD_REQUISITION_MODEL = env.str(
 HOLIDAY_FILE = env.str('DJANGO_HOLIDAY_FILE')
 COUNTRY = env.str('DJANGO_COUNTRY')
 
-EMAIL_CONTACTS = env.dict('DJANGO_EMAIL_CONTACTS', {})
-EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
-EMAIL_PORT = env.int('DJANGO_EMAIL_PORT')
-EMAIL_HOST_USER = env.str('DJANGO_EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env.str('DJANGO_EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = env('DJANGO_EMAIL_USE_TLS')
+if env('DJANGO_EMAIL_ENABLED'):
+    EMAIL_CONTACTS = env.dict('DJANGO_EMAIL_CONTACTS', {})
+    EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
+    EMAIL_PORT = env.int('DJANGO_EMAIL_PORT')
+    EMAIL_HOST_USER = env.str('DJANGO_EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = env.str('DJANGO_EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = env('DJANGO_EMAIL_USE_TLS')
 
 if DEBUG:
     RANDOMIZATION_LIST_PATH = os.path.join(
@@ -341,7 +348,7 @@ GIT_DIR = BASE_DIR
 # django_crypto_fields
 if not DEBUG:
     KEY_PATH = env.str('DJANGO_KEY_FOLDER')
-AUTO_CREATE_KEYS = env.str('DJANGO_AUTO_CREATE_KEYS')
+    AUTO_CREATE_KEYS = env.str('DJANGO_AUTO_CREATE_KEYS')
 
 EXPORT_FOLDER = env.str('DJANGO_EXPORT_FOLDER') or os.path.expanduser('~/')
 
@@ -383,7 +390,8 @@ if SENTRY_ENABLED:
         'release': raven.fetch_git_sha(BASE_DIR),
     }
 else:
-    from .logging.standard import LOGGING  # noqa
+    if env('DJANGO_LOGGING_ENABLED'):
+        from .logging.standard import LOGGING  # noqa
 
 if 'test' in sys.argv:
 
