@@ -1,4 +1,4 @@
--e git+https://github.com/ambition-trial/ambition-edc.git@82ae25cbcbfbb30903b5c8501fb7cc0888e75e83#egg=ambition_edc
+-e git+https://github.com/ambition-trial/ambition-edc.git@31e2c0c01a7f26dabcd56b9203fe9be2074cd999#egg=ambition_edc
 ambition-ae==0.1.8
 ambition-dashboard==0.1.2a4
 ambition-export==0.1.3
