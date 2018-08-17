@@ -1,7 +1,7 @@
 
 Additional Groups have been added to the system to control
 
-Run the management command
+Run the management command:
 
 .. code-block:: bash
 
@@ -9,6 +9,9 @@ Run the management command
 	&& cd ~/app \
 	&& python manage.py update_edc_permissions
 
+.. code-block:: bash
+
+	python manage.py shell
 
 Add CLINIC group members to PII and RANDO
 
