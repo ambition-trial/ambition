@@ -3,9 +3,11 @@ Additional Groups have been added to the system to control
 
 Run the management command
 
-.. code-block:: python
+.. code-block:: bash
 
-	python manage.py update_edc_permissions
+	source ~/.venvs/ambition/bin/activate \
+	&& cd ~/app \
+	&& python manage.py update_edc_permissions
 
 
 Add CLINIC group members to PII and RANDO
