@@ -12,6 +12,8 @@ Add CLINIC group members to PII and RANDO
 
 .. code-block:: python
 
+    from django.contrib.auth.models import User, Group
+
     pii_group = Group.objects.get(name='PII')
     rando_group = Group.objects.get(name='RANDO')
     for user in User.objects.filter(is_active=True, is_staff=True):
