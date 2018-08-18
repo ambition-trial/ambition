@@ -47,6 +47,12 @@ class PermissionsUpdater(EdcPermissionsUpdater):
                           'view_historicaldeathreporttmg',
                           'view_historicalsubjectconsent',
                           'view_historicalsubjectreconsent']).delete()
+        # allow CLINIC users to view AeTmg
+        for permission in Permission.objects.filter(
+                content_type__app_label__in=['ambition_ae'],
+                content_type__model__in=['aetmg'],
+                codename__startswith='view'):
+            group.permissions.add(permission)
 
     def update_tmg_group_permissions(self):
         group_name = 'TMG'

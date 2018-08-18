@@ -1,3 +1,4 @@
+fabfile/.hosts
 static/*
 .etc/*
 .envs/*
