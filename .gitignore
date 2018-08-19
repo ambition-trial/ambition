@@ -1,3 +1,5 @@
+geckodriver.log
+freeze*
 fabfile/.hosts
 static/*
 .etc/*
