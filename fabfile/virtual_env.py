@@ -4,6 +4,7 @@ from fabric.decorators import hosts, task
 from .utils import set_fab_env
 
 
+@task
 def update_virtualenv(user=None):
     set_fab_env(user)
     with prefix(env.activate):
@@ -72,6 +73,7 @@ def update_develop_virtualenv():
                 local(
                     f'pip install -U -e {source_folder}/{app} --no-cache-dir')
             local(
-                f'pip install -U pip ipython setuptools wheel edc-selenium coverage Fabric3 --no-cache-dir')
+                f'pip install -U pip ipython setuptools wheel twine '
+                f'edc-selenium coverage Fabric3 --no-cache-dir')
             local(
                 f'pip install -U git+https://github.com/PyCQA/flake8.git --no-cache-dir')
