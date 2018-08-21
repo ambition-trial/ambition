@@ -25,4 +25,4 @@ def migrate(user=None):
             update_virtualenv(user)
             run('python manage.py migrate')
             run('python manage.py update_edc_permissions')
-            run('python manage.py collectstatic')
+            # run('python manage.py collectstatic')
