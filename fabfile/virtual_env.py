@@ -1,6 +1,7 @@
 from fabric.api import cd, env, run, prefix, local
 from fabric.decorators import hosts, task
 
+from .gunicorn import restart_gunicorn
 from .utils import set_fab_env
 
 
@@ -12,6 +13,7 @@ def update_virtualenv(user=None):
             run('git checkout master')
             run('git pull')
             run('pip install -U -r requirements/stable.txt --no-cache-dir')
+    restart_gunicorn(user)
 
 
 @task
