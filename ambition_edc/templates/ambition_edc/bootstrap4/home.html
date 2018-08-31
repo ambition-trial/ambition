@@ -1,0 +1,66 @@
+{% extends 'ambition_edc/base.html' %}
+{% load static %}
+
+{% block main %}
+
+<style>
+
+.bg-1 {
+    background-color: #428bca; /* dark blue */
+    color: #ffffff;
+}
+.bg-2 {
+    background-color: #5bc0de; /* light Blue */
+    color: #ffffff;
+}
+.bg-3 {
+    background-color: #f9f9f9; /* White */
+    color: #555555;
+}
+
+</style>
+
+{{ block.super }}
+
+
+
+
+<div class="container bg-3">
+
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ protocol_name |default:project_name }} {{ request.site.name|title }}</div>
+
+      <div class="list-group">
+        <a href="{% url screening_listboard_url %}" class="list-group-item"><i class="fas fa-user-plus fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Screening</a>
+        <a href="{% url subject_listboard_url %}" class="list-group-item"><i class="fas fa-user-circle fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Subjects</a>
+      {% if perms.edc_navbar.nav_lab_section %}
+        <a href="{% url requisition_listboard_url %}" class="list-group-item"><i class="fas fa-flask fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Specimens</a>
+      {% endif %}
+      {% if perms.edc_navbar.nav_pharmacy_section %}
+        <a href="#" class="list-group-item"><i class="fas fa-medkit fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Pharmacy</a>
+      {% endif %}
+      {% if perms.ambition_ae %}
+        <a href="{% url 'ambition_ae:home_url' %}" class="list-group-item"><i class="fas fa-heartbeat fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Adverse Events</a>
+      {% endif %}
+      {% if perms.edc_action_item %}
+        <a href="{% url 'edc_action_item:home_url' %}" class="list-group-item"><i class="fas fa-bolt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Action Items</a>
+      {% endif %}
+      {% if perms.edc_navbar.navbar_collect_offline %}
+        <a href="{% url 'django_collect_offline:home_url' %}" class="list-group-item"><i class="fas fa-exchange-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Synchronization</a>
+      {% endif %}
+        <a href="/switch_sites/" class="list-group-item"><i class="fas fa-arrows-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Switch sites</a>
+        <a href="{% url 'logout' %}"" class="list-group-item"><i class="fas fa-sign-out-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Log out</a>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4"></div>
+</div>
+</div>
+
+
+
+{% endblock main %}
