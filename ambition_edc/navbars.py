@@ -1,38 +1,27 @@
+from ambition_dashboard.navbars import navbar as ambition_dashboard_navbar
+from copy import copy
 from django.conf import settings
-from edc_navbar import NavbarItem, site_navbars, Navbar
-from edc_lab_dashboard.dashboard_urls import dashboard_urls as lab_dashboard_urls
+from edc_lab_dashboard.navbars import navbar as lab_navbar
+from edc_navbar import site_navbars, Navbar
 
-navbar = Navbar(name='ambition')
+navbar = Navbar(name=settings.APP_NAME)
 
-navbar.append_item(
-    NavbarItem(
-        name='pharmacy',
-        label='Pharmacy',
-        fa_icon='fas fa-medkit',
-        permission_codename='nav_pharmacy_section',
-        url_name=f'home_url'))
+navbar_item = copy([item for item in lab_navbar.items
+                    if item.name == 'specimens'][0])
+navbar_item.active = False
+navbar_item.label = 'Specimens'
+navbar.append_item(navbar_item)
 
 navbar.append_item(
-    NavbarItem(
-        name='lab',
-        label='Specimens',
-        fa_icon='fas fa-flask',
-        permission_codename='nav_lab_section',
-        url_name=lab_dashboard_urls.get('requisition_listboard_url')))
+    [item for item in ambition_dashboard_navbar.items
+     if item.name == 'screened_subject'][0])
 
 navbar.append_item(
-    NavbarItem(
-        name='screened_subject',
-        label='Screening',
-        fa_icon='fas fa-user-plus',
-        url_name=settings.DASHBOARD_URL_NAMES.get('screening_listboard_url')))
+    [item for item in ambition_dashboard_navbar.items
+     if item.name == 'consented_subject'][0])
 
 navbar.append_item(
-    NavbarItem(
-        name='consented_subject',
-        label='Subjects',
-        fa_icon='fas fa-user-circle',
-        url_name=settings.DASHBOARD_URL_NAMES.get('subject_listboard_url')))
-
+    [item for item in ambition_dashboard_navbar.items
+     if item.name == 'tmg'][0])
 
 site_navbars.register(navbar)
