@@ -17,6 +17,7 @@ from edc_list_data.site_list_data import site_list_data
 from edc_selenium.mixins import SeleniumLoginMixin, SeleniumModelFormMixin
 from model_mommy import mommy
 from selenium.webdriver.firefox.webdriver import WebDriver
+from time import sleep
 
 
 style = color_style()
@@ -88,6 +89,8 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
                      'gender', 'study_site'],
             verbose=True)
 
+        sleep(10)
+
         # set appointment in progress
         subject_identifier = model_obj.subject_identifier
         appointment = Appointment.objects.filter(
@@ -138,6 +141,9 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
 
     @tag('3')
     def test_action_item(self):
+
+        subject_identifier = self.go_to_subject_dashboard()
+        self.add_action_item(subject_identifier, AE_INITIAL_ACTION)
 
         action_type = ActionType.objects.get(name=AE_INITIAL_ACTION)
 

@@ -22,9 +22,38 @@ from edc_facility.import_holidays import import_holidays
 style = color_style()
 
 
+class AmbitionEdcMixin:
+
+    def add_subject_screening(self):
+        """Add a subject screening form.
+        """
+        obj = mommy.prepare_recipe(self.subject_screening_model)
+        model_obj = self.fill_form(
+            model=self.subject_screening_model,
+            obj=obj, exclude=['subject_identifier', 'report_datetime'])
+        return model_obj
+
+    def add_subject_consent(self, model_obj):
+        """Add a subject consent for the newly screening subject.
+        """
+        obj = mommy.prepare_recipe(
+            self.subject_consent_model,
+            **{'screening_identifier': model_obj.screening_identifier,
+               'dob': model_obj.estimated_dob,
+               'gender': model_obj.gender})
+        obj.initials = f'{obj.first_name[0]}{obj.last_name[0]}'
+        model_obj = self.fill_form(
+            model=self.subject_consent_model, obj=obj,
+            exclude=['subject_identifier', 'citizen', 'legal_marriage',
+                     'marriage_certificate', 'subject_type',
+                     'gender', 'study_site'],
+            verbose=True)
+        return model_obj
+
+
 @override_settings(DEBUG=True)
 class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMixin,
-                      StaticLiveServerTestCase):
+                      AmbitionEdcMixin, StaticLiveServerTestCase):
 
     default_sites = ambition_sites
     appointment_model = 'edc_appointment.appointment'
@@ -81,10 +110,7 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
         self.selenium.find_element_by_id('subjectscreening_add').click()
 
         # add a subject screening form
-        obj = mommy.prepare_recipe(self.subject_screening_model)
-        model_obj = self.fill_form(
-            model=self.subject_screening_model,
-            obj=obj, exclude=['subject_identifier', 'report_datetime'])
+        model_obj = self.add_subject_screening()
 
         # assert back at screening listboard
         self.selenium.find_element_by_id('subjectscreening_add')
@@ -98,18 +124,7 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
         self.selenium.find_element_by_id(
             f'subjectconsent_add_{model_obj.screening_identifier}').click()
 
-        obj = mommy.prepare_recipe(
-            self.subject_consent_model,
-            **{'screening_identifier': model_obj.screening_identifier,
-               'dob': model_obj.estimated_dob,
-               'gender': model_obj.gender})
-        obj.initials = f'{obj.first_name[0]}{obj.last_name[0]}'
-        model_obj = self.fill_form(
-            model=self.subject_consent_model, obj=obj,
-            exclude=['subject_identifier', 'citizen', 'legal_marriage',
-                     'marriage_certificate', 'subject_type',
-                     'gender', 'study_site'],
-            verbose=True)
+        model_obj = self.add_subject_consent(model_obj)
 
         # assert reached at subject dashboard
         self.selenium.find_element_by_id(f'subject_dashboard')
