@@ -1,14 +1,17 @@
-from django.contrib.auth.models import Group, Permission
-from edc_permissions.permissions_updater import (
-    PermissionsUpdater as EdcPermissionsUpdater)
+from django.contrib.auth.models import Group, Permission, User
+from django.core.exceptions import ObjectDoesNotExist
+from edc_permissions.permissions_updater import CLINIC, LAB, AUDITOR, ADMINISTRATION, PII
+from edc_permissions.permissions_updater import PermissionsUpdater as EdcPermissionsUpdater
+
+
+RANDO = 'RANDO'
+TMG = 'TMG'
 
 
 class PermissionsUpdater(EdcPermissionsUpdater):
 
-    group_names = [
-        'CLINIC',
-        'RANDO',
-        'TMG']
+    group_names = [RANDO, TMG]
+
     pii_models = [
         'edc_locator.subjectconsent',
         'ambition_subject.subjectreconsent',
@@ -20,12 +23,48 @@ class PermissionsUpdater(EdcPermissionsUpdater):
         'ambition_prn',
     ]
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # ensure in ADMINITRATION group
+        administration_group = Group.objects.get(name=ADMINISTRATION)
+        for user in User.objects.filter(groups__name__in=[CLINIC, LAB, TMG]):
+            try:
+                user.groups.get(name=administration_group.name)
+            except ObjectDoesNotExist:
+                user.groups.add(administration_group)
+        # ensure in PII group
+        pii_group = Group.objects.get(name=PII)
+        for user in User.objects.filter(groups__name__in=[CLINIC, LAB]):
+            try:
+                user.groups.get(name=pii_group.name)
+            except ObjectDoesNotExist:
+                user.groups.add(pii_group)
+        # ensure NOT in PII group
+        for user in User.objects.filter(groups__name__in=[TMG, AUDITOR]):
+            try:
+                user.groups.get(name=pii_group.name)
+            except ObjectDoesNotExist:
+                pass
+            else:
+                user.groups.remove(pii_group)
+        # ensure NOT in RANDO group
+        rando_group = Group.objects.get(name=RANDO)
+        for user in User.objects.filter(groups__name__in=[TMG, AUDITOR]):
+            try:
+                user.groups.get(name=rando_group.name)
+            except ObjectDoesNotExist:
+                pass
+            else:
+                user.groups.remove(rando_group)
+
     def extra_lab_group_permissions(self, group):
         permission = Permission.objects.get(
             content_type__app_label='ambition_subject',
             content_type__model='subjectrequisition',
             codename__startswith='view')
         group.permissions.add(permission)
+        self.add_navbar_permissions(
+            group=group, codenames=['nav_subject_section'])
 
     def extra_clinic_group_permissions(self, group):
         exclude_models = [
@@ -53,9 +92,12 @@ class PermissionsUpdater(EdcPermissionsUpdater):
                 content_type__model__in=['aetmg'],
                 codename__startswith='view'):
             group.permissions.add(permission)
+        self.add_navbar_permissions(
+            group=group, codenames=[
+                'nav_subject_section', 'nav_screening_section'])
 
     def update_tmg_group_permissions(self):
-        group_name = 'TMG'
+        group_name = TMG
         group = Group.objects.get(name=group_name)
         group.permissions.clear()
         for permission in Permission.objects.filter(
@@ -73,9 +115,15 @@ class PermissionsUpdater(EdcPermissionsUpdater):
                 content_type__app_label__in=['ambition_prn'],
                 content_type__model__in=['deathreporttmg']):
             group.permissions.add(permission)
+        Permission.objects.get(
+            content_type__app_label='edc_navbar',
+            codename='nav_tmg_section')
+        group.permissions.add(permission)
+        self.add_navbar_permissions(
+            group=group, codenames=['nav_tmg_section'])
 
     def update_rando_group_permissions(self):
-        group_name = 'RANDO'
+        group_name = RANDO
         group = Group.objects.get(name=group_name)
         group.permissions.clear()
         for permission in Permission.objects.filter(

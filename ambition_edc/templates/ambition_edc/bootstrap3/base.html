@@ -1,0 +1,33 @@
+{% extends 'edc_dashboard/bootstrap3/base.html' %}
+
+{% load static %}
+
+{% block extra-scripts %}
+{{ block.super }}
+{% endblock extra-scripts %} 
+
+{% block extra-styles %}
+{{ block.super }}
+<style>
+  .panel-extended {
+    min-height: 200px;
+    overflow-y: scroll;
+  }
+  </style>
+ {% endblock extra-styles %}
+
+
+
+{% block topbar_navbar_extra_items %}
+
+    {{ block.super }}
+    {{ navbar.name }}
+
+{% endblock topbar_navbar_extra_items %}
+
+
+{% block modals %}
+
+{{ block.super }}
+    {% include 'ambition_edc/bootstrap3/help_modal.html' %}
+{% endblock modals %}

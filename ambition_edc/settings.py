@@ -19,18 +19,19 @@ BASE_DIR = str(Path(os.path.dirname(
 env = environ.Env(
     AWS_ENABLED=(bool, False),
     CDN_ENABLED=(bool, False),
+    DATABASE_SQLITE_ENABLED=(bool, False),
     DJANGO_AUTO_CREATE_KEYS=(bool, False),
     DJANGO_CSRF_COOKIE_SECURE=(bool, True),
     DJANGO_DEBUG=(bool, False),
+    DJANGO_EDC_BOOTSTRAP=(int, 3),
     DJANGO_EMAIL_ENABLED=(bool, False),
     DJANGO_EMAIL_USE_TLS=(bool, True),
+    DJANGO_LIVE_SYSTEM=(bool, False),
     DJANGO_LOGGING_ENABLED=(bool, True),
     DJANGO_SESSION_COOKIE_SECURE=(bool, True),
     DJANGO_USE_I18N=(bool, True),
     DJANGO_USE_L10N=(bool, False),
     DJANGO_USE_TZ=(bool, True),
-    DATABASE_SQLITE_ENABLED=(bool, False),
-    DJANGO_LIVE_SYSTEM=(bool, False),
     SENTRY_ENABLED=(bool, False),
 )
 
@@ -80,6 +81,7 @@ INSTALLED_APPS = [
     'django_crypto_fields.apps.AppConfig',
     'django_revision.apps.AppConfig',
     'django_extensions',
+    'logentry_admin',
     'simple_history',
     'storages',
     'corsheaders',
@@ -97,7 +99,7 @@ INSTALLED_APPS = [
     'django_collect_offline.apps.AppConfig',
     'django_collect_offline_files.apps.AppConfig',
     'edc_pharmacy.apps.AppConfig',
-    # 'edc_pharmacy_dashboard.apps.AppConfig',
+    'edc_pharmacy_dashboard.apps.AppConfig',
     'edc_auth.apps.AppConfig',
     'edc_navbar.apps.AppConfig',
     'edc_reference.apps.AppConfig',
@@ -155,7 +157,10 @@ if env('SENTRY_ENABLED'):
 MIDDLEWARE.extend(
     ['edc_dashboard.middleware.DashboardMiddleware',
      'edc_subject_dashboard.middleware.DashboardMiddleware',
-     'edc_lab_dashboard.middleware.DashboardMiddleware'])
+     'edc_lab_dashboard.middleware.DashboardMiddleware',
+     # 'simple_history.middleware.HistoryRequestMiddleware'
+     ]
+)
 
 ROOT_URLCONF = f'{APP_NAME}.urls'
 
@@ -315,10 +320,12 @@ DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = env.str(
     'DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME')
 
 # dashboards
+EDC_BOOTSTRAP = env('DJANGO_EDC_BOOTSTRAP')
 DASHBOARD_URL_NAMES = env.dict('DJANGO_DASHBOARD_URL_NAMES')
 DASHBOARD_BASE_TEMPLATES = env.dict('DJANGO_DASHBOARD_BASE_TEMPLATES')
+LAB_DASHBOARD_BASE_TEMPLATES = env.dict(
+    'DJANGO_LAB_DASHBOARD_BASE_TEMPLATES')
 LAB_DASHBOARD_URL_NAMES = env.dict('DJANGO_LAB_DASHBOARD_URL_NAMES')
-LAB_DASHBOARD_BASE_TEMPLATES = env.dict('DJANGO_LAB_DASHBOARD_BASE_TEMPLATES')
 LAB_DASHBOARD_REQUISITION_MODEL = env.str(
     'DJANGO_LAB_DASHBOARD_REQUISITION_MODEL')
 

@@ -3,14 +3,18 @@ from ambition_export.admin_site import ambition_export_admin
 from ambition_prn.admin_site import ambition_prn_admin
 from ambition_screening.admin_site import ambition_screening_admin
 from ambition_subject.admin_site import ambition_subject_admin
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
+from django.template.response import TemplateResponse
 from django.urls.conf import path, include
+from django.views.defaults import page_not_found, server_error  # noqa
 from django.views.generic.base import RedirectView
 from django_collect_offline.admin import django_collect_offline_admin
 from django_collect_offline_files.admin_site import django_collect_offline_files_admin
 from edc_action_item.admin_site import edc_action_item_admin
 from edc_appointment.admin_site import edc_appointment_admin
+from edc_dashboard.views import AdministrationView
 from edc_identifier.admin_site import edc_identifier_admin
 from edc_lab.admin_site import edc_lab_admin
 from edc_locator.admin_site import edc_locator_admin
@@ -20,11 +24,7 @@ from edc_reference.admin_site import edc_reference_admin
 from edc_registration.admin_site import edc_registration_admin
 from edc_visit_schedule.admin_site import edc_visit_schedule_admin
 
-from .views import HomeView, AdministrationView
-from django.conf import settings
-
-from django.views.defaults import page_not_found, server_error  # noqa
-from django.template.response import TemplateResponse
+from .views import HomeView
 
 
 def handler500(request):
@@ -80,7 +80,7 @@ urlpatterns = [
     path('edc_lab_dashboard/', include('edc_lab_dashboard.urls')),
     path('edc_locator/', include('edc_locator.urls')),
     path('edc_pharmacy/', include('edc_pharmacy.urls')),
-    # path('edc_pharmacy_dashboard/', include('edc_pharmacy_dashboard.urls')),
+    path('edc_pharmacy_dashboard/', include('edc_pharmacy_dashboard.urls')),
     path('edc_label/', include('edc_label.urls')),
     path('edc_metadata/', include('edc_metadata.urls')),
     path('edc_protocol/', include('edc_protocol.urls')),
