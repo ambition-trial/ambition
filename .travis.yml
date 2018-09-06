@@ -15,14 +15,14 @@ services:
 - mysql
 install:
 - pip install --upgrade pip
-- pip install flake8 edc-selenium
+- pip install flake8 edc-selenium model-mommy faker
 - pip install coveralls
 - pip install -e .
 - pip install -q -r requirements/stable.txt
 before_script:
-- flake8 ambition
+- flake8 ambition_edc
 - mysql -e 'create database edc character set utf8;'
 script:
-- coverage run --source=ambition manage.py test
+- coverage run --source=ambition_edc manage.py test
 after_success:
 - coveralls
