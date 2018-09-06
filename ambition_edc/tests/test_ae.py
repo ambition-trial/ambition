@@ -1,15 +1,15 @@
 from ambition_ae.action_items import AE_INITIAL_ACTION
 from ambition_rando.randomization_list_importer import RandomizationListImporter
-from ambition_sites import ambition_sites
+from ambition_sites import ambition_sites, fqdn
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management.color import color_style
 from django.test.utils import override_settings, tag
 from django.urls.base import reverse
+from edc_action_item.models.action_item import ActionItem
 from edc_action_item.models.action_type import ActionType
-from edc_appointment.constants import IN_PROGRESS_APPT, SCHEDULED_APPT
-from edc_appointment.models.appointment import Appointment
+from edc_base.sites.utils import add_or_update_django_sites
 from edc_base.tests.site_test_case_mixin import SiteTestCaseMixin
 from edc_facility.import_holidays import import_holidays
 from edc_lab_dashboard.dashboard_urls import dashboard_urls
@@ -19,9 +19,6 @@ from model_mommy import mommy
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from .mixins import AmbitionEdcMixin
-from edc_base.sites.utils import add_or_update_django_sites
-from ambition_sites.sites import fqdn
-from edc_action_item.models.action_item import ActionItem
 
 
 style = color_style()
@@ -121,7 +118,6 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
     def consent_model_cls(self):
         return django_apps.get_model(self.subject_consent_model)
 
-    @tag('3')
     def test_action_item(self):
 
         subject_identifier = self.go_to_subject_dashboard()
@@ -165,8 +161,11 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
         self.selenium.implicitly_wait(2)
 
         # verify no longer on dashboard
-        (assert f'referencemodel-change-{action_item.action_identifier.upper()}'
-        not in self.selenium.page_source)
+        action_item_control_id = (
+            f'referencemodel-change-{action_item.action_identifier.upper()}')
+        if (action_item_control_id in self.selenium.page_source):
+            self.fail(
+                f'Unexpectedly found id on dashboard. Got {action_item_control_id}')
 
         # find through PRN Forms
         self.selenium.find_element_by_link_text(

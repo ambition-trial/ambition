@@ -1,0 +1,2 @@
+RANDO = 'RANDO'
+TMG = 'TMG'
