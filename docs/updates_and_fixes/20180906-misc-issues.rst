@@ -1,5 +1,5 @@
-Update 2018-09
-==============
+Update 2018-09 v0.1.27
+=====================
 
 # Resolved Redmine issues
 # Added more comprehensive testing around permissions (see `edc_permissions`)
