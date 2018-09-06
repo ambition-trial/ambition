@@ -302,9 +302,6 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = env.str(
         'DJANGO_SESSION_COOKIE_SECURE')
 
-# edc_base
-MAIN_NAVBAR_NAME = env.str('DJANGO_MAIN_NAVBAR_NAME')
-
 # edc_lab and label
 LABEL_TEMPLATE_FOLDER = env.str(
     'DJANGO_LABEL_TEMPLATE_FOLDER') or os.path.join(BASE_DIR, 'label_templates')

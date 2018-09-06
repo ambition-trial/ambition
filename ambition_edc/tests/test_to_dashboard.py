@@ -1,6 +1,9 @@
 import os
 import sys
 
+from ambition_rando.randomization_list_importer import RandomizationListImporter
+from ambition_sites import ambition_sites, fqdn
+from django.apps import apps as django_apps
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management.color import color_style
@@ -9,46 +12,17 @@ from django.urls.base import reverse
 from django.urls.exceptions import NoReverseMatch
 from edc_appointment.constants import IN_PROGRESS_APPT, SCHEDULED_APPT
 from edc_appointment.models.appointment import Appointment
+from edc_base.sites.utils import add_or_update_django_sites
 from edc_base.tests.site_test_case_mixin import SiteTestCaseMixin
+from edc_facility.import_holidays import import_holidays
 from edc_lab_dashboard.dashboard_urls import dashboard_urls
 from edc_selenium.mixins import SeleniumLoginMixin, SeleniumModelFormMixin
 from model_mommy import mommy
 from selenium.webdriver.firefox.webdriver import WebDriver
 
-from ambition_rando.randomization_list_importer import RandomizationListImporter
-from ambition_sites import ambition_sites
-from edc_facility.import_holidays import import_holidays
+from .mixins import AmbitionEdcMixin
 
 style = color_style()
-
-
-class AmbitionEdcMixin:
-
-    def add_subject_screening(self):
-        """Add a subject screening form.
-        """
-        obj = mommy.prepare_recipe(self.subject_screening_model)
-        model_obj = self.fill_form(
-            model=self.subject_screening_model,
-            obj=obj, exclude=['subject_identifier', 'report_datetime'])
-        return model_obj
-
-    def add_subject_consent(self, model_obj):
-        """Add a subject consent for the newly screening subject.
-        """
-        obj = mommy.prepare_recipe(
-            self.subject_consent_model,
-            **{'screening_identifier': model_obj.screening_identifier,
-               'dob': model_obj.estimated_dob,
-               'gender': model_obj.gender})
-        obj.initials = f'{obj.first_name[0]}{obj.last_name[0]}'
-        model_obj = self.fill_form(
-            model=self.subject_consent_model, obj=obj,
-            exclude=['subject_identifier', 'citizen', 'legal_marriage',
-                     'marriage_certificate', 'subject_type',
-                     'gender', 'study_site'],
-            verbose=True)
-        return model_obj
 
 
 @override_settings(DEBUG=True)
@@ -63,11 +37,9 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
-        RandomizationListImporter()
-        import_holidays()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(3)
+        super().setUpClass()
 
     @classmethod
     def tearDownClass(cls):
@@ -75,7 +47,10 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
         super().tearDownClass()
 
     def setUp(self):
-        super().setUp()
+        add_or_update_django_sites(
+            apps=django_apps, sites=ambition_sites, fqdn=fqdn)
+        RandomizationListImporter()
+        import_holidays()
         url_names = (self.extra_url_names
                      + list(settings.DASHBOARD_URL_NAMES.values())
                      + list(settings.LAB_DASHBOARD_URL_NAMES.values())
@@ -97,7 +72,6 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
                 self.selenium.get('%s%s' % (self.live_server_url, url))
                 self.selenium.implicitly_wait(2)
 
-    @tag('1')
     def test_subject_screening_to_subject_dashboard(self):
         self.login()
 
@@ -106,7 +80,7 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
         self.selenium.get('%s%s' % (self.live_server_url, url))
         self.selenium.save_screenshot(
             os.path.join(settings.BASE_DIR, 'screenshots', 'screening_listboard.png'))
-        self.selenium.implicitly_wait(3)
+        self.selenium.implicitly_wait(2)
         self.selenium.find_element_by_id('subjectscreening_add').click()
 
         # add a subject screening form
@@ -166,5 +140,6 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
             'subject_dashboard_url'),
             kwargs=dict(subject_identifier=subject_consent.subject_identifier))
         self.selenium.get('%s%s' % (self.live_server_url, url))
-        self.selenium.find_element_by_id(f'subject_dashboard')
         self.selenium.implicitly_wait(10)
+        self.selenium.find_element_by_id(f'subject_dashboard')
+        self.selenium.implicitly_wait(2)

@@ -1,22 +1,21 @@
 from django.contrib.auth.models import Group, Permission, User
 from django.core.exceptions import ObjectDoesNotExist
-from edc_permissions.permissions_updater import CLINIC, LAB, AUDITOR, ADMINISTRATION, PII
+from edc_permissions.constants import CLINIC, LAB, AUDITOR, ADMINISTRATION, PII
 from edc_permissions.permissions_updater import PermissionsUpdater as EdcPermissionsUpdater
 
-
-RANDO = 'RANDO'
-TMG = 'TMG'
+from .group_names import RANDO, TMG
 
 
 class PermissionsUpdater(EdcPermissionsUpdater):
 
-    group_names = [RANDO, TMG]
+    extra_group_names = [RANDO, TMG]
 
-    pii_models = [
-        'edc_locator.subjectconsent',
+    extra_pii_models = [
+        'ambition_subject.subjectconsent',
         'ambition_subject.subjectreconsent',
         'ambition_screening.subjectscreening']
-    auditor_app_labels = [
+
+    extra_auditor_app_labels = [
         'ambition_ae',
         'ambition_screening',
         'ambition_subject',
@@ -25,7 +24,7 @@ class PermissionsUpdater(EdcPermissionsUpdater):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # ensure in ADMINITRATION group
+        # ensure in ADMINISTRATION group
         administration_group = Group.objects.get(name=ADMINISTRATION)
         for user in User.objects.filter(groups__name__in=[CLINIC, LAB, TMG]):
             try:

@@ -1,7 +1,7 @@
 
 from django.core.management.base import BaseCommand
 
-from ...permissions_updater import PermissionsUpdater
+from ...permissions import PermissionsUpdater
 
 
 class Command(BaseCommand):
