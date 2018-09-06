@@ -39,7 +39,7 @@ edc-model-wrapper==0.1.9
 edc-navbar==0.1.8
 edc-offstudy==0.2.6
 edc-pdutils==0.1.3
-edc-permissions==0.1.5
+edc-permissions==0.1.6
 edc-pharmacy==0.1.2a4
 edc-pharmacy-dashboard==0.1.1a5
 edc-prn==0.1.7
