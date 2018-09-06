@@ -1,5 +1,4 @@
-from django.contrib.auth.models import Group, Permission, User
-from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import Group, Permission
 from edc_permissions.constants import CLINIC, LAB, AUDITOR, ADMINISTRATION, PII
 from edc_permissions.permissions_updater import PermissionsUpdater as EdcPermissionsUpdater
 
@@ -25,36 +24,14 @@ class PermissionsUpdater(EdcPermissionsUpdater):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # ensure in ADMINISTRATION group
-        administration_group = Group.objects.get(name=ADMINISTRATION)
-        for user in User.objects.filter(groups__name__in=[CLINIC, LAB, TMG]):
-            try:
-                user.groups.get(name=administration_group.name)
-            except ObjectDoesNotExist:
-                user.groups.add(administration_group)
+        self.ensure_users_in_group(
+            ADMINISTRATION, users_by_groups=[CLINIC, LAB, TMG])
         # ensure in PII group
-        pii_group = Group.objects.get(name=PII)
-        for user in User.objects.filter(groups__name__in=[CLINIC, LAB]):
-            try:
-                user.groups.get(name=pii_group.name)
-            except ObjectDoesNotExist:
-                user.groups.add(pii_group)
+        self.ensure_users_in_group(PII, users_by_groups=[CLINIC, LAB])
         # ensure NOT in PII group
-        for user in User.objects.filter(groups__name__in=[TMG, AUDITOR]):
-            try:
-                user.groups.get(name=pii_group.name)
-            except ObjectDoesNotExist:
-                pass
-            else:
-                user.groups.remove(pii_group)
+        self.ensure_users_not_in_group(PII, users_by_groups=[TMG, AUDITOR])
         # ensure NOT in RANDO group
-        rando_group = Group.objects.get(name=RANDO)
-        for user in User.objects.filter(groups__name__in=[TMG, AUDITOR]):
-            try:
-                user.groups.get(name=rando_group.name)
-            except ObjectDoesNotExist:
-                pass
-            else:
-                user.groups.remove(rando_group)
+        self.ensure_users_not_in_group(RANDO, users_by_groups=[TMG, AUDITOR])
 
     def extra_lab_group_permissions(self, group):
         permission = Permission.objects.get(
