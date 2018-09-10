@@ -1,4 +1,5 @@
 from ambition_ae.action_items import AE_INITIAL_ACTION
+from ambition_auth.permissions_updater import PermissionsUpdater
 from ambition_rando.randomization_list_importer import RandomizationListImporter
 from ambition_sites import ambition_sites, fqdn
 from django.apps import apps as django_apps
@@ -16,7 +17,6 @@ from edc_list_data.site_list_data import site_list_data
 from edc_selenium.mixins import SeleniumLoginMixin, SeleniumModelFormMixin
 from model_mommy import mommy
 
-from ..permissions import PermissionsUpdater
 from .mixins import AmbitionEdcMixin, AmbitionEdcSeleniumMixin
 
 

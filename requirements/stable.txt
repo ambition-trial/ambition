@@ -1,4 +1,5 @@
 ambition-ae
+ambition-auth
 ambition-export
 ambition-dashboard
 ambition-labs

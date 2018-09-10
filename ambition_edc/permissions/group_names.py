@@ -1,2 +1,0 @@
-RANDO = 'RANDO'
-TMG = 'TMG'
