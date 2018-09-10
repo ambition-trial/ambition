@@ -38,7 +38,7 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
     @classmethod
     def setUpClass(cls):
         cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(3)
+        cls.selenium.implicitly_wait(2)
         super().setUpClass()
 
     @classmethod
@@ -140,6 +140,5 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
             'subject_dashboard_url'),
             kwargs=dict(subject_identifier=subject_consent.subject_identifier))
         self.selenium.get('%s%s' % (self.live_server_url, url))
-        self.selenium.implicitly_wait(10)
         self.selenium.find_element_by_id(f'subject_dashboard')
         self.selenium.implicitly_wait(2)

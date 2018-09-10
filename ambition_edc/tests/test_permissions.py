@@ -1,18 +1,17 @@
 from django.test import tag
-from edc_permissions.tests.test_group_permissions import TestGroupPermissions
 from edc_permissions.constants import CLINIC
 from edc_permissions.permissions_inspector import PermissionsInspector
+from edc_permissions.tests.test_group_permissions import TestGroupPermissions
 
 from ..permissions import PermissionsUpdater, RANDO, TMG
 
 
-@tag('1')
 class MyTestGroupPermissions(TestGroupPermissions):
 
     permissions_updater_cls = PermissionsUpdater
 
     def setUp(self):
-        self.updater = self.permissions_updater_cls(verbose=False)
+        self.updater = self.permissions_updater_cls(verbose=True)
         self.inspector = PermissionsInspector(
             extra_group_names=[RANDO, TMG],
             extra_pii_models=[
