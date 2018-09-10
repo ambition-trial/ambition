@@ -1,9 +1,9 @@
+from ambition_auth import RANDO, TMG
+from ambition_auth.permissions_updater import PermissionsUpdater
 from django.test import tag
 from edc_permissions.constants import CLINIC
 from edc_permissions.permissions_inspector import PermissionsInspector
 from edc_permissions.tests.test_group_permissions import TestGroupPermissions
-
-from ..permissions import PermissionsUpdater, RANDO, TMG
 
 
 class MyTestGroupPermissions(TestGroupPermissions):

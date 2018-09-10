@@ -111,6 +111,7 @@ INSTALLED_APPS = [
     'edc_registration.apps.AppConfig',
     'edc_timepoint.apps.AppConfig',
     'edc_visit_schedule.apps.AppConfig',
+    'ambition_auth.apps.AppConfig',
     'ambition_dashboard.apps.AppConfig',
     'ambition_labs.apps.AppConfig',
     'ambition_metadata_rules.apps.AppConfig',
