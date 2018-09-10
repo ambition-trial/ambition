@@ -6,7 +6,6 @@ from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management.color import color_style
 from django.test.utils import override_settings, tag
-from django.urls.base import reverse
 from edc_action_item.models.action_item import ActionItem
 from edc_action_item.models.action_type import ActionType
 from edc_base.sites.utils import add_or_update_django_sites
@@ -16,9 +15,9 @@ from edc_lab_dashboard.dashboard_urls import dashboard_urls
 from edc_list_data.site_list_data import site_list_data
 from edc_selenium.mixins import SeleniumLoginMixin, SeleniumModelFormMixin
 from model_mommy import mommy
-from selenium.webdriver.firefox.webdriver import WebDriver
 
-from .mixins import AmbitionEdcMixin
+from ..permissions import PermissionsUpdater
+from .mixins import AmbitionEdcMixin, AmbitionEdcSeleniumMixin
 
 
 style = color_style()
@@ -26,7 +25,8 @@ style = color_style()
 
 @override_settings(DEBUG=True)
 class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMixin,
-                      AmbitionEdcMixin, StaticLiveServerTestCase):
+                      AmbitionEdcMixin, AmbitionEdcSeleniumMixin,
+                      StaticLiveServerTestCase):
 
     default_sites = ambition_sites
     appointment_model = 'edc_appointment.appointment'
@@ -35,18 +35,8 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
     action_item_model = 'edc_action_item.actionitem'
     extra_url_names = ['home_url', 'administration_url']
 
-    @classmethod
-    def setUpClass(cls):
-        cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(3)
-        super().setUpClass()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.selenium.quit()
-        super().tearDownClass()
-
     def setUp(self):
+        PermissionsUpdater(verbose=False)
         add_or_update_django_sites(
             apps=django_apps, sites=ambition_sites, fqdn=fqdn)
         RandomizationListImporter()
@@ -58,33 +48,6 @@ class MySeleniumTests(SiteTestCaseMixin, SeleniumLoginMixin, SeleniumModelFormMi
                      + list(dashboard_urls.values()))
         self.url_names = list(set(url_names))
         super().setUp()
-
-    def go_to_subject_dashboard(self):
-        """Login, add screening, add subject consent, proceed
-        to dashboard and update appointment to in_progress.
-        """
-
-        self.login()
-
-        url = reverse(settings.DASHBOARD_URL_NAMES.get(
-            'screening_listboard_url'))
-        self.selenium.get('%s%s' % (self.live_server_url, url))
-        self.selenium.find_element_by_id('subjectscreening_add').click()
-
-        # add a subject screening form
-        model_obj = self.add_subject_screening()
-
-        # add a subject consent for the newly screening subject
-        self.selenium.find_element_by_id(
-            f'subjectconsent_add_{model_obj.screening_identifier}').click()
-
-        model_obj = self.add_subject_consent(model_obj)
-        subject_identifier = model_obj.subject_identifier
-
-        # set appointment in progress
-        self.update_appointment_in_progress(subject_identifier)
-
-        return subject_identifier
 
     def add_action_item(self, subject_identifier=None, name=None, click_add=None):
         # add action item

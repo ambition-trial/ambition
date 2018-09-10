@@ -1,6 +1,57 @@
-from model_mommy import mommy
-from edc_appointment.models.appointment import Appointment
+from django.conf import settings
+from django.urls.base import reverse
 from edc_appointment.constants import IN_PROGRESS_APPT, SCHEDULED_APPT
+from edc_appointment.models.appointment import Appointment
+from model_mommy import mommy
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+class AmbitionEdcSeleniumMixin:
+
+    @classmethod
+    def setUpClass(cls):
+        cls.selenium = WebDriver()
+        # cls.selenium.implicitly_wait(2)
+        super().setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def go_to_subject_dashboard(self, **kwargs):
+        """Login, add screening, add subject consent, proceed
+        to dashboard and update appointment to in_progress.
+        """
+
+        self.login(**kwargs)
+
+        url = reverse(settings.DASHBOARD_URL_NAMES.get(
+            'screening_listboard_url'))
+        self.selenium.get('%s%s' % (self.live_server_url, url))
+
+        self.selenium.find_element_by_partial_link_text(
+            f'Add Subject Screening').click()
+
+        # add a subject screening form
+        model_obj = self.add_subject_screening()
+
+        # add a subject consent for the newly screening subject
+        element_id = f'subjectconsent_add_{model_obj.screening_identifier}'
+        WebDriverWait(self.selenium, 10).until(
+            EC.presence_of_element_located((By.ID, element_id)))
+        self.selenium.find_element_by_id(element_id).click()
+
+        model_obj = self.add_subject_consent(model_obj)
+        subject_identifier = model_obj.subject_identifier
+
+        # set appointment in progress
+        self.update_appointment_in_progress(subject_identifier)
+
+        return subject_identifier
 
 
 class AmbitionEdcMixin:

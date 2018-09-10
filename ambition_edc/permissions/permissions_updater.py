@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.contrib.auth.models import Group, Permission
-from edc_permissions.constants import CLINIC, LAB, AUDITOR, ADMINISTRATION, PII
+from edc_permissions.constants import CLINIC, LAB, AUDITOR, ADMINISTRATION, PII, PII_VIEW
+from edc_permissions.constants.group_names import PHARMACY
 from edc_permissions.permissions_updater import PermissionsUpdater as EdcPermissionsUpdater
 
 from .group_names import RANDO, TMG
@@ -21,17 +23,42 @@ class PermissionsUpdater(EdcPermissionsUpdater):
         'ambition_prn',
     ]
 
+    extra_dashboard_codenames = {
+        settings.APP_NAME: [
+            ('view_screening_listboard', 'Can view Screening Listboard'),
+            ('view_subject_listboard', 'Can view Subject Listboard'),
+            ('view_tmg_listboard', 'Can view TMG Listboard')],
+    }
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # ensure in ADMINISTRATION group
         self.ensure_users_in_group(
             ADMINISTRATION, users_by_groups=[CLINIC, LAB, TMG])
         # ensure in PII group
-        self.ensure_users_in_group(PII, users_by_groups=[CLINIC, LAB])
+        self.ensure_users_in_group(PII, users_by_groups=[CLINIC])
+        # ensure in PII_VIEW group
+        self.ensure_users_in_group(PII_VIEW, users_by_groups=[LAB, PHARMACY])
         # ensure NOT in PII group
-        self.ensure_users_not_in_group(PII, users_by_groups=[TMG, AUDITOR])
+        self.ensure_users_not_in_group(
+            PII, users_by_groups=[TMG, AUDITOR])
+        self.ensure_users_not_in_group(
+            PII_VIEW, users_by_groups=[TMG, AUDITOR])
         # ensure NOT in RANDO group
-        self.ensure_users_not_in_group(RANDO, users_by_groups=[TMG, AUDITOR])
+        self.ensure_users_not_in_group(
+            RANDO, users_by_groups=[TMG, AUDITOR, LAB])
+
+        for group in Group.objects.filter(name__in=[CLINIC, TMG, LAB, AUDITOR]):
+            self.add_dashboard_permissions(
+                group, codename='view_screening_listboard')
+            self.add_dashboard_permissions(
+                group, codename='view_subject_listboard')
+            self.add_dashboard_permissions(
+                group, codename='view_tmg_listboard')
+            self.add_dashboard_permissions(group, dashboard_category=LAB)
+        group = Group.objects.get(name=LAB)
+        permission = Permission.objects.get(codename='view_tmg_listboard')
+        group.permissions.remove(permission)
 
     def extra_lab_group_permissions(self, group):
         permission = Permission.objects.get(
@@ -70,7 +97,8 @@ class PermissionsUpdater(EdcPermissionsUpdater):
             group.permissions.add(permission)
         self.add_navbar_permissions(
             group=group, codenames=[
-                'nav_subject_section', 'nav_screening_section'])
+                'nav_subject_section',
+                'nav_screening_section'])
 
     def update_tmg_group_permissions(self):
         group_name = TMG

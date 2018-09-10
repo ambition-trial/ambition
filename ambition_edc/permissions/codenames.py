@@ -6,7 +6,7 @@ Validated with the PermissionsInspector in tests.
 
 from edc_permissions.constants import (
     AUDITOR, LAB, EVERYONE, PII, ADMINISTRATION, PHARMACY,
-    ACCOUNT_MANAGER, CLINIC)
+    ACCOUNT_MANAGER, CLINIC, PII_VIEW)
 
 from .group_names import TMG, RANDO
 
@@ -525,6 +525,17 @@ CODENAMES = {
         'delete_subjectlocator',
         'delete_subjectreconsent',
         'delete_subjectscreening',
+        'display_dob',
+        'display_firstname',
+        'display_identity',
+        'display_initials',
+        'display_lastname',
+        'view_registeredsubject',
+        'view_subjectconsent',
+        'view_subjectlocator',
+        'view_subjectreconsent',
+        'view_subjectscreening'],
+    PII_VIEW: [
         'display_dob',
         'display_firstname',
         'display_identity',

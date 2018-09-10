@@ -34,8 +34,15 @@
       <div class="panel-heading">{{ protocol_name |default:project_name }} {{ request.site.name|title }}</div>
 
       <div class="list-group">
-        <a href="{% url screening_listboard_url %}" class="list-group-item"><i class="fas fa-user-plus fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Screening</a>
-        <a href="{% url subject_listboard_url %}" class="list-group-item"><i class="fas fa-user-circle fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Subjects</a>
+      {% if perms.edc_dashboard.view_screening_listboard %}
+        <a id="home_list_group_screening_listboard" href="{% url screening_listboard_url %}" class="list-group-item"><i class="fas fa-user-plus fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Screening</a>
+      {% endif %}
+      {% if perms.edc_dashboard.view_subject_listboard %}
+        <a id="home_list_group_subject_listboard" href="{% url subject_listboard_url %}" class="list-group-item"><i class="fas fa-user-circle fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Subjects</a>
+      {% endif %}
+      {% if perms.edc_dashboard.view_tmg_listboard %}
+        <a id="home_list_group_tmg_listboard" href="{% url tmg_listboard_url %}" class="list-group-item"><i class="fas fa-chalkboard-teacher fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;AE TMG Reports</a>
+      {% endif %}
       {% if perms.edc_navbar.nav_lab_section %}
         <a href="{% url requisition_listboard_url %}" class="list-group-item"><i class="fas fa-flask fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Specimens</a>
       {% endif %}
