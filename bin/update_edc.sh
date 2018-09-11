@@ -5,6 +5,25 @@ green=`tput setaf 2`
 reset=`tput sgr0`
 
 while true; do
+    read -p "Update this script? [y/n]" yn
+    case $yn in
+        [Yy]* ) update_script="y"; break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+if [ "${update_script}" = "y" ]; then
+  echo "${green}Copying script ... ${reset}" 
+  cd ~/app \
+  && git checkout master \
+  && git pull \
+  && cp bin/update_edc.sh ~/
+  echo "${green}Done ... ${reset}"
+  exit
+fi
+
+while true; do
     read -p "Update repo and env? [y/n]" yn
     case $yn in
         [Yy]* ) break;;
