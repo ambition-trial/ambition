@@ -38,17 +38,17 @@ while true; do
 done
 echo "${green}Start ... ${reset}"
 
-if [ "${update_ubuntu}" = "y" ]; then
-  echo "${green}Updating permissions ... ${reset}"
-  sudo apt-get update \
-  && sudo apt-get upgrade
-fi
+cd ~/app \
+  && git checkout master \
+  && git pull \
+  && version=$(head -n 1 VERSION) \
+  && echo "Version ${version}"
 
 cd ~/app \
   && git checkout master \
   && git pull \
   && . ~/.venvs/ambition/bin/activate \
-  && pip install --no-cache-dir -U -r requirements/stable.txt \
+  && pip install --no-cache-dir -U -r requirements/stable-v$1.txt \
   && pip install -e .
 
 if [ "${migrate}" = "y" ]; then
@@ -61,6 +61,12 @@ fi
   echo "${green}Updating permissions ... ${reset}"
   cd ~/app \
   && python manage.py update_edc_permissions
+fi
+
+if [ "${update_ubuntu}" = "y" ]; then
+  echo "${green}Updating permissions ... ${reset}"
+  sudo apt-get update \
+  && sudo apt-get upgrade
 fi
 
 echo "${green}Restarting gunicorn / gunicorn-uat ... ${reset}"
