@@ -6,6 +6,7 @@ from edc_permissions.permissions_inspector import PermissionsInspector
 from edc_permissions.tests.test_group_permissions import TestGroupPermissions
 
 
+@tag('permissions')
 class MyTestGroupPermissions(TestGroupPermissions):
 
     permissions_updater_cls = PermissionsUpdater
