@@ -67,7 +67,7 @@ cd ~/app \
   && git checkout master \
   && git pull \
   && . ~/.venvs/ambition/bin/activate \
-  && pip install --no-cache-dir -U -r requirements/stable-v$1.txt \
+  && pip install --no-cache-dir -U -r requirements/stable-v${version}.txt \
   && pip install -e .
 
 if [ "${migrate}" = "y" ]; then
