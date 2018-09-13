@@ -1,7 +1,6 @@
 ambition-ae==0.1.13
 ambition-auth==0.1.1
 ambition-dashboard==0.1.4
-ambition-edc==0.1.31
 ambition-export==0.1.3
 ambition-labs==0.1.5
 ambition-metadata-rules==0.1.6
@@ -14,7 +13,7 @@ ambition-sites==0.1.5
 ambition-subject==0.1.18
 ambition-validators==0.1.8
 ambition-visit-schedule==0.1.6
-edc-action-item==0.1.10
+edc-action-item==0.1.11
 edc-appointment==0.2.19
 edc-auth==0.1.9
 edc-base==0.2.30

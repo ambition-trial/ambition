@@ -1,0 +1,59 @@
+**Run a manual backup since migrations are involved.**
+
+Log into `db.clinicedc.org` and backup each DB manually.
+
+* ambition_production
+* ambition_uat
+
+
+**Log into each server and perform the following steps.**
+
+**1. update_edc.sh and other scripts**
+
+
+Copy new ``update_edc.sh`` script from develop
+
+.. code-block:: bash
+
+    cd ~/app \
+    && git checkout develop \
+    && git pull \
+    && cp bin/scripts/* ~/ \
+    && ls -la ~/*.sh
+
+Run ``update_edc.sh`` but update repo only
+
+.. code-block:: bash
+
+    sh ~/update_edc.sh
+
+**2. Diff and update `.env`**
+
+.. code-block:: bash
+
+    cd ~/app
+    diff -y .env env.sample
+
+Make the following changes.
+
+After ``DJANGO_DEBUG=False``::
+    
+    DJANGO_EDC_BOOTSTRAP=3
+
+Remove::
+
+    DJANGO_MAIN_NAVBAR_NAME=
+    
+Change ``DJANGO_DASHBOARD_BASE_TEMPLATES`` and ``DJANGO_DASHBOARD_URL_NAMES`` to::
+
+    DJANGO_DASHBOARD_BASE_TEMPLATES=edc_base_template=edc_dashboard/base.html,listboard_base_template=ambition_edc/base.html,dashboard_base_template=ambition_edc/base.html,screening_listboard_template=ambition_dashboard/screening/listboard.html,subject_listboard_template=ambition_dashboard/subject/listboard.html,tmg_listboard_template=ambition_dashboard/tmg/listboard.html,subject_dashboard_template=ambition_dashboard/subject/dashboard.html
+    DJANGO_DASHBOARD_URL_NAMES=subject_models_url=subject_models_url,subject_listboard_url=ambition_dashboard:subject_listboard_url,screening_listboard_url=ambition_dashboard:screening_listboard_url,tmg_listboard_url=ambition_dashboard:tmg_listboard_url,subject_dashboard_url=ambition_dashboard:subject_dashboard_url
+
+
+**3. Run update_edc.sh and update repo, migrate, and update EDC permissions**
+
+ Note: migrations and permissions need only be run on the first server (since they all point to the same DBs)
+
+.. code-block:: bash
+
+    sh ~/update_edc.sh

@@ -32,6 +32,7 @@ env = environ.Env(
     DJANGO_USE_I18N=(bool, True),
     DJANGO_USE_L10N=(bool, False),
     DJANGO_USE_TZ=(bool, True),
+    SAUCE_ENABLED=(bool, False),
     SENTRY_ENABLED=(bool, False),
 )
 
@@ -411,3 +412,7 @@ if 'test' in sys.argv:
     MIGRATION_MODULES = DisableMigrations()
     PASSWORD_HASHERS = ('django.contrib.auth.hashers.MD5PasswordHasher', )
     DEFAULT_FILE_STORAGE = 'inmemorystorage.InMemoryStorage'
+
+    if env('SAUCE_ENABLED'):
+        SAUCE_USERNAME = env.str('SAUCE_USERNAME')
+        SAUCE_ACCESS_KEY = env.str('SAUCE_ACCESS_KEY')
