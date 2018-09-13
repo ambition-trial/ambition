@@ -1,71 +1,102 @@
+import os
+
+from ambition_auth.group_names import (
+    CLINIC_USER_GROUPS, LAB_USER_GROUPS, TMG_USER_GROUPS)
+from ambition_sites.sites import ambition_sites
+from ambition_subject.constants import PATIENT
+from django.apps import apps as django_apps
 from django.conf import settings
 from django.urls.base import reverse
+from edc_action_item.models.action_type import ActionType
 from edc_appointment.constants import IN_PROGRESS_APPT, SCHEDULED_APPT
 from edc_appointment.models.appointment import Appointment
+from edc_selenium.mixins import SeleniumLoginMixin, SeleniumModelFormMixin, SeleniumUtilsMixin
 from model_mommy import mommy
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.webdriver import WebDriver
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
+from edc_visit_tracking.constants import SCHEDULED
+from edc_constants.constants import YES
+from edc_base.utils import get_utcnow
+from edc_lab.constants import TUBE
 
 
-class AmbitionEdcSeleniumMixin:
+class AmbitionEdcSeleniumMixin(
+        SeleniumLoginMixin, SeleniumModelFormMixin, SeleniumUtilsMixin):
 
-    @classmethod
-    def setUpClass(cls):
-        cls.selenium = WebDriver()
-        # cls.selenium.implicitly_wait(2)
-        super().setUpClass()
+    clinic_user_group_names = CLINIC_USER_GROUPS
+    lab_user_group_names = LAB_USER_GROUPS
+    tmg_user_group_names = TMG_USER_GROUPS
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.selenium.quit()
-        super().tearDownClass()
+    default_sites = ambition_sites
+    appointment_model = 'edc_appointment.appointment'
+    subject_screening_model = 'ambition_screening.subjectscreening'
+    subject_consent_model = 'ambition_subject.subjectconsent'
+    subject_visit_model = 'ambition_subject.subjectvisit'
+    subject_requisition_model = 'ambition_subject.subjectrequisition'
+    action_item_model = 'edc_action_item.actionitem'
+    extra_url_names = ['home_url', 'administration_url']
 
-    def go_to_subject_dashboard(self, **kwargs):
-        """Login, add screening, add subject consent, proceed
+    @property
+    def consent_model_cls(self):
+        return django_apps.get_model(self.subject_consent_model)
+
+    def go_to_subject_visit_schedule_dashboard(self):
+        """Add screening, add subject consent, proceed
         to dashboard and update appointment to in_progress.
         """
-
-        self.login(**kwargs)
-
         url = reverse(settings.DASHBOARD_URL_NAMES.get(
             'screening_listboard_url'))
         self.selenium.get('%s%s' % (self.live_server_url, url))
+        self.selenium.save_screenshot(
+            os.path.join(settings.BASE_DIR, 'screenshots', 'new_subject1.png'))
 
-        self.selenium.find_element_by_partial_link_text(
-            f'Add Subject Screening').click()
+        element = self.wait_for('Add Subject Screening')
+        element.click()
 
         # add a subject screening form
-        model_obj = self.add_subject_screening()
+        model_obj = self.fill_subject_screening()
+        self.selenium.save_screenshot(
+            os.path.join(settings.BASE_DIR, 'screenshots', 'new_subject2.png'))
 
-        # add a subject consent for the newly screening subject
-        element_id = f'subjectconsent_add_{model_obj.screening_identifier}'
-        WebDriverWait(self.selenium, 10).until(
-            EC.presence_of_element_located((By.ID, element_id)))
-        self.selenium.find_element_by_id(element_id).click()
+        # add a subject consent for the newly screened subject
+        element = self.wait_for(
+            text=f'subjectconsent_add_{model_obj.screening_identifier}',
+            by=By.ID)
+        element.click()
 
-        model_obj = self.add_subject_consent(model_obj)
+        model_obj = self.fill_subject_consent(model_obj)
+        self.selenium.save_screenshot(
+            os.path.join(settings.BASE_DIR, 'screenshots', 'new_subject3.png'))
         subject_identifier = model_obj.subject_identifier
 
         # set appointment in progress
-        self.update_appointment_in_progress(subject_identifier)
+        appointment = self.fill_appointment_in_progress(subject_identifier)
+        self.selenium.save_screenshot(
+            os.path.join(settings.BASE_DIR, 'screenshots', 'new_subject4.png'))
 
-        return subject_identifier
+        return appointment
 
+    def go_to_subject_visit_dashboard(self, visit_code=None):
+        appointment = self.go_to_subject_visit_schedule_dashboard()
+        self.selenium.save_screenshot(
+            os.path.join(settings.BASE_DIR, 'screenshots', 'new_subject5.png'))
+        self.selenium.find_element_by_partial_link_text('Start').click()
+        subject_visit = self.fill_subject_visit(appointment)
+        self.selenium.save_screenshot(
+            os.path.join(settings.BASE_DIR, 'screenshots', 'new_subject6.png'))
+        self.wait_for_edc()
+        return subject_visit
 
-class AmbitionEdcMixin:
-
-    def add_subject_screening(self):
+    def fill_subject_screening(self):
         """Add a subject screening form.
         """
         obj = mommy.prepare_recipe(self.subject_screening_model)
         model_obj = self.fill_form(
             model=self.subject_screening_model,
             obj=obj, exclude=['subject_identifier', 'report_datetime'])
+        self.wait_for_edc()
         return model_obj
 
-    def add_subject_consent(self, model_obj):
+    def fill_subject_consent(self, model_obj):
         """Add a subject consent for the newly screening subject.
         """
         obj = mommy.prepare_recipe(
@@ -79,10 +110,11 @@ class AmbitionEdcMixin:
             exclude=['subject_identifier', 'citizen', 'legal_marriage',
                      'marriage_certificate', 'subject_type',
                      'gender', 'study_site'],
-            verbose=True)
+            verbose=False)
+        self.wait_for_edc()
         return model_obj
 
-    def update_appointment_in_progress(self, subject_identifier):
+    def fill_appointment_in_progress(self, subject_identifier):
         appointment = Appointment.objects.filter(
             subject_identifier=subject_identifier).order_by('timepoint')[0]
         self.selenium.find_element_by_id(
@@ -95,5 +127,49 @@ class AmbitionEdcMixin:
             exclude=['subject_identifier',
                      'timepoint_datetime', 'timepoint_status',
                      'facility_name'],
-            verbose=True)
+            verbose=False)
+        self.wait_for_edc()
+        return model_obj
+
+    def fill_subject_visit(self, appointment):
+        obj = mommy.prepare_recipe(
+            self.subject_visit_model,
+            **{'appointment': appointment,
+               'reason': SCHEDULED,
+               'info_source': PATIENT})
+        model_obj = self.fill_form(
+            model=self.subject_visit_model, obj=obj,
+            verbose=False)
+        self.wait_for_edc()
+        return model_obj
+
+    def fill_subject_requisition(self, subject_visit):
+        obj = mommy.prepare_recipe(
+            self.subject_requisition_model,
+            **{'subject_visit': subject_visit,
+               'is_drawn': YES,
+               'drawn_dateime': get_utcnow(),
+               'item_type': TUBE,
+               'item_count': 1,
+               'estimated_volume': 0.5})
+        model_obj = self.fill_form(
+            model=self.subject_visit_model, obj=obj,
+            verbose=False)
+        self.wait_for_edc()
+        return model_obj
+
+    def fill_action_item(self, subject_identifier=None, name=None, click_add=None):
+        # add action item
+        if click_add:
+            self.selenium.find_element_by_id(
+                'edc_action_item_actionitem_add').click()
+        action_type = ActionType.objects.get(name=name)
+        obj = mommy.prepare_recipe(
+            self.action_item_model,
+            subject_identifier=subject_identifier,
+            action_type=action_type)
+        model_obj = self.fill_form(
+            model=self.action_item_model, obj=obj,
+            exclude=['action_identifier'],
+            verbose=False)
         return model_obj

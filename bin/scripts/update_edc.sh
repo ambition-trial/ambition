@@ -18,7 +18,7 @@ if [ "${update_script}" = "y" ]; then
   cd ~/app \
   && git checkout master \
   && git pull \
-  && cp bin/update_edc.sh ~/
+  && cp bin/scripts/update_edc.sh ~/
   echo "${green}Done ... ${reset}"
   exit
 fi

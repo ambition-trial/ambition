@@ -44,7 +44,7 @@
         <a id="home_list_group_tmg_listboard" href="{% url tmg_listboard_url %}" class="list-group-item"><i class="fas fa-chalkboard-teacher fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;AE TMG Reports</a>
       {% endif %}
       {% if perms.edc_navbar.nav_lab_section %}
-        <a href="{% url requisition_listboard_url %}" class="list-group-item"><i class="fas fa-flask fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Specimens</a>
+        <a id="home_list_group_requisition_listboard" href="{% url requisition_listboard_url %}" class="list-group-item"><i class="fas fa-flask fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Specimens</a>
       {% endif %}
       {% if perms.edc_navbar.nav_pharmacy_section %}
         <a href="#" class="list-group-item"><i class="fas fa-medkit fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Pharmacy</a>
