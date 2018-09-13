@@ -1,6 +1,6 @@
 ambition-ae==0.1.13
-ambition-auth==0.1.1
-ambition-dashboard==0.1.4
+ambition-auth==0.1.2
+ambition-dashboard==0.1.5
 ambition-export==0.1.3
 ambition-labs==0.1.5
 ambition-metadata-rules==0.1.6
@@ -10,7 +10,7 @@ ambition-rando==0.1.11
 ambition-reference==0.1.6
 ambition-screening==0.1.8
 ambition-sites==0.1.5
-ambition-subject==0.1.18
+ambition-subject==0.1.19
 ambition-validators==0.1.8
 ambition-visit-schedule==0.1.6
 edc-action-item==0.1.11
@@ -19,7 +19,7 @@ edc-auth==0.1.9
 edc-base==0.2.30
 edc-consent==0.2.15
 edc-constants==0.2.10
-edc-dashboard==0.2.14
+edc-dashboard==0.2.15
 edc-device==0.2.9
 edc-fabric==0.1.5a1
 edc-facility==0.1.8
@@ -27,7 +27,7 @@ edc-fieldsets==0.1.3
 edc-form-validators==0.1.5
 edc-identifier==0.2.15
 edc-lab==0.2.25
-edc-lab-dashboard==0.1.18
+edc-lab-dashboard==0.1.19
 edc-label==0.1.12
 edc-list-data==0.1.3
 edc-locator==0.2.10
@@ -50,8 +50,8 @@ edc-reportable==0.1.6
 edc-reports==0.1.6
 edc-rest==0.1.3
 edc-search==0.1.7
-edc-selenium==0.1.1a1
-edc-subject-dashboard==0.1.12
+edc-selenium==0.1.2
+edc-subject-dashboard==0.1.13
 edc-timepoint==0.1.6
 edc-visit-schedule==0.2.11
 edc-visit-tracking==0.2.11
