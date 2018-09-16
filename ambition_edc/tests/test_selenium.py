@@ -28,6 +28,8 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from .mixins import AmbitionEdcSeleniumMixin
 from selenium.webdriver.common.by import By
 from ambition_labs.panels import fbc_panel
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 style = color_style()
 
@@ -52,7 +54,16 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
         PermissionsUpdater(verbose=False)
         import_holidays()
         site_list_data.autodiscover()
-        self.selenium = WebDriver()
+        if os.environ('TRAVIS'):
+            capabilities = DesiredCapabilities.FIREFOX.copy()
+            username = os.environ["SAUCE_USERNAME"]
+            access_key = os.environ["SAUCE_ACCESS_KEY"]
+            capabilities["tunnel-identifier"] = os.environ["TRAVIS_JOB_NUMBER"]
+            hub_url = "%s:%s@localhost:4445" % (username, access_key)
+            self.selenium = webdriver.Remote(
+                desired_capabilities=capabilities, command_executor="http://%s/wd/hub" % hub_url)
+        else:
+            self.selenium = WebDriver()
 
     def tearDown(self):
         self.selenium.quit()
