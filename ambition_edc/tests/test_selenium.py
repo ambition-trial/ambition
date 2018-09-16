@@ -24,12 +24,12 @@ from edc_list_data.site_list_data import site_list_data
 from model_mommy import mommy
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium.webdriver import Firefox
+from selenium.webdriver.firefox.options import Options
 
 from .mixins import AmbitionEdcSeleniumMixin
 from selenium.webdriver.common.by import By
 from ambition_labs.panels import fbc_panel
-from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 style = color_style()
 
@@ -54,16 +54,10 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
         PermissionsUpdater(verbose=False)
         import_holidays()
         site_list_data.autodiscover()
-        if os.environ('TRAVIS'):
-            capabilities = DesiredCapabilities.FIREFOX.copy()
-            username = os.environ["SAUCE_USERNAME"]
-            access_key = os.environ["SAUCE_ACCESS_KEY"]
-            capabilities["tunnel-identifier"] = os.environ["TRAVIS_JOB_NUMBER"]
-            hub_url = "%s:%s@localhost:4445" % (username, access_key)
-            self.selenium = webdriver.Remote(
-                desired_capabilities=capabilities, command_executor="http://%s/wd/hub" % hub_url)
-        else:
-            self.selenium = WebDriver()
+        options = Options()
+        if os.environ.get('TRAVIS'):
+            options.add_argument('-headless')
+        self.selenium = Firefox(firefox_options=options)
 
     def tearDown(self):
         self.selenium.quit()
