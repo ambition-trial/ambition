@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'edc_pdutils.apps.AppConfig',
     'edc_offstudy.apps.AppConfig',
     'edc_dashboard.apps.AppConfig',
+    'edc_export.apps.AppConfig',
     'edc_form_validators.apps.AppConfig',
     'edc_fieldsets.apps.AppConfig',
     'edc_subject_dashboard.apps.AppConfig',

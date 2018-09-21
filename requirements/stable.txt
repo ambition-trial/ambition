@@ -25,6 +25,7 @@ edc-consent
 edc-constants
 edc-dashboard
 edc-device
+edc-export
 edc-fabric
 edc-facility
 edc-fieldsets

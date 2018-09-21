@@ -33,6 +33,11 @@ def post_migrate_update_sites(sender=None, **kwargs):
         apps=django_apps, sites=ambition_sites, fqdn=fqdn, verbose=True)
 
 
+def post_migrate_update_edc_permissions(sender=None, **kwargs):
+    from ambition_auth.permissions_updater import PermissionsUpdater
+    PermissionsUpdater(verbose=True)
+
+
 class AppConfig(DjangoAppConfig):
     name = 'ambition_edc'
 
@@ -41,6 +46,7 @@ class AppConfig(DjangoAppConfig):
         register(randomization_list_check)(['ambition_edc'])
         register(ambition_check)
         post_migrate.connect(post_migrate_update_sites, sender=self)
+        post_migrate.connect(post_migrate_update_edc_permissions, sender=self)
 
 
 class EdcProtocolAppConfig(BaseEdcProtocolAppConfig):
