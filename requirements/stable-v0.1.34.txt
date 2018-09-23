@@ -22,7 +22,7 @@ edc-consent==0.2.15
 edc-constants==0.2.10
 edc-dashboard==0.2.16
 edc-device==0.2.9
-edc-export==0.2.5
+edc-export==0.2.6
 edc-fabric==0.1.5a1
 edc-facility==0.1.8
 edc-fieldsets==0.1.3
