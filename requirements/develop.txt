@@ -2,6 +2,7 @@
 -e /Users/erikvw/source/edc-navbar  #develop#egg=edc-navbar
 -e /Users/erikvw/source/edc-device  #develop#egg=edc-device
 -e /Users/erikvw/source/edc-protocol  #develop#egg=edc-protocol
+-e /Users/erikvw/source/edc-export  #develop#egg=edc-export
 -e /Users/erikvw/source/edc-facility  #develop#egg=edc-facility
 -e /Users/erikvw/source/edc-label  #develop#egg=edc-label
 -e /Users/erikvw/source/edc-reference  #develop#egg=edc-reference
