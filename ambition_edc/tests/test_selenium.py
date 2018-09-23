@@ -3,6 +3,7 @@ import sys
 
 from ambition_ae.action_items import AE_INITIAL_ACTION
 from ambition_auth.permissions_updater import PermissionsUpdater
+from ambition_labs.panels import fbc_panel
 from ambition_rando.randomization_list_importer import RandomizationListImporter
 from ambition_sites import ambition_sites, fqdn
 from django.apps import apps as django_apps
@@ -23,11 +24,11 @@ from edc_lab_dashboard.dashboard_urls import dashboard_urls
 from edc_list_data.site_list_data import site_list_data
 from model_mommy import mommy
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium.webdriver import Firefox
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 
 from .mixins import AmbitionEdcSeleniumMixin
-from selenium.webdriver.common.by import By
-from ambition_labs.panels import fbc_panel
 
 style = color_style()
 
@@ -52,7 +53,10 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
         PermissionsUpdater(verbose=False)
         import_holidays()
         site_list_data.autodiscover()
-        self.selenium = WebDriver()
+        options = Options()
+        if os.environ.get('TRAVIS'):
+            options.add_argument('-headless')
+        self.selenium = Firefox(firefox_options=options)
 
     def tearDown(self):
         self.selenium.quit()

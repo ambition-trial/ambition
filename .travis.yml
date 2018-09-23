@@ -4,13 +4,12 @@ python:
 - 3.7
 dist: xenial
 sudo: true
+env:
+  - MOZ_HEADLESS=1
 addons:
+  firefox: latest
   apt_packages:
   - libcups2-dev
-  sauce_connect:
-    username: erikvw
-  jwt:
-    secure: ip494EeI6mMPytPnjXwCB05fva5B0bzDWkJnwVvQBSiIj/mLzLbVelPC2FYxWjcaS/4SaU2plnDb+qEpAOfj4mMXHhNwnJybhIIuykMoPSZNwzm+ahvr0iToL/yhRa+VTSaAxCAXYN3mweeNIzlemqxoojji9oe46BCpFVhV4IkaxddO45X6WtuAK5VguBHIEsmR93PUl11XOmwmPbkY6OWA+AvTQ8kmP58Eqi64jl2KP1uUttWCMPvBQpRA/brwc1bckxDMRqFvkPLrUcNePLkbU7SAJdTqB8RmBrjYHetW4+lJOIvbsPyYjWxYiNI/F5ItnuLZBDmYfq+1nP0IAuD2yzyzN/XptMtxAdTFafP1ch5CtDpaMt+81+i9/rTBSTc+SRPm9/aN3jJivUi6n/TEXH3PiJ6J19J9uf+kjKbD2jwirMIhHAAMx7RuufR9sWH3WURuAJNrU56tYCv1ab35rR1DS3uyxjw6m9fSGW+zme226iPy9epU1wxtLuTEZPGqkTaLSXLY2Zc9GVD9kzcdwcHKOEv+b4mpZG2RCqwGuiehzxg/ijgqeRcD07qnpkn2SnTvAUfVqgW40BzrB/VcXCPc/BF4vhq5kCPm8KIaXOT8IJUfVsDZLYhHC3/La3W64gHUAy6igPDdeqIWdcjxpQpfc+4P2C4XmtuEFJA=
 services:
 - mysql
 install:

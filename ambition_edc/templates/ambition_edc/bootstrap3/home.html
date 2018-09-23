@@ -40,20 +40,23 @@
       {% if perms.edc_dashboard.view_subject_listboard %}
         <a id="home_list_group_subject_listboard" href="{% url subject_listboard_url %}" class="list-group-item"><i class="fas fa-user-circle fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Subjects</a>
       {% endif %}
-      {% if perms.edc_dashboard.view_tmg_listboard %}
-        <a id="home_list_group_tmg_listboard" href="{% url tmg_listboard_url %}" class="list-group-item"><i class="fas fa-chalkboard-teacher fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;AE TMG Reports</a>
-      {% endif %}
       {% if perms.edc_navbar.nav_lab_section %}
         <a id="home_list_group_requisition_listboard" href="{% url requisition_listboard_url %}" class="list-group-item"><i class="fas fa-flask fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Specimens</a>
-      {% endif %}
-      {% if perms.edc_navbar.nav_pharmacy_section %}
-        <a href="#" class="list-group-item"><i class="fas fa-medkit fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Pharmacy</a>
       {% endif %}
       {% if perms.ambition_ae %}
         <a href="{% url 'ambition_ae:home_url' %}" class="list-group-item"><i class="fas fa-heartbeat fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Adverse Events</a>
       {% endif %}
+      {% if perms.edc_dashboard.view_tmg_listboard %}
+        <a id="home_list_group_tmg_listboard" href="{% url tmg_listboard_url %}" class="list-group-item"><i class="fas fa-chalkboard-teacher fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;AE TMG Reports</a>
+      {% endif %}
+      {% if perms.edc_navbar.nav_pharmacy_section %}
+        <a href="#" class="list-group-item"><i class="fas fa-medkit fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Pharmacy</a>
+      {% endif %}
       {% if perms.edc_action_item %}
         <a href="{% url 'edc_action_item:home_url' %}" class="list-group-item"><i class="fas fa-bolt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Action Items</a>
+      {% endif %}
+      {% if perms.edc_export %}
+        <a href="{% url 'edc_export:home_url' %}" class="list-group-item"><i class="fas fa-file-export fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Export data</a>
       {% endif %}
       {% if perms.edc_navbar.navbar_collect_offline %}
         <a href="{% url 'django_collect_offline:home_url' %}" class="list-group-item"><i class="fas fa-exchange-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Synchronization</a>

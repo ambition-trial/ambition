@@ -1,3 +1,4 @@
+export/*
 geckodriver.log
 freeze*
 fabfile/.hosts
