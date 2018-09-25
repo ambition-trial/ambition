@@ -306,6 +306,13 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = env.str(
         'DJANGO_SESSION_COOKIE_SECURE')
 
+    # other security defaults
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
+
 # edc_lab and label
 LABEL_TEMPLATE_FOLDER = env.str(
     'DJANGO_LABEL_TEMPLATE_FOLDER') or os.path.join(BASE_DIR, 'label_templates')
