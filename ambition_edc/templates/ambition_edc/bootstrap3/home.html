@@ -47,7 +47,7 @@
         <a href="{% url 'ambition_ae:home_url' %}" class="list-group-item"><i class="fas fa-heartbeat fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Adverse Events</a>
       {% endif %}
       {% if perms.edc_dashboard.view_tmg_listboard %}
-        <a id="home_list_group_tmg_listboard" href="{% url tmg_listboard_url %}" class="list-group-item"><i class="fas fa-chalkboard-teacher fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;AE TMG Reports</a>
+        <a id="home_list_group_tmg_listboard" href="{% url 'ambition_dashboard:tmg_home_url' %}" class="list-group-item"><i class="fas fa-chalkboard-teacher fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;TMG Reports</a>
       {% endif %}
       {% if perms.edc_navbar.nav_pharmacy_section %}
         <a href="#" class="list-group-item"><i class="fas fa-medkit fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Pharmacy</a>

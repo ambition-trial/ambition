@@ -22,6 +22,6 @@ navbar.append_item(
 
 navbar.append_item(
     [item for item in ambition_dashboard_navbar.items
-     if item.name == 'tmg'][0])
+     if item.name == 'tmg_ae'][0])
 
 site_navbars.register(navbar)
