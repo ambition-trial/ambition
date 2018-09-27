@@ -40,9 +40,9 @@ while true; do
     esac
 done
 while true; do
-    read -p "Update edc permissions? [y/n]" yn
+    read -p "Update static files? [y/n]" yn
     case $yn in
-        [Yy]* ) update_permissions="y"; break;;
+        [Yy]* ) collect_static="y"; break;;
         [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
     esac
@@ -76,14 +76,14 @@ if [ "${migrate}" = "y" ]; then
   && python manage.py migrate
 fi
 
- if [ "${update_permissions}" = "y" ]; then
-  echo "${green}Updating permissions ... ${reset}"
+ if [ "${collect_static}" = "y" ]; then
+  echo "${green}Updating static files ... ${reset}"
   cd ~/app \
-  && python manage.py update_edc_permissions
+  && python manage.py collectstatic
 fi
 
 if [ "${update_ubuntu}" = "y" ]; then
-  echo "${green}Updating permissions ... ${reset}"
+  echo "${green}Updating ubuntu ... ${reset}"
   sudo apt-get update \
   && sudo apt-get upgrade
 fi
