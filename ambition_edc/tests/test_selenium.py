@@ -100,6 +100,7 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
 
     """TMG"""
 
+    @tag('1')
     def test_tmg(self):
 
         self.login(group_names=self.clinic_user_group_names,
