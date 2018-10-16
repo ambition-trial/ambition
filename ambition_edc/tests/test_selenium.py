@@ -76,7 +76,6 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
                 sys.stdout.write(style.SUCCESS(f'{url_name} {url}\n'))
                 self.selenium.get('%s%s' % (self.live_server_url, url))
 
-    @tag('1')
     def test_new_subject(self):
 
         self.login(
@@ -315,5 +314,5 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
                       self.selenium.page_source)
 
         # assert next action shows, if required
-        for name in [a.name for a in action_item.action.get_next_actions()]:
+        for name in [name for name in action_item.action.get_next_actions()]:
             assert name in self.selenium.page_source

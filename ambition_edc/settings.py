@@ -57,6 +57,8 @@ TEST_DIR = os.path.join(BASE_DIR, APP_NAME, 'tests')
 
 ALLOWED_HOSTS = ["*"]  # env.list('DJANGO_ALLOWED_HOSTS')
 
+ENFORCE_RELATED_ACTION_ITEM_EXISTS = False
+
 # get site ID from more familiar town name
 TOWN = env.str('DJANGO_TOWN')
 if TOWN:
