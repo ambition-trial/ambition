@@ -24,10 +24,10 @@ class MyTestGroupPermissions(TestGroupPermissions):
             ])
 
     def test_clinic(self):
-        self.compare_codenames(CLINIC)
+        self.inspector.compare_codenames(group_name=CLINIC)
 
     def test_rando(self):
-        self.compare_codenames(RANDO)
+        self.inspector.compare_codenames(group_name=RANDO)
 
     def test_tmg(self):
-        self.compare_codenames(TMG)
+        self.inspector.compare_codenames(group_name=TMG)

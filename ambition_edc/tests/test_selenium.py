@@ -316,5 +316,5 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
                       self.selenium.page_source)
 
         # assert next action shows, if required
-        for name in [a.name for a in action_item.action.get_next_actions()]:
+        for name in [name for name in action_item.action.get_next_actions()]:
             assert name in self.selenium.page_source
