@@ -1,6 +1,6 @@
 ambition-ae==0.1.21
 ambition-auth==0.1.6
-ambition-dashboard==0.1.11
+ambition-dashboard==0.1.13
 ambition-export==0.1.5
 ambition-labs==0.1.5
 ambition-metadata-rules==0.1.6
