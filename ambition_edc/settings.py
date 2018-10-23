@@ -113,6 +113,7 @@ INSTALLED_APPS = [
     'edc_label.apps.AppConfig',
     'edc_locator.apps.AppConfig',
     'edc_metadata_rules.apps.AppConfig',
+    'edc_notification.apps.AppConfig',
     'edc_registration.apps.AppConfig',
     'edc_timepoint.apps.AppConfig',
     'edc_visit_schedule.apps.AppConfig',
@@ -344,13 +345,14 @@ HOLIDAY_FILE = env.str('DJANGO_HOLIDAY_FILE')
 COUNTRY = env.str('DJANGO_COUNTRY')
 
 EMAIL_ENABLED = env('DJANGO_EMAIL_ENABLED')
+EMAIL_CONTACTS = env.dict('DJANGO_EMAIL_CONTACTS')
 if EMAIL_ENABLED:
-    EMAIL_CONTACTS = env.dict('DJANGO_EMAIL_CONTACTS')
     EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
     EMAIL_PORT = env.int('DJANGO_EMAIL_PORT')
     EMAIL_HOST_USER = env.str('DJANGO_EMAIL_HOST_USER')
     EMAIL_HOST_PASSWORD = env.str('DJANGO_EMAIL_HOST_PASSWORD')
     EMAIL_USE_TLS = env('DJANGO_EMAIL_USE_TLS')
+    MAILGUN_API_KEY = env.str('MAILGUN_API_KEY')
 
 if DEBUG:
     RANDOMIZATION_LIST_PATH = os.path.join(
