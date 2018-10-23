@@ -67,9 +67,9 @@ cd ~/app \
   && git checkout master \
   && git pull \
   && . ~/.venvs/ambition/bin/activate \
-  && pip install -U pip
-  && pip install --no-cache-dir -U -r requirements/stable-v${version}.txt \
-  && pip install -e .
+  && pip install -U pip \
+  && pip install --no-cache-dir --upgrade-strategy eager --upgrade -r requirements/stable-v${version}.txt \
+  && pip install -e . --no-cache-dir --upgrade-strategy eager --upgrade
 
 if [ "${migrate}" = "y" ]; then
   echo "${green}Running migrations ... ${reset}"
