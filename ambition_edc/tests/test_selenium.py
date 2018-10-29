@@ -6,6 +6,8 @@ from ambition_auth.permissions_updater import PermissionsUpdater
 from ambition_labs.panels import fbc_panel
 from ambition_rando.randomization_list_importer import RandomizationListImporter
 from ambition_sites import ambition_sites, fqdn
+from ambition_visit_schedule.constants import WEEK10
+from ambition_visit_schedule.visit_schedules import VISIT_SCHEDULE, SCHEDULE
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -29,6 +31,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 
 from .mixins import AmbitionEdcSeleniumMixin
+from time import sleep
+from edc_visit_schedule.site_visit_schedules import site_visit_schedules
+from ambition_subject.models.follow_up import FollowUp
 
 style = color_style()
 
@@ -300,7 +305,8 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
             f'referencemodel-change-{action_item.action_identifier.upper()}')
         if (action_item_control_id in self.selenium.page_source):
             self.fail(
-                f'Unexpectedly found id on dashboard. Got {action_item_control_id}')
+                'Unexpectedly found action_item \'id\' on dashboard. '
+                f'Got {action_item_control_id}')
 
         # find through PRN Forms
         self.selenium.find_element_by_link_text(
@@ -316,3 +322,36 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
         # assert next action shows, if required
         for name in [name for name in action_item.action.get_next_actions()]:
             assert name in self.selenium.page_source
+
+    @tag('1')
+    def test_week10_followup(self):
+        """Asserts the form label on WEEK10 changes according to the
+        configuration in FollowupAdmin.
+        """
+        self.login(group_names=self.clinic_user_group_names,
+                   site_names=[settings.TOWN])
+        # get visit_codes for where followup form is administered
+        for visit_code, visit in site_visit_schedules.get_visit_schedule(
+                VISIT_SCHEDULE).schedules.get(SCHEDULE).visits.items():
+            if 'ambition_subject.followup' in [c.model for c in visit.crfs]:
+                subject_visit = self.go_to_subject_visit_dashboard(
+                    visit_schedule_name=VISIT_SCHEDULE,
+                    schedule_name=SCHEDULE,
+                    visit_code=visit_code,
+                    save_only=True)
+                url = reverse(settings.DASHBOARD_URL_NAMES.get(
+                    'subject_dashboard_url'),
+                    kwargs={
+                        'subject_identifier': subject_visit.subject_identifier,
+                        'appointment': str(subject_visit.appointment.id)})
+                self.selenium.get(f'{self.live_server_url}{url}')
+                self.selenium.find_element_by_name(
+                    f'id_{FollowUp._meta.label_lower.replace(".", "_")}').click()
+                if visit_code == WEEK10:
+                    self.assertIn(
+                        'Were any of the following antibiotics given since week two?',
+                        self.selenium.page_source)
+                else:
+                    self.assertNotIn(
+                        'Were any of the following antibiotics',
+                        self.selenium.page_source)
