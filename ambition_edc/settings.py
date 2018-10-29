@@ -34,6 +34,7 @@ env = environ.Env(
     DJANGO_USE_TZ=(bool, True),
     SAUCE_ENABLED=(bool, False),
     SENTRY_ENABLED=(bool, False),
+    TWILIO_ENABLED=(bool, False),
 )
 
 # copy your .env file from .envs/ to BASE_DIR
@@ -90,33 +91,33 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'edc_model_admin.apps.AppConfig',
-    'edc_prn.apps.AppConfig',
-    'edc_pdutils.apps.AppConfig',
-    'edc_offstudy.apps.AppConfig',
-    'edc_dashboard.apps.AppConfig',
-    'edc_export.apps.AppConfig',
-    'edc_form_validators.apps.AppConfig',
-    'edc_fieldsets.apps.AppConfig',
-    'edc_subject_dashboard.apps.AppConfig',
-    'edc_lab_dashboard.apps.AppConfig',
-    'edc_list_data.apps.AppConfig',
     'django_collect_offline.apps.AppConfig',
     'django_collect_offline_files.apps.AppConfig',
-    'edc_pharmacy.apps.AppConfig',
-    'edc_pharmacy_dashboard.apps.AppConfig',
-    'edc_auth.apps.AppConfig',
-    'edc_navbar.apps.AppConfig',
-    'edc_reference.apps.AppConfig',
-    'edc_consent.apps.AppConfig',
     'edc_action_item.apps.AppConfig',
+    'edc_auth.apps.AppConfig',
+    'edc_consent.apps.AppConfig',
+    'edc_dashboard.apps.AppConfig',
+    'edc_export.apps.AppConfig',
+    'edc_fieldsets.apps.AppConfig',
+    'edc_form_validators.apps.AppConfig',
+    'edc_lab_dashboard.apps.AppConfig',
     'edc_label.apps.AppConfig',
     'edc_locator.apps.AppConfig',
+    'edc_reference.apps.AppConfig',
     'edc_metadata_rules.apps.AppConfig',
+    'edc_model_admin.apps.AppConfig',
+    'edc_navbar.apps.AppConfig',
     'edc_notification.apps.AppConfig',
-    'edc_registration.apps.AppConfig',
-    'edc_timepoint.apps.AppConfig',
+    'edc_offstudy.apps.AppConfig',
     'edc_visit_schedule.apps.AppConfig',
+    'edc_pdutils.apps.AppConfig',
+    'edc_pharmacy.apps.AppConfig',
+    'edc_pharmacy_dashboard.apps.AppConfig',
+    'edc_prn.apps.AppConfig',
+    'edc_registration.apps.AppConfig',
+    'edc_subject_dashboard.apps.AppConfig',
+    'edc_timepoint.apps.AppConfig',
+    'edc_list_data.apps.AppConfig',
     'ambition_auth.apps.AppConfig',
     'ambition_dashboard.apps.AppConfig',
     'ambition_labs.apps.AppConfig',
@@ -353,6 +354,12 @@ if EMAIL_ENABLED:
     EMAIL_HOST_PASSWORD = env.str('DJANGO_EMAIL_HOST_PASSWORD')
     EMAIL_USE_TLS = env('DJANGO_EMAIL_USE_TLS')
     MAILGUN_API_KEY = env.str('MAILGUN_API_KEY')
+
+TWILIO_ENABLED = env('TWILIO_ENABLED')
+if TWILIO_ENABLED:
+    TWILIO_ACCOUNT_SID = env.str('TWILIO_ACCOUNT_SID')
+    TWILIO_AUTH_TOKEN = env.str('TWILIO_AUTH_TOKEN')
+    TWILIO_SENDER = env.str('TWILIO_SENDER')
 
 if DEBUG:
     RANDOMIZATION_LIST_PATH = os.path.join(
