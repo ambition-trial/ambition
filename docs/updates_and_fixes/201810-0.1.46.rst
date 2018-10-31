@@ -1,0 +1,65 @@
+Fix action items.
+
+.. code-block:: python
+
+    # look for missing parent and related action item when related_reference_fk_attr is not null
+
+    from django.core.exceptions import ObjectDoesNotExist
+    from edc_action_item.models import ActionItem
+    from edc_action_item import site_action_items
+    from pprint import pprint
+
+    class BadParentAction(Exception):
+        pass
+
+    for action_cls in site_action_items.registry.values():
+        print('')
+        print('')
+        print(action_cls)
+        if action_cls.related_reference_fk_attr:
+            print(action_cls.related_reference_fk_attr)
+            print(action_cls.parent_action_names)
+            print('parent action items')            
+            for index, action_item in enumerate(ActionItem.objects.filter(action_type__name=action_cls.name).order_by('created')):
+                try:
+                    parent_reference_obj = action_item.parent_reference_obj
+                except ObjectDoesNotExist:
+                    print(index, '  NOT OK', action_item, 'missing parent_reference_obj')
+                else:
+                    if parent_reference_obj.get_action_cls().name not in action_cls.parent_action_names:
+                        raise BadParentAction(
+                            f'{parent_reference_obj.get_action_cls().name}. See {action_cls}')
+                    if (parent_reference_obj._meta.label_lower.split('.')[1]
+                        == action_cls.related_reference_fk_attr.replace('_', '')
+                       or (parent_reference_obj._meta.label_lower.split('.')[1]
+                           == action_item.reference_model.split('.')[1].replace('_', ''))):
+                        print(index, 'OK')
+                    else:
+                        print(index, '  NOT OK', action_item)
+                        print('   *', 'parent_reference_obj', action_item.parent_reference_obj)
+                        print('   *', 'parent_action_item', action_item.parent_action_item)
+                        print('   *', 'parent_action_identifier', action_item.parent_action_identifier)
+
+            print('related action items')            
+            for index, action_item in enumerate(
+                ActionItem.objects.filter(action_type__name=action_cls.name).order_by('created')):
+                try:
+                    related_reference_obj = action_item.related_reference_obj
+                except ObjectDoesNotExist:
+                    print(index, '  NOT OK', action_item, 'missing related_reference_obj')
+                    if (parent_reference_obj._meta.label_lower.split('.')[1]
+                        == action_cls.related_reference_fk_attr.replace('_', '')):
+                        # what is the expected related action item?
+                        print('   *', 'related_action_item is parent', action_item.parent_action_item)
+                        action_item.related_action_item = action_item.parent_action_item
+                        action_item.save()
+                else:
+                    if (related_reference_obj._meta.label_lower.split('.')[1]
+                        == action_cls.related_reference_fk_attr.replace('_', '')):
+                        print(index, 'OK')
+                    else:
+                        print(index, '  NOT OK', action_item)
+                        print('   *', 'related_reference_obj', action_item.related_reference_obj)
+                        print('   *', 'related_action_item', action_item.related_action_item)
+
+
