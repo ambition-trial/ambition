@@ -63,7 +63,7 @@ def update_develop_virtualenv():
                 'ambition-screening',
                 'ambition-sites',
                 'ambition-subject',
-                'ambition-validators',
+                'ambition_form_validators',
                 'ambition-visit-schedule',
                 'django-crypto-fields',
                 'django-revision',
