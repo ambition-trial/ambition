@@ -125,7 +125,7 @@ INSTALLED_APPS = [
     'ambition_rando.apps.AppConfig',
     'ambition_reference.apps.AppConfig',
     'ambition_subject.apps.AppConfig',
-    'ambition_validators.apps.AppConfig',
+    'ambition_form_validators.apps.AppConfig',
     'ambition_visit_schedule.apps.AppConfig',
     'ambition_ae.apps.AppConfig',
     'ambition_prn.apps.AppConfig',
