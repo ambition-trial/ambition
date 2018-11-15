@@ -1,5 +1,6 @@
 from ambition_ae.admin_site import ambition_ae_admin
 from ambition_export.admin_site import ambition_export_admin
+from ambition_lists.admin_site import ambition_lists_admin
 from ambition_prn.admin_site import ambition_prn_admin
 from ambition_screening.admin_site import ambition_screening_admin
 from ambition_subject.admin_site import ambition_subject_admin
@@ -48,6 +49,7 @@ urlpatterns = [
     path('admin/', edc_appointment_admin.urls),
     path('admin/', ambition_subject_admin.urls),
     path('admin/', ambition_ae_admin.urls),
+    path('admin/', ambition_lists_admin.urls),
     path('admin/', ambition_export_admin.urls),
     path('admin/', ambition_prn_admin.urls),
     path('admin/', ambition_screening_admin.urls),
@@ -72,6 +74,7 @@ urlpatterns = [
     path('ambition_subject/', include('ambition_subject.urls')),
     path('ambition_ae/', include('ambition_ae.urls')),
     path('ambition_export/', include('ambition_export.urls')),
+    path('ambition_lists/', include('ambition_lists.urls')),
     path('ambition_prn/', include('ambition_prn.urls')),
     path('ambition_screening/', include('ambition_screening.urls')),
     path('subject/', include('ambition_dashboard.urls')),
