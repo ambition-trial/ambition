@@ -1,0 +1,25 @@
+Insert Ambition Lists migration before Ambition Subject
+
+On production:
+
+.. code-block:: sql
+
+	select * from django_migrations;
+	update django_migrations set id=id+1001 where id>=40;
+	update django_migrations set id=id-1000 where id>=40;
+	insert into django_migrations (id, app, name, applied) values (40, 'ambition_lists', '0001_initial', '2018-01-30 08:23:20.303000');
+
+	# increment the auto ID
+	alter table django_migrations AUTO_INCREMENT=218;
+
+After running the following, verify the sequence is correct.
+
+Run `makemigrations`
+
+.. code-block:: python
+
+	python manage.py makemigrations
+
+It should return `no changes detect`
+
+
