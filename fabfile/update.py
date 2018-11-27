@@ -3,7 +3,6 @@ import os
 from fabric.api import cd, env, prefix
 from fabric.decorators import serial, task
 
-from .freeze import _pip_freeze
 from .gunicorn import restart_gunicorn
 from .migrate import migrate
 from .utils import set_fab_env
@@ -30,5 +29,4 @@ def update(user=None):
         with cd(env.app_folder):
             update_virtualenv(user)
             migrate(user)
-            _pip_freeze()
     restart_gunicorn(user)
