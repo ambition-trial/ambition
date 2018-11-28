@@ -16,6 +16,7 @@ done
 if [ "${update_script}" = "y" ]; then
   echo "${green}Copying script ... ${reset}" 
   cd ~/app \
+  && git checkout docs/forms_reference.md \
   && git checkout master \
   && git pull \
   && cp bin/scripts/update_edc.sh ~/
