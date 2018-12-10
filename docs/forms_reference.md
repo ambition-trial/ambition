@@ -62,7 +62,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Patient'S History
 *[missing model class docstring]*
@@ -93,23 +93,23 @@
 * column: symptom
 * type: ManyToManyField
 * responses: *Select all that apply*
-  - `cough`: *Cough* 
-  - `headache`: *Headache* 
   - `double_vision`: *Double vision* 
-  - `visual_loss`: *Visual loss* 
-  - `fever`: *Fever* 
-  - `hearing_loss`: *Hearing loss* 
-  - `confusion`: *Confusion* 
-  - `drowsiness`: *Drowsiness* 
   - `behaviour_change`: *Behaviour change* 
+  - `confusion`: *Confusion* 
+  - `cough`: *Cough* 
+  - `drowsiness`: *Drowsiness* 
+  - `fever`: *Fever* 
   - `focal_weakness`: *Focal weakness* 
-  - `seizures_lt_72 hrs`: *Seizures (<72 hrs)* 
-  - `seizures_gt_72`: *Seizures (72 hrs - 1 mo)* 
+  - `headache`: *Headache* 
+  - `hearing_loss`: *Hearing loss* 
   - `nausea`: *Nausea* 
+  - `seizures_gt_72`: *Seizures (72 hrs - 1 mo)* 
+  - `seizures_lt_72 hrs`: *Seizures (<72 hrs)* 
+  - `shortness_of_breath`: *Shortness of breath* 
+  - `skin_lesions`: *Skin lesions* 
+  - `visual_loss`: *Visual loss* 
   - `vomiting`: *Vomiting* 
   - `weight_loss`: *Weight loss* 
-  - `skin_lesions`: *Skin lesions* 
-  - `shortness_of_breath`: *Shortness of breath* 
 ---
 
 **4.0.** If headache, how many days did it last?
@@ -432,14 +432,14 @@
 * column: neurological
 * type: ManyToManyField
 * responses: *Select all that apply*
+  - `focal_neurologic_deficit`: *Focal neurologic deficit* 
   - `meningism`: *Meningism* 
   - `papilloedema`: * Papilloedema* 
-  - `focal_neurologic_deficit`: *Focal neurologic deficit* 
-  - `CN_VI_palsy`: *Cranial Nerve VI palsy* 
   - `CN_III_palsy`: *Cranial Nerve III palsy* 
   - `CN_IV_palsy`: *Cranial Nerve IV palsy* 
-  - `CN_VII_palsy`: *Cranial Nerve VII palsy* 
   - `CN_VIII_palsy`: *Cranial Nerve VIII palsy* 
+  - `CN_VII_palsy`: *Cranial Nerve VII palsy* 
+  - `CN_VI_palsy`: *Cranial Nerve VI palsy* 
   - `OTHER`: *Other CN palsy* 
 ---
 
@@ -543,7 +543,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Health Economics: Medical Expenses (1000)
 *[missing model class docstring]*
@@ -808,7 +808,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Health Economics: Medical Expenses Part 2
 *[missing model class docstring]*
@@ -837,7 +837,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Health Economics: Education
 *[missing model class docstring]*
@@ -950,7 +950,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Health Economics: Education (Person Who Earns The Highest Income)
 *[missing model class docstring]*
@@ -1051,7 +1051,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result (1000)
 *[missing model class docstring]*
@@ -1758,7 +1758,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Lumbar Puncture/Cerebrospinal Fluid
 *[missing model class docstring]*
@@ -2050,7 +2050,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Microbiology
 *[missing model class docstring]*
@@ -2404,7 +2404,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Radiology
 *[missing model class docstring]*
@@ -2452,11 +2452,11 @@
 * column: cxr_type
 * type: ManyToManyField
 * responses: *Select all that apply*
-  - `NORMAL`: *Normal* 
   - `hilar_adenopathy`: *Hilar adenopathy* 
-  - `miliary_appearance`: *Miliary appearance* 
-  - `pleural_effusion`: *Pleural effusion* 
   - `infiltrates`: *Infiltrates* 
+  - `miliary_appearance`: *Miliary appearance* 
+  - `NORMAL`: *Normal* 
+  - `pleural_effusion`: *Pleural effusion* 
 ---
 
 **6.0.** If infiltrates, specify location
@@ -2464,12 +2464,12 @@
 * column: infiltrate_location
 * type: ManyToManyField
 * responses: *Select all that apply*
-  - `lul`: *LUL* 
+  - `diffuse`: *Diffuse* 
   - `lll`: *LLL* 
-  - `rul`: *RUL* 
+  - `lul`: *LUL* 
   - `rll`: *RLL* 
   - `rml`: *RML* 
-  - `diffuse`: *Diffuse* 
+  - `rul`: *RUL* 
 ---
 
 **7.0.** Description/Comments
@@ -2545,10 +2545,10 @@
 * type: ManyToManyField
 * responses: *Select all that apply*
   - `cerebral_oedema`: *Cerebral oedema* 
-  - `hydrocephalus`: *Hydrocephalus* 
   - `cryptococcomas`: *Cryptococcomas* 
   - `dilated_virchow_robin_spaces`: *Dilated Virchow-Robin spaces* 
   - `enhancing_mass_lesions`: *Enhancing mass lesions DD toxoplasmosis, TB, lymphoma* 
+  - `hydrocephalus`: *Hydrocephalus* 
   - `infarcts`: *Infarcts* 
   - `OTHER`: *Other* 
 ---
@@ -2606,7 +2606,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -3269,7 +3269,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -3928,7 +3928,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -4581,7 +4581,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Lumbar Puncture/Cerebrospinal Fluid
 *[missing model class docstring]*
@@ -4873,7 +4873,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Pk/Pd (1007)
 *[missing model class docstring]*
@@ -5232,7 +5232,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -5891,7 +5891,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -6550,7 +6550,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Week 2
 *[missing model class docstring]*
@@ -6702,14 +6702,14 @@
 * column: antibiotic
 * type: ManyToManyField
 * responses: *Select all that apply*
-  - `flucloxacillin`: *Flucloxacillin* 
-  - `('flucloxacillin', 'Flucloxacillin')`: *('flucloxacillin', 'Flucloxacillin')* 
-  - `gentamicin`: *Gentamicin* 
-  - `ceftriaxone`: *Ceftriaxone* 
   - `amoxicillin_ampicillin`: *Amoxicillin/Ampicillin* 
+  - `('flucloxacillin', 'Flucloxacillin')`: *('flucloxacillin', 'Flucloxacillin')* 
+  - `ceftriaxone`: *Ceftriaxone* 
+  - `ciprofloxacin`: *Ciprofloxacin* 
   - `doxycycline`: *Doxycycline* 
   - `erythromycin`: *Erythromycin* 
-  - `ciprofloxacin`: *Ciprofloxacin* 
+  - `flucloxacillin`: *Flucloxacillin* 
+  - `gentamicin`: *Gentamicin* 
   - `OTHER`: *Other, specify* 
 ---
 
@@ -6824,9 +6824,9 @@
 * column: medicines
 * type: ManyToManyField
 * responses: *Select all that apply*
+  - `co_trimoxazole`: *Co-trimoxazole* 
   - `fluconazole`: *Fluconazole* 
   - `rifampicin`: * Rifampicin* 
-  - `co_trimoxazole`: *Co-trimoxazole* 
   - `OTHER`: *Other* 
 ---
 
@@ -6849,7 +6849,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -7502,7 +7502,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Lumbar Puncture/Cerebrospinal Fluid
 *[missing model class docstring]*
@@ -7812,7 +7812,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Week 4
 *[missing model class docstring]*
@@ -7977,7 +7977,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -8638,7 +8638,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Follow-Up
 *[missing model class docstring]*
@@ -8792,7 +8792,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -9449,7 +9449,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Follow-Up
 *[missing model class docstring]*
@@ -9603,7 +9603,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -10260,7 +10260,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Follow-Up (1070)
 *[missing model class docstring]*
@@ -10424,14 +10424,14 @@
 * column: antibiotic
 * type: ManyToManyField
 * responses: *Select all that apply*
-  - `flucloxacillin`: *Flucloxacillin* 
-  - `('flucloxacillin', 'Flucloxacillin')`: *('flucloxacillin', 'Flucloxacillin')* 
-  - `gentamicin`: *Gentamicin* 
-  - `ceftriaxone`: *Ceftriaxone* 
   - `amoxicillin_ampicillin`: *Amoxicillin/Ampicillin* 
+  - `('flucloxacillin', 'Flucloxacillin')`: *('flucloxacillin', 'Flucloxacillin')* 
+  - `ceftriaxone`: *Ceftriaxone* 
+  - `ciprofloxacin`: *Ciprofloxacin* 
   - `doxycycline`: *Doxycycline* 
   - `erythromycin`: *Erythromycin* 
-  - `ciprofloxacin`: *Ciprofloxacin* 
+  - `flucloxacillin`: *Flucloxacillin* 
+  - `gentamicin`: *Gentamicin* 
   - `OTHER`: *Other, specify* 
 ---
 
@@ -10516,7 +10516,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Health Economics: Medical Expenses (1070)
 *[missing model class docstring]*
@@ -10713,7 +10713,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Health Economics: Medical Expenses Part 2
 *[missing model class docstring]*
@@ -10742,7 +10742,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -11399,7 +11399,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Week16
 *[missing model class docstring]*
@@ -11492,7 +11492,7 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -12147,6 +12147,6 @@
 
 
 
-*Rendered on 2018-12-06 22:55*
+*Rendered on 2018-12-10 06:16*
 
 
