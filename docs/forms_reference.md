@@ -62,7 +62,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Patient'S History
 *[missing model class docstring]*
@@ -543,7 +543,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Health Economics: Medical Expenses (1000)
 *[missing model class docstring]*
@@ -808,7 +808,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Health Economics: Medical Expenses Part 2
 *[missing model class docstring]*
@@ -837,7 +837,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Health Economics: Education
 *[missing model class docstring]*
@@ -950,7 +950,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Health Economics: Education (Person Who Earns The Highest Income)
 *[missing model class docstring]*
@@ -1051,7 +1051,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result (1000)
 *[missing model class docstring]*
@@ -1758,7 +1758,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Lumbar Puncture/Cerebrospinal Fluid
 *[missing model class docstring]*
@@ -2050,7 +2050,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Microbiology
 *[missing model class docstring]*
@@ -2404,7 +2404,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Radiology
 *[missing model class docstring]*
@@ -2606,7 +2606,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -3269,7 +3269,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -3928,7 +3928,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -4581,7 +4581,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Lumbar Puncture/Cerebrospinal Fluid
 *[missing model class docstring]*
@@ -4873,7 +4873,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Pk/Pd (1007)
 *[missing model class docstring]*
@@ -4899,17 +4899,9 @@
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**3.0.** Albumin
-
-&nbsp;&nbsp;&nbsp;&nbsp; *Units in g/L*
-* db_table: ambition_subject_pkpdcrf
-* column: albumin
-* type: IntegerField
----
-
 **Section: Amphotericin**
 
-**4.0.** Did the patient receive any amphotericin formulation in the last 24 hours?
+**3.0.** Did the patient receive any amphotericin formulation in the last 24 hours?
 * db_table: ambition_subject_pkpdcrf
 * column: amphotericin_given
 * type: CharField
@@ -4919,7 +4911,7 @@
   - `No`: *No* 
 ---
 
-**5.0.** If Yes, Which formulation of amphotericin?
+**4.0.** If Yes, Which formulation of amphotericin?
 * db_table: ambition_subject_pkpdcrf
 * column: amphotericin_formulation
 * type: CharField
@@ -4929,7 +4921,7 @@
   - `amphotericin_b`: *Amphotericin B Deoxycholate* 
 ---
 
-**6.0.** Dose given
+**5.0.** Dose given
 
 &nbsp;&nbsp;&nbsp;&nbsp; *Units in mg*
 * db_table: ambition_subject_pkpdcrf
@@ -4937,21 +4929,21 @@
 * type: IntegerField
 ---
 
-**7.0.** Date and time started
+**6.0.** Date and time started
 * db_table: ambition_subject_pkpdcrf
 * column: amphotericin_started_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**8.0.** Date and time stopped
+**7.0.** Date and time stopped
 * db_table: ambition_subject_pkpdcrf
 * column: amphotericin_ended_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**9.0.** Was the entire dose given?
+**8.0.** Was the entire dose given?
 * db_table: ambition_subject_pkpdcrf
 * column: amphotericin_full_dose_given
 * type: CharField
@@ -4963,7 +4955,7 @@
 
 **Section: Flucytosine**
 
-**10.0.** Flucytosine dose?
+**9.0.** Flucytosine dose?
 
 &nbsp;&nbsp;&nbsp;&nbsp; *Total of all doses given. Units in mg*
 * db_table: ambition_subject_pkpdcrf
@@ -4971,7 +4963,7 @@
 * type: IntegerField
 ---
 
-**11.0.** Flucytosine <b><u>DOSE&nbsp;1</u></b> given? 
+**10.0.** Flucytosine <b><u>DOSE&nbsp;1</u></b> given? 
 * db_table: ambition_subject_pkpdcrf
 * column: flucytosine_dose_one_given
 * type: CharField
@@ -4981,14 +4973,14 @@
   - `No`: *No* 
 ---
 
-**12.0.** Date and time Flucytosine <u>DOSE&nbsp;1</u> was swallowed?
+**11.0.** Date and time Flucytosine <u>DOSE&nbsp;1</u> was swallowed?
 * db_table: ambition_subject_pkpdcrf
 * column: flucytosine_dose_one_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**13.0.** Flucytosine <u>DOSE&nbsp;1</u>
+**12.0.** Flucytosine <u>DOSE&nbsp;1</u>
 
 &nbsp;&nbsp;&nbsp;&nbsp; *Units in mg*
 * db_table: ambition_subject_pkpdcrf
@@ -4996,7 +4988,7 @@
 * type: IntegerField
 ---
 
-**14.0.** Flucytosine <b><u>DOSE&nbsp;2</u></b> given? 
+**13.0.** Flucytosine <b><u>DOSE&nbsp;2</u></b> given? 
 * db_table: ambition_subject_pkpdcrf
 * column: flucytosine_dose_two_given
 * type: CharField
@@ -5006,14 +4998,14 @@
   - `No`: *No* 
 ---
 
-**15.0.** Date and time Flucytosine <u>DOSE&nbsp;2</u> was swallowed?
+**14.0.** Date and time Flucytosine <u>DOSE&nbsp;2</u> was swallowed?
 * db_table: ambition_subject_pkpdcrf
 * column: flucytosine_dose_two_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**16.0.** Flucytosine <u>DOSE&nbsp;2</u>
+**15.0.** Flucytosine <u>DOSE&nbsp;2</u>
 
 &nbsp;&nbsp;&nbsp;&nbsp; *Units in mg*
 * db_table: ambition_subject_pkpdcrf
@@ -5021,7 +5013,7 @@
 * type: IntegerField
 ---
 
-**17.0.** Flucytosine <b><u>DOSE&nbsp;3</u></b> given? 
+**16.0.** Flucytosine <b><u>DOSE&nbsp;3</u></b> given? 
 * db_table: ambition_subject_pkpdcrf
 * column: flucytosine_dose_three_given
 * type: CharField
@@ -5031,14 +5023,14 @@
   - `No`: *No* 
 ---
 
-**18.0.** Date and time Flucytosine <u>DOSE&nbsp;3</u> was swallowed?
+**17.0.** Date and time Flucytosine <u>DOSE&nbsp;3</u> was swallowed?
 * db_table: ambition_subject_pkpdcrf
 * column: flucytosine_dose_three_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**19.0.** Flucytosine <u>DOSE&nbsp;3</u>
+**18.0.** Flucytosine <u>DOSE&nbsp;3</u>
 
 &nbsp;&nbsp;&nbsp;&nbsp; *Units in mg*
 * db_table: ambition_subject_pkpdcrf
@@ -5046,7 +5038,7 @@
 * type: IntegerField
 ---
 
-**20.0.** Flucytosine <b><u>DOSE&nbsp;4</u></b> given? 
+**19.0.** Flucytosine <b><u>DOSE&nbsp;4</u></b> given? 
 * db_table: ambition_subject_pkpdcrf
 * column: flucytosine_dose_four_given
 * type: CharField
@@ -5056,14 +5048,14 @@
   - `No`: *No* 
 ---
 
-**21.0.** Date and time Flucytosine <u>DOSE&nbsp;4</u> was swallowed?
+**20.0.** Date and time Flucytosine <u>DOSE&nbsp;4</u> was swallowed?
 * db_table: ambition_subject_pkpdcrf
 * column: flucytosine_dose_four_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**22.0.** Flucytosine <u>DOSE&nbsp;4</u>
+**21.0.** Flucytosine <u>DOSE&nbsp;4</u>
 
 &nbsp;&nbsp;&nbsp;&nbsp; *Units in mg*
 * db_table: ambition_subject_pkpdcrf
@@ -5071,7 +5063,7 @@
 * type: IntegerField
 ---
 
-**23.0.** If any Flucytosine doses not given, provide reason
+**22.0.** If any Flucytosine doses not given, provide reason
 * db_table: ambition_subject_pkpdcrf
 * column: flucytosine_dose_reason_missed
 * type: TextField
@@ -5080,7 +5072,7 @@
 
 **Section: Fluconazole**
 
-**24.0.** Fluconazole dose?
+**23.0.** Fluconazole dose?
 
 &nbsp;&nbsp;&nbsp;&nbsp; *Units in mg*
 * db_table: ambition_subject_pkpdcrf
@@ -5088,14 +5080,14 @@
 * type: IntegerField
 ---
 
-**25.0.** Date and time Fluconazole was swallowed?
+**24.0.** Date and time Fluconazole was swallowed?
 * db_table: ambition_subject_pkpdcrf
 * column: fluconazole_dose_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**26.0.** Was the Fluconazole dose given?
+**25.0.** Was the Fluconazole dose given?
 * db_table: ambition_subject_pkpdcrf
 * column: fluconazole_dose_given
 * type: CharField
@@ -5106,7 +5098,7 @@
   - `N/A`: *Not applicable* 
 ---
 
-**27.0.** If Fluconazole dose not given, provide reason
+**26.0.** If Fluconazole dose not given, provide reason
 * db_table: ambition_subject_pkpdcrf
 * column: fluconazole_dose_reason_missed
 * type: TextField
@@ -5115,49 +5107,49 @@
 
 **Section: Blood Results**
 
-**28.0.** Date and time blood <u>SAMPLE&nbsp;1</u> taken?
+**27.0.** Date and time blood <u>SAMPLE&nbsp;1</u> taken?
 * db_table: ambition_subject_pkpdcrf
 * column: blood_sample_one_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**29.0.** Date and time blood <u>SAMPLE&nbsp;2</u> taken?
+**28.0.** Date and time blood <u>SAMPLE&nbsp;2</u> taken?
 * db_table: ambition_subject_pkpdcrf
 * column: blood_sample_two_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**30.0.** Date and time blood <u>SAMPLE&nbsp;3</u> taken?
+**29.0.** Date and time blood <u>SAMPLE&nbsp;3</u> taken?
 * db_table: ambition_subject_pkpdcrf
 * column: blood_sample_three_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**31.0.** Date and time blood <u>SAMPLE&nbsp;4</u> taken?
+**30.0.** Date and time blood <u>SAMPLE&nbsp;4</u> taken?
 * db_table: ambition_subject_pkpdcrf
 * column: blood_sample_four_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**32.0.** Date and time blood <u>SAMPLE&nbsp;5</u> taken?
+**31.0.** Date and time blood <u>SAMPLE&nbsp;5</u> taken?
 * db_table: ambition_subject_pkpdcrf
 * column: blood_sample_five_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**33.0.** Date and time blood <u>SAMPLE&nbsp;6</u> taken?
+**32.0.** Date and time blood <u>SAMPLE&nbsp;6</u> taken?
 * db_table: ambition_subject_pkpdcrf
 * column: blood_sample_six_datetime
 * type: DateTimeField
 * format: YYYY-MM-DD HH:MM:SS.sss (tz=UTC)
 ---
 
-**34.0.** Were any blood samples missed?
+**33.0.** Were any blood samples missed?
 * db_table: ambition_subject_pkpdcrf
 * column: blood_sample_missed
 * type: CharField
@@ -5167,7 +5159,7 @@
   - `No`: *No* 
 ---
 
-**35.0.** If any blood samples missed, provide reason
+**34.0.** If any blood samples missed, provide reason
 * db_table: ambition_subject_pkpdcrf
 * column: blood_sample_reason_missed
 * type: TextField
@@ -5176,7 +5168,7 @@
 
 **Section: CSF**
 
-**36.0.** Is this a pre-dose LP?
+**35.0.** Is this a pre-dose LP?
 * db_table: ambition_subject_pkpdcrf
 * column: pre_dose_lp
 * type: CharField
@@ -5186,7 +5178,7 @@
   - `No`: *No* 
 ---
 
-**37.0.** Is this a post-dose LP?
+**36.0.** Is this a post-dose LP?
 * db_table: ambition_subject_pkpdcrf
 * column: post_dose_lp
 * type: CharField
@@ -5196,7 +5188,7 @@
   - `No`: *No* 
 ---
 
-**38.0.** What date and time was the CSF sample taken?
+**37.0.** What date and time was the CSF sample taken?
 * db_table: ambition_subject_pkpdcrf
 * column: time_csf_sample_taken
 * type: DateTimeField
@@ -5232,7 +5224,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -5891,7 +5883,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -6550,7 +6542,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Week 2
 *[missing model class docstring]*
@@ -6703,7 +6695,6 @@
 * type: ManyToManyField
 * responses: *Select all that apply*
   - `amoxicillin_ampicillin`: *Amoxicillin/Ampicillin* 
-  - `('flucloxacillin', 'Flucloxacillin')`: *('flucloxacillin', 'Flucloxacillin')* 
   - `ceftriaxone`: *Ceftriaxone* 
   - `ciprofloxacin`: *Ciprofloxacin* 
   - `doxycycline`: *Doxycycline* 
@@ -6828,6 +6819,8 @@
   - `fluconazole`: *Fluconazole* 
   - `rifampicin`: * Rifampicin* 
   - `OTHER`: *Other* 
+  - `none`: *None, no other medications given* 
+  - `N/A`: *Not applicable* 
 ---
 
 **28.1.** If other, please specify:
@@ -6849,7 +6842,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -7502,7 +7495,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Lumbar Puncture/Cerebrospinal Fluid
 *[missing model class docstring]*
@@ -7812,7 +7805,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Week 4
 *[missing model class docstring]*
@@ -7977,7 +7970,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -8638,7 +8631,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Follow-Up
 *[missing model class docstring]*
@@ -8792,7 +8785,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -9449,7 +9442,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Follow-Up
 *[missing model class docstring]*
@@ -9603,7 +9596,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -10260,7 +10253,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Follow-Up (1070)
 *[missing model class docstring]*
@@ -10425,7 +10418,6 @@
 * type: ManyToManyField
 * responses: *Select all that apply*
   - `amoxicillin_ampicillin`: *Amoxicillin/Ampicillin* 
-  - `('flucloxacillin', 'Flucloxacillin')`: *('flucloxacillin', 'Flucloxacillin')* 
   - `ceftriaxone`: *Ceftriaxone* 
   - `ciprofloxacin`: *Ciprofloxacin* 
   - `doxycycline`: *Doxycycline* 
@@ -10516,7 +10508,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Health Economics: Medical Expenses (1070)
 *[missing model class docstring]*
@@ -10713,7 +10705,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Health Economics: Medical Expenses Part 2
 *[missing model class docstring]*
@@ -10742,7 +10734,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -11399,7 +11391,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Week16
 *[missing model class docstring]*
@@ -11492,7 +11484,7 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 #### Blood Result
 *[missing model class docstring]*
@@ -12147,6 +12139,6 @@
 
 
 
-*Rendered on 2018-12-10 06:16*
+*Rendered on 2018-12-24 17:41*
 
 
