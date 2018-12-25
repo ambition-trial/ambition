@@ -15,7 +15,7 @@ ambition-sites==0.1.5
 ambition-subject==0.1.36
 ambition-validators==0.1.10
 ambition-visit-schedule==0.1.10
-edc-action-item==0.1.22
+edc-action-item==0.1.23
 edc-appointment==0.2.21
 edc-auth==0.1.15
 edc-base==0.2.42
