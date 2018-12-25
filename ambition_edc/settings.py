@@ -397,12 +397,6 @@ if env('AWS_ENABLED'):
     AWS_LOCATION = env.str('AWS_LOCATION')
     AWS_IS_GZIPPED = True
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-#     if env('CDN_ENABLED'):
-#         CDN_ZONE_URL = env.str("CDN_ZONE_URL")
-#         STATIC_URL = f'https://{CDN_ZONE_URL}/{AWS_LOCATION}/'
-#     else:
-#         STATIC_URL = (f'https://{AWS_STORAGE_BUCKET_NAME}.'
-#                       f'{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/')
 else:
     # run collectstatic, check nginx LOCATION
     STATIC_URL = env.str('DJANGO_STATIC_URL')
