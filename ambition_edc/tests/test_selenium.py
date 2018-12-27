@@ -103,6 +103,7 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
 
     """TMG"""
 
+    @tag('1')
     def test_tmg(self):
 
         self.login(group_names=self.clinic_user_group_names,
@@ -322,7 +323,6 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
         for name in [name for name in action_item.action.get_next_actions()]:
             assert name in self.selenium.page_source
 
-    @tag('1')
     def test_week10_followup(self):
         """Asserts the form label on WEEK10 changes according to the
         configuration in FollowupAdmin.
