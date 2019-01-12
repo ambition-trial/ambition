@@ -34,6 +34,7 @@
 -e /Users/erikvw/source/edc-reports  #develop#egg=edc-reports
 -e /Users/erikvw/source/edc-reportable  #develop#egg=edc-reportable
 -e /Users/erikvw/source/edc-search  #develop#egg=edc-search
+-e /Users/erikvw/source/edc-selenium  #develop#egg=edc-selenium
 -e /Users/erikvw/source/edc-subject-dashboard  #develop#egg=edc-subject-dashboard
 -e /Users/erikvw/source/django-collect-offline-files  #develop#egg=django-collect-offline-files
 -e /Users/erikvw/source/django-collect-offline  #develop#egg=django-collect-offline
@@ -55,6 +56,6 @@
 -e /Users/erikvw/source/ambition-screening  #develop#egg=ambition-screening
 -e /Users/erikvw/source/ambition-sites
 -e /Users/erikvw/source/ambition-subject  #develop#egg=ambition-subject
--e /Users/erikvw/source/ambition-validators  #develop#egg=ambition-validators
+-e /Users/erikvw/source/ambition-form-validators  #develop#egg=ambition-form-validators
 -e /Users/erikvw/source/ambition-visit-schedule  #develop#egg=ambition-visit-schedule
 -e .
