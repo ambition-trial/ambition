@@ -80,6 +80,7 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
                 sys.stdout.write(style.SUCCESS(f'{url_name} {url}\n'))
                 self.selenium.get('%s%s' % (self.live_server_url, url))
 
+    @tag('1')
     def test_new_subject(self):
 
         self.login(
@@ -103,7 +104,6 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
 
     """TMG"""
 
-    @tag('1')
     def test_tmg(self):
 
         self.login(group_names=self.clinic_user_group_names,
@@ -124,11 +124,16 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
         # Save the action Item
         self.selenium.find_element_by_name('_save').click()
 
+        action_item = ActionItem.objects.get(
+            subject_identifier=subject_identifier,
+            action_type__name=AE_INITIAL_ACTION)
+
         # clinic user completes AE
         mommy.make_recipe(
             'ambition_ae.aeinitial',
             subject_identifier=subject_identifier,
-            ae_classification='anaemia')
+            ae_classification='anaemia',
+            parent_action_item=action_item)
 
         # verify TMG Action exists
         try:
