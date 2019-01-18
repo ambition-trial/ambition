@@ -1,4 +1,4 @@
-|pypi| |travis| |coverage|
+|pypi| |travis| |coverage| |downloads|
 
 
 Ambition Edc
@@ -19,6 +19,9 @@ See docs folder.
     
 .. |coverage| image:: https://coveralls.io/repos/github/ambition-trial/ambition-edc/badge.svg?branch=develop
     :target: https://coveralls.io/github/ambition-trial/ambition-edc?branch=develop
+
+.. |downloads| image:: https://pepy.tech/badge/ambition-edc
+   :target: https://pepy.tech/project/ambition-edc
 
 .. _django-environ: https://github.com/joke2k/django-environ
 .. _12-factor-django: http://www.wellfireinteractive.com/blog/easier-12-factor-django/
