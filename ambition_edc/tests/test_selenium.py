@@ -21,7 +21,7 @@ from edc_action_item.models.action_item import ActionItem
 from edc_base import get_utcnow
 from edc_base.sites.utils import add_or_update_django_sites
 from edc_base.tests.site_test_case_mixin import SiteTestCaseMixin
-from edc_constants.constants import NEW, OPEN, CLOSED
+from edc_constants.constants import NEW, OPEN, CLOSED, YES
 from edc_facility.import_holidays import import_holidays
 from edc_lab_dashboard.dashboard_urls import dashboard_urls
 from edc_list_data.site_list_data import site_list_data
@@ -33,20 +33,25 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 
 from .mixins import AmbitionEdcSeleniumMixin
+from edc_metadata.models.requisition_metadata import RequisitionMetadata
+from edc_metadata.constants import REQUIRED
+from edc_lab.models.panel import Panel
 
 style = color_style()
 
 
 @override_settings(DEBUG=True)
-class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
-                      StaticLiveServerTestCase):
-
+class MySeleniumTests(
+    SiteTestCaseMixin, AmbitionEdcSeleniumMixin, StaticLiveServerTestCase
+):
     @classmethod
     def setUpClass(cls):
-        url_names = (cls.extra_url_names
-                     + list(settings.DASHBOARD_URL_NAMES.values())
-                     + list(settings.LAB_DASHBOARD_URL_NAMES.values())
-                     + list(dashboard_urls.values()))
+        url_names = (
+            cls.extra_url_names
+            + list(settings.DASHBOARD_URL_NAMES.values())
+            + list(settings.LAB_DASHBOARD_URL_NAMES.values())
+            + list(dashboard_urls.values())
+        )
         cls.url_names = list(set(url_names))
         super().setUpClass()
 
@@ -58,8 +63,8 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
         import_holidays()
         site_list_data.autodiscover()
         options = Options()
-        if os.environ.get('TRAVIS'):
-            options.add_argument('-headless')
+        if os.environ.get("TRAVIS"):
+            options.add_argument("-headless")
         self.selenium = Firefox(firefox_options=options)
 
     def tearDown(self):
@@ -74,36 +79,48 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
             try:
                 url = reverse(url_name)
             except NoReverseMatch:
-                sys.stdout.write(style.ERROR(
-                    f'NoReverseMatch: {url_name} without kwargs.\n'))
+                sys.stdout.write(
+                    style.ERROR(
+                        f"NoReverseMatch: {url_name} without kwargs.\n")
+                )
             else:
-                sys.stdout.write(style.SUCCESS(f'{url_name} {url}\n'))
-                self.selenium.get('%s%s' % (self.live_server_url, url))
+                sys.stdout.write(style.SUCCESS(f"{url_name} {url}\n"))
+                self.selenium.get("%s%s" % (self.live_server_url, url))
 
-    @tag('1')
     def test_new_subject(self):
 
-        self.login(
-            group_names=self.clinic_user_group_names,
-            site_names=[settings.TOWN])
+        self.login(group_names=self.clinic_user_group_names,
+                   site_names=[settings.TOWN])
 
         subject_visit = self.go_to_subject_visit_dashboard()
 
         # add requisition
-        element = self.wait_for(by=By.ID, text=f'add-{fbc_panel.name}')
+        requisition = RequisitionMetadata.objects.filter(
+            subject_identifier=subject_visit.subject_identifier,
+            visit_code=subject_visit.visit_code,
+            entry_status=REQUIRED).order_by('show_order')[0]
+        element = self.wait_for(by=By.ID, text=f'add-{requisition.panel_name}')
         element.click()
         subject_requisition = self.fill_subject_requisition(subject_visit)
 
         # go to lab section as CLINIC user
-        element = self.wait_for(text='Specimens')
+        self.selenium.find_element_by_name("home").click()
+        element = self.wait_for(text="Specimens")
         element.click()
         self.selenium.save_screenshot(
-            os.path.join(settings.BASE_DIR, 'screenshots', 'new_subject_lab_requisitions.png'))
-        self.assertIn(subject_requisition.requisition_identifier,
-                      self.selenium.page_source)
+            os.path.join(
+                settings.BASE_DIR, "screenshots", "new_subject_lab_requisitions.png"
+            )
+        )
+        self.assertIn(
+            subject_requisition.human_readable_identifier, self.selenium.page_source
+        )
+        # log out clinic user
+        self.logout()
 
     """TMG"""
 
+    @tag("1")
     def test_tmg(self):
 
         self.login(group_names=self.clinic_user_group_names,
@@ -115,32 +132,32 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
 
         # open popover
         self.selenium.find_element_by_link_text(
-            'Add Action linked PRN').click()
+            "Add Action linked PRN").click()
 
         # start an AE Initial report
         self.selenium.find_element_by_link_text(
-            'Submit AE Initial Report').click()
+            "Submit AE Initial Report").click()
 
         # Save the action Item
-        self.selenium.find_element_by_name('_save').click()
+        self.selenium.find_element_by_name("_save").click()
 
         action_item = ActionItem.objects.get(
-            subject_identifier=subject_identifier,
-            action_type__name=AE_INITIAL_ACTION)
+            subject_identifier=subject_identifier, action_type__name=AE_INITIAL_ACTION
+        )
 
         # clinic user completes AE
         mommy.make_recipe(
-            'ambition_ae.aeinitial',
+            "ambition_ae.aeinitial",
             subject_identifier=subject_identifier,
-            ae_classification='anaemia',
-            parent_action_item=action_item)
+            ae_classification="anaemia",
+            parent_action_item=action_item,
+        )
 
         # verify TMG Action exists
         try:
-            ActionItem.objects.get(
-                reference_model='ambition_ae.aetmg')
+            ActionItem.objects.get(reference_model="ambition_ae.aetmg")
         except ObjectDoesNotExist:
-            self.fail('Action unexpectedly does not exist')
+            self.fail("Action unexpectedly does not exist")
 
         # log out clinic user
         self.logout()
@@ -150,117 +167,123 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
 
         # got to TMG listboard from Home page
         self.selenium.find_element_by_id(
-            'home_list_group_tmg_listboard').click()
+            "home_list_group_tmg_listboard").click()
 
-        self.login(
-            group_names=self.tmg_user_group_names,
-            site_names=[settings.TOWN])
+        self.login(group_names=self.tmg_user_group_names,
+                   site_names=[settings.TOWN])
 
         self.selenium.find_element_by_id(
-            'home_list_group_tmg_listboard').click()
+            "home_list_group_tmg_listboard").click()
 
-        self.selenium.save_screenshot('screenshots/tmg_screenshot1.png')
+        self.selenium.save_screenshot("screenshots/tmg_screenshot1.png")
+
+        self.selenium.find_element_by_id("tmg_ae").click()
 
         # click on New tab
         new_tab = self.selenium.find_element_by_css_selector(
-            f'ul.nav.nav-tabs a[href="#{NEW}-tab"]')
+            f'ul.nav.nav-tabs a[href="#{NEW}-tab"]'
+        )
         new_tab.click()
 
-        self.selenium.save_screenshot('screenshots/tmg_screenshot2.png')
+        self.selenium.save_screenshot("screenshots/tmg_screenshot2.png")
 
         # view AE Initial
         self.selenium.find_element_by_partial_link_text(
-            f'AE Initial Report').click()
+            f"AE Initial Report").click()
 
         # assert on Django Admin AE Initial change-form with
         # VIEW permissions
-        if ('View AE Initial Report' not in self.selenium.page_source):
+        if "View AE Initial Report" not in self.selenium.page_source:
             self.fail(
-                f'Unexpectedly did not find text. Expected \'View AE Initial\'')
+                f"Unexpectedly did not find text. Expected 'View AE Initial'")
 
         self.selenium.back()
 
-        self.selenium.find_element_by_partial_link_text('TMG Report').click()
+        self.selenium.find_element_by_partial_link_text("TMG Report").click()
 
         obj = self.fill_form(
-            model='ambition_ae.aetmg',
-            values={
-                'report_status': OPEN,
-                'ae_classification': 'anaemia'}
+            model="ambition_ae.aetmg",
+            values={"report_status": OPEN,
+                    "ae_classification": "anaemia",
+                    "original_report_agreed": YES},
         )
 
         open_tab = self.selenium.find_element_by_css_selector(
-            f'ul.nav.nav-tabs a[href="#{OPEN}-tab"]')
+            f'ul.nav.nav-tabs a[href="#{OPEN}-tab"]'
+        )
         open_tab.click()
 
-        self.selenium.save_screenshot('screenshots/tmg_screenshot3.png')
+        self.selenium.save_screenshot("screenshots/tmg_screenshot3.png")
 
-        self.selenium.find_element_by_partial_link_text('TMG Report').click()
+        self.selenium.find_element_by_partial_link_text("TMG Report").click()
 
         obj = self.fill_form(
-            model='ambition_ae.aetmg',
+            model="ambition_ae.aetmg",
             obj=obj,
             values={
-                'ae_classification': 'anaemia',
-                'report_status': CLOSED,
-                'report_closed_datetime': get_utcnow()}
+                "ae_classification": "anaemia",
+                "report_status": CLOSED,
+                "report_closed_datetime": get_utcnow(),
+                "original_report_agreed": YES,
+            },
+            exclude=['action_identifier'],
         )
 
         closed_tab = self.selenium.find_element_by_css_selector(
-            f'ul.nav.nav-tabs a[href="#{CLOSED}-tab"]')
+            f'ul.nav.nav-tabs a[href="#{CLOSED}-tab"]'
+        )
         closed_tab.click()
 
-        self.selenium.save_screenshot('screenshots/tmg_screenshot4.png')
+        self.selenium.save_screenshot("screenshots/tmg_screenshot4.png")
 
     """ Lab """
 
     def test_to_specimens_clinic(self):
 
-        self.login(
-            group_names=self.lab_user_group_names,
-            site_names=[settings.TOWN])
+        self.login(group_names=self.lab_user_group_names,
+                   site_names=[settings.TOWN])
 
-        self.selenium.find_element_by_id('consented_subject')
-        self.selenium.find_element_by_id('specimens')
-        for id_label in ['screened_subject']:
+        self.selenium.find_element_by_id("consented_subject")
+        self.selenium.find_element_by_id("specimens")
+        for id_label in ["screened_subject"]:
             self.assertRaises(
-                NoSuchElementException,
-                self.selenium.find_element_by_id, id_label)
+                NoSuchElementException, self.selenium.find_element_by_id, id_label
+            )
 
         self.selenium.find_element_by_id(
-            'home_list_group_requisition_listboard').click()
+            "home_list_group_requisition_listboard"
+        ).click()
 
-        self.selenium.find_element_by_id('requisition')
-        self.selenium.find_element_by_id('receive')
-        self.selenium.find_element_by_id('pack')
-        self.selenium.find_element_by_id('manifest')
-        self.selenium.find_element_by_id('aliquot')
+        self.selenium.find_element_by_id("requisition")
+        self.selenium.find_element_by_id("receive")
+        self.selenium.find_element_by_id("pack")
+        self.selenium.find_element_by_id("manifest")
+        self.selenium.find_element_by_id("aliquot")
 
         # CLINIC user
-        self.login(
-            group_names=self.clinic_user_group_names,
-            site_names=[settings.TOWN])
-        self.selenium.find_element_by_id('consented_subject')
-        self.selenium.find_element_by_id('screened_subject')
-        self.selenium.find_element_by_id('specimens')
+        self.login(group_names=self.clinic_user_group_names,
+                   site_names=[settings.TOWN])
+        self.selenium.find_element_by_id("consented_subject")
+        self.selenium.find_element_by_id("screened_subject")
+        self.selenium.find_element_by_id("specimens")
 
         self.selenium.find_element_by_id(
-            'home_list_group_requisition_listboard').click()
-        self.selenium.find_element_by_id('requisition')
-        for id_label in ['receive', 'pack', 'manifest', 'aliquot']:
+            "home_list_group_requisition_listboard"
+        ).click()
+        self.selenium.find_element_by_id("requisition")
+        for id_label in ["receive", "pack", "manifest", "aliquot"]:
             self.assertRaises(
-                NoSuchElementException,
-                self.selenium.find_element_by_id, id_label)
+                NoSuchElementException, self.selenium.find_element_by_id, id_label
+            )
 
         # TMG user
-        self.login(
-            group_names=self.tmg_user_group_names,
-            site_names=[settings.TOWN])
+        self.login(group_names=self.tmg_user_group_names,
+                   site_names=[settings.TOWN])
 
-        for id_label in ['home_list_group_requisition_listboard']:
+        for id_label in ["home_list_group_requisition_listboard"]:
             self.assertRaises(
-                NoSuchElementException,
-                self.selenium.find_element_by_id, id_label)
+                NoSuchElementException, self.selenium.find_element_by_id, id_label
+            )
 
     """ Action Item / AE """
 
@@ -274,55 +297,56 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
 
         # open popover
         self.selenium.find_element_by_link_text(
-            'Add Action linked PRN').click()
+            "Add Action linked PRN").click()
 
         # start an AE Initial report
         self.selenium.find_element_by_link_text(
-            'Submit AE Initial Report').click()
+            "Submit AE Initial Report").click()
 
         # Save the action Item
-        self.selenium.find_element_by_name('_save').click()
+        self.selenium.find_element_by_name("_save").click()
 
         # get
         action_item = ActionItem.objects.get(
-            subject_identifier=subject_identifier,
-            action_type__name=AE_INITIAL_ACTION)
+            subject_identifier=subject_identifier, action_type__name=AE_INITIAL_ACTION
+        )
 
         # on dashboard, click on action item popover
         self.selenium.find_element_by_link_text(
-            action_item.action_type.display_name).click()
+            action_item.action_type.display_name
+        ).click()
 
         # open AE Initial
         self.selenium.find_element_by_id(
-            f'referencemodel-change-{action_item.action_identifier.upper()}').click()
+            f"referencemodel-change-{action_item.action_identifier.upper()}"
+        ).click()
 
         # fill form, AE Initial
         obj = mommy.prepare_recipe(action_item.reference_model)
         model_obj = self.fill_form(
-            model=action_item.reference_model, obj=obj,
-            verbose=False)
+            model=action_item.reference_model, obj=obj, verbose=False
+        )
 
         self.assertEqual(action_item.action_identifier,
                          model_obj.action_identifier)
 
         # verify no longer on dashboard
         action_item_control_id = (
-            f'referencemodel-change-{action_item.action_identifier.upper()}')
-        if (action_item_control_id in self.selenium.page_source):
+            f"referencemodel-change-{action_item.action_identifier.upper()}"
+        )
+        if action_item_control_id in self.selenium.page_source:
             self.fail(
-                'Unexpectedly found action_item \'id\' on dashboard. '
-                f'Got {action_item_control_id}')
+                "Unexpectedly found action_item 'id' on dashboard. "
+                f"Got {action_item_control_id}"
+            )
 
         # find through PRN Forms
-        self.selenium.find_element_by_link_text(
-            'PRN Lists').click()
+        self.selenium.find_element_by_link_text("PRN Lists").click()
         # go to admin change list
-        self.selenium.find_element_by_partial_link_text(
-            'Action Items').click()
+        self.selenium.find_element_by_partial_link_text("Action Items").click()
 
         # find action identifier on changelist
-        self.assertIn(action_item.identifier,
-                      self.selenium.page_source)
+        self.assertIn(action_item.identifier, self.selenium.page_source)
 
         # assert next action shows, if required
         for name in [name for name in action_item.action.get_next_actions()]:
@@ -335,27 +359,36 @@ class MySeleniumTests(SiteTestCaseMixin, AmbitionEdcSeleniumMixin,
         self.login(group_names=self.clinic_user_group_names,
                    site_names=[settings.TOWN])
         # get visit_codes for where followup form is administered
-        for visit_code, visit in site_visit_schedules.get_visit_schedule(
-                VISIT_SCHEDULE).schedules.get(SCHEDULE).visits.items():
-            if 'ambition_subject.followup' in [c.model for c in visit.crfs]:
+        for visit_code, visit in (
+            site_visit_schedules.get_visit_schedule(VISIT_SCHEDULE)
+            .schedules.get(SCHEDULE)
+            .visits.items()
+        ):
+            if "ambition_subject.followup" in [c.model for c in visit.crfs]:
                 subject_visit = self.go_to_subject_visit_dashboard(
                     visit_schedule_name=VISIT_SCHEDULE,
                     schedule_name=SCHEDULE,
                     visit_code=visit_code,
-                    save_only=True)
-                url = reverse(settings.DASHBOARD_URL_NAMES.get(
-                    'subject_dashboard_url'),
+                    save_only=True,
+                )
+                url = reverse(
+                    settings.DASHBOARD_URL_NAMES.get("subject_dashboard_url"),
                     kwargs={
-                        'subject_identifier': subject_visit.subject_identifier,
-                        'appointment': str(subject_visit.appointment.id)})
-                self.selenium.get(f'{self.live_server_url}{url}')
+                        "subject_identifier": subject_visit.subject_identifier,
+                        "appointment": str(subject_visit.appointment.id),
+                    },
+                )
+                self.selenium.get(f"{self.live_server_url}{url}")
                 self.selenium.find_element_by_name(
-                    f'id_{FollowUp._meta.label_lower.replace(".", "_")}').click()
+                    f'id_{FollowUp._meta.label_lower.replace(".", "_")}'
+                ).click()
                 if visit_code == WEEK10:
                     self.assertIn(
-                        'Were any of the following antibiotics given since week two?',
-                        self.selenium.page_source)
+                        "Were any of the following antibiotics given since week two?",
+                        self.selenium.page_source,
+                    )
                 else:
                     self.assertNotIn(
-                        'Were any of the following antibiotics',
-                        self.selenium.page_source)
+                        "Were any of the following antibiotics",
+                        self.selenium.page_source,
+                    )

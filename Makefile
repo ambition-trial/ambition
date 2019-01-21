@@ -47,4 +47,4 @@ release: dist
 
 format:
 	pip install -U black
-	black edc_export
+	black ambition_edc
