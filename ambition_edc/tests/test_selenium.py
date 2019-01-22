@@ -3,7 +3,6 @@ import sys
 
 from ambition_ae.action_items import AE_INITIAL_ACTION
 from ambition_auth.permissions_updater import PermissionsUpdater
-from ambition_labs.panels import fbc_panel
 from ambition_rando.randomization_list_importer import RandomizationListImporter
 from ambition_sites import ambition_sites, fqdn
 from ambition_subject.models.follow_up import FollowUp
@@ -25,6 +24,8 @@ from edc_constants.constants import NEW, OPEN, CLOSED, YES
 from edc_facility.import_holidays import import_holidays
 from edc_lab_dashboard.dashboard_urls import dashboard_urls
 from edc_list_data.site_list_data import site_list_data
+from edc_metadata.constants import REQUIRED
+from edc_metadata.models import RequisitionMetadata
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 from model_mommy import mommy
 from selenium.common.exceptions import NoSuchElementException
@@ -33,9 +34,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 
 from .mixins import AmbitionEdcSeleniumMixin
-from edc_metadata.models.requisition_metadata import RequisitionMetadata
-from edc_metadata.constants import REQUIRED
-from edc_lab.models.panel import Panel
 
 style = color_style()
 
