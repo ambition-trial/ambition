@@ -8,7 +8,7 @@ env:
   - MOZ_HEADLESS=1
 addons:
   firefox: latest
-  apt_packages:
+apt_packages:
   - libcups2-dev
 services:
 - mysql
@@ -17,6 +17,7 @@ before_install:
   - mkdir geckodriver
   - tar -xzf geckodriver-v0.23.0-linux64.tar.gz -C geckodriver
   - export PATH=$PATH:$PWD/geckodriver
+  - geckodriver --version
 install:
 - pip install --upgrade pip
 - pip install flake8 edc-selenium model-mommy faker
