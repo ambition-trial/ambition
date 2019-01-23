@@ -40,8 +40,8 @@ style = color_style()
 
 @override_settings(DEBUG=True)
 class MySeleniumTests(
-    SiteTestCaseMixin, AmbitionEdcSeleniumMixin, StaticLiveServerTestCase
-):
+        SiteTestCaseMixin, AmbitionEdcSeleniumMixin, StaticLiveServerTestCase):
+
     @classmethod
     def setUpClass(cls):
         url_names = (
@@ -284,6 +284,7 @@ class MySeleniumTests(
 
     """ Action Item / AE """
 
+    @tag('1')
     def test_action_item(self):
 
         self.login(group_names=self.clinic_user_group_names,
@@ -389,3 +390,21 @@ class MySeleniumTests(
                         "Were any of the following antibiotics",
                         self.selenium.page_source,
                     )
+
+    @tag('2')
+    def test_study_termination(self):
+
+        model = 'ambition_prn.studyterminationconclusion'
+
+        self.login(group_names=self.clinic_user_group_names,
+                   site_names=[settings.TOWN])
+        appointment = self.go_to_subject_visit_schedule_dashboard()
+        subject_identifier = appointment.subject_identifier
+
+        # open popover
+        self.selenium.find_element_by_link_text(
+            "Study Termination/Conclusion").click()
+
+        # fill form, AE Initial
+        obj = mommy.prepare_recipe(model)
+        model_obj = self.fill_form(model=model, obj=obj, verbose=False)
