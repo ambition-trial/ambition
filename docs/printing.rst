@@ -11,7 +11,7 @@ Install CUPS Print Server::
 	
 	sudo chmod a-w /etc/cups/cupsd.conf.original
 
-Edit ``/etc/cups/cupsd.conf`` to listin on the public IP::
+Edit ``/etc/cups/cupsd.conf`` to listen on the public IP::
 
 	sudo  nano /etc/cups/cupsd.conf
 
@@ -25,8 +25,8 @@ Restart CUPS::
 
 	sudo systemctl restart cups.service
 
-Add a remote printer
-++++++++++++++++++++
+Add a remote printer to a remote CUPS server
+++++++++++++++++++++++++++++++++++++++++++++
 
 ``LOCAL_PRINTER_NAME``: printer as named on the EDC, your server
 
@@ -37,4 +37,14 @@ Add a remote printer
 For example::
 
 	lpadmin -p LOCAL_PRINTER_NAME -E -v ipp://REMOTE_IP_ADDRESS/printers/PRINTER_NAME
+
+
+Add an IP addressable remote printer 
++++++++++++++++++++++++++++++++++++++
+
+``PRINTER_NAME``: printer as named on the EDC, your server
+
+``REMOTE_IP_ADDRESS``: IP of remote printer
+
+	lpadmin -p PRINTER_NAME -E -v ipp://REMOTE_IP_ADDRESS/ipp/print -m everywhere
 
