@@ -19,7 +19,8 @@ from edc_lab.apps import AppConfig as BaseEdcLabAppConfig
 from edc_metadata.apps import AppConfig as BaseEdcMetadataAppConfig
 from edc_protocol.apps import AppConfig as BaseEdcProtocolAppConfig
 from edc_visit_tracking.apps import AppConfig as BaseEdcVisitTrackingAppConfig
-from edc_visit_tracking.constants import SCHEDULED, UNSCHEDULED, LOST_VISIT
+from edc_visit_tracking.constants import SCHEDULED, UNSCHEDULED, LOST_VISIT,\
+    MISSED_VISIT
 
 from .system_checks import ambition_check
 
@@ -59,7 +60,8 @@ class EdcProtocolAppConfig(BaseEdcProtocolAppConfig):
     protocol_number = "092"
     protocol_title = ""
     study_open_datetime = datetime(2016, 12, 31, 0, 0, 0, tzinfo=gettz("UTC"))
-    study_close_datetime = datetime(2022, 12, 31, 23, 59, 59, tzinfo=gettz("UTC"))
+    study_close_datetime = datetime(
+        2022, 12, 31, 23, 59, 59, tzinfo=gettz("UTC"))
 
 
 class EdcLabAppConfig(BaseEdcLabAppConfig):
@@ -90,7 +92,7 @@ class EdcIdentifierAppConfig(BaseEdcIdentifierAppConfig):
 class EdcMetadataAppConfig(BaseEdcMetadataAppConfig):
     reason_field = {"ambition_subject.subjectvisit": "reason"}
     create_on_reasons = [SCHEDULED, UNSCHEDULED]
-    delete_on_reasons = [LOST_VISIT, FAILED_ELIGIBILITY]
+    delete_on_reasons = [LOST_VISIT, FAILED_ELIGIBILITY, MISSED_VISIT]
 
 
 class EdcAppointmentAppConfig(BaseEdcAppointmentAppConfig):
@@ -107,7 +109,8 @@ class EdcFacilityAppConfig(BaseEdcFacilityAppConfig):
     country = "botswana"
     definitions = {
         "7-day clinic": dict(
-            days=[MO, TU, WE, TH, FR, SA, SU], slots=[100, 100, 100, 100, 100, 100, 100]
+            days=[MO, TU, WE, TH, FR, SA, SU], slots=[
+                100, 100, 100, 100, 100, 100, 100]
         ),
         "5-day clinic": dict(
             days=[MO, TU, WE, TH, FR], slots=[100, 100, 100, 100, 100]
