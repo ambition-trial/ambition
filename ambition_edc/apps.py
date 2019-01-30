@@ -10,7 +10,6 @@ from django.db.models.signals import post_migrate
 from edc_appointment.appointment_config import AppointmentConfig
 from edc_appointment.apps import AppConfig as BaseEdcAppointmentAppConfig
 from edc_base.apps import AppConfig as BaseEdcBaseAppConfig
-from edc_constants.constants import FAILED_ELIGIBILITY
 from edc_device.apps import AppConfig as BaseEdcDeviceAppConfig
 from edc_device.constants import CENTRAL_SERVER
 from edc_facility.apps import AppConfig as BaseEdcFacilityAppConfig
@@ -19,8 +18,6 @@ from edc_lab.apps import AppConfig as BaseEdcLabAppConfig
 from edc_metadata.apps import AppConfig as BaseEdcMetadataAppConfig
 from edc_protocol.apps import AppConfig as BaseEdcProtocolAppConfig
 from edc_visit_tracking.apps import AppConfig as BaseEdcVisitTrackingAppConfig
-from edc_visit_tracking.constants import SCHEDULED, UNSCHEDULED, LOST_VISIT,\
-    MISSED_VISIT
 
 from .system_checks import ambition_check
 
@@ -91,8 +88,6 @@ class EdcIdentifierAppConfig(BaseEdcIdentifierAppConfig):
 
 class EdcMetadataAppConfig(BaseEdcMetadataAppConfig):
     reason_field = {"ambition_subject.subjectvisit": "reason"}
-    create_on_reasons = [SCHEDULED, UNSCHEDULED]
-    delete_on_reasons = [LOST_VISIT, FAILED_ELIGIBILITY, MISSED_VISIT]
 
 
 class EdcAppointmentAppConfig(BaseEdcAppointmentAppConfig):
