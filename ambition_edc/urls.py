@@ -21,6 +21,7 @@ from edc_identifier.admin_site import edc_identifier_admin
 from edc_lab.admin_site import edc_lab_admin
 from edc_locator.admin_site import edc_locator_admin
 from edc_metadata.admin_site import edc_metadata_admin
+from edc_notification.admin_site import edc_notification_admin
 from edc_pdutils.admin_site import edc_pdutils_admin
 from edc_pharmacy.admin_site import edc_pharmacy_admin
 from edc_reference.admin_site import edc_reference_admin
@@ -58,6 +59,7 @@ urlpatterns = [
     path("admin/", edc_locator_admin.urls),
     path("admin/", edc_identifier_admin.urls),
     path("admin/", edc_metadata_admin.urls),
+    path("admin/", edc_notification_admin.urls),
     path("admin/", edc_registration_admin.urls),
     path("admin/", edc_reference_admin.urls),
     path("admin/", django_collect_offline_admin.urls),
@@ -68,7 +70,8 @@ urlpatterns = [
     path(
         "admin/django_collect_offline_files/", django_collect_offline_files_admin.urls
     ),
-    path("administration/", AdministrationView.as_view(), name="administration_url"),
+    path("administration/", AdministrationView.as_view(),
+         name="administration_url"),
     path(
         "admin/ambition_subject/",
         RedirectView.as_view(url="admin/ambition_subject/"),
@@ -95,13 +98,15 @@ urlpatterns = [
     path("edc_pharmacy_dashboard/", include("edc_pharmacy_dashboard.urls")),
     path("edc_label/", include("edc_label.urls")),
     path("edc_metadata/", include("edc_metadata.urls")),
+    path("edc_notification/", include("edc_notification.urls")),
     path("edc_protocol/", include("edc_protocol.urls")),
     path("edc_identifier/", include("edc_identifier.urls")),
     path("edc_reference/", include("edc_reference.urls")),
     path("edc_registration/", include("edc_registration.urls")),
     path("edc_subject_dashboard/", include("edc_subject_dashboard.urls")),
     path("django_collect_offline/", include("django_collect_offline.urls")),
-    path("django_collect_offline_files/", include("django_collect_offline_files.urls")),
+    path("django_collect_offline_files/",
+         include("django_collect_offline_files.urls")),
     path("edc_visit_schedule/", include("edc_visit_schedule.urls")),
     path(
         "switch_sites/",
