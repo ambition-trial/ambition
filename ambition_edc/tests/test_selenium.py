@@ -40,8 +40,8 @@ style = color_style()
 
 @override_settings(DEBUG=True)
 class MySeleniumTests(
-        SiteTestCaseMixin, AmbitionEdcSeleniumMixin, StaticLiveServerTestCase):
-
+    SiteTestCaseMixin, AmbitionEdcSeleniumMixin, StaticLiveServerTestCase
+):
     @classmethod
     def setUpClass(cls):
         url_names = (
@@ -54,8 +54,7 @@ class MySeleniumTests(
         super().setUpClass()
 
     def setUp(self):
-        add_or_update_django_sites(
-            apps=django_apps, sites=ambition_sites, fqdn=fqdn)
+        add_or_update_django_sites(apps=django_apps, sites=ambition_sites, fqdn=fqdn)
         RandomizationListImporter()
         PermissionsUpdater(verbose=False)
         import_holidays()
@@ -78,8 +77,7 @@ class MySeleniumTests(
                 url = reverse(url_name)
             except NoReverseMatch:
                 sys.stdout.write(
-                    style.ERROR(
-                        f"NoReverseMatch: {url_name} without kwargs.\n")
+                    style.ERROR(f"NoReverseMatch: {url_name} without kwargs.\n")
                 )
             else:
                 sys.stdout.write(style.SUCCESS(f"{url_name} {url}\n"))
@@ -87,8 +85,7 @@ class MySeleniumTests(
 
     def test_new_subject(self):
 
-        self.login(group_names=self.clinic_user_group_names,
-                   site_names=[settings.TOWN])
+        self.login(group_names=self.clinic_user_group_names, site_names=[settings.TOWN])
 
         subject_visit = self.go_to_subject_visit_dashboard()
 
@@ -96,8 +93,9 @@ class MySeleniumTests(
         requisition = RequisitionMetadata.objects.filter(
             subject_identifier=subject_visit.subject_identifier,
             visit_code=subject_visit.visit_code,
-            entry_status=REQUIRED).order_by('show_order')[0]
-        element = self.wait_for(by=By.ID, text=f'add-{requisition.panel_name}')
+            entry_status=REQUIRED,
+        ).order_by("show_order")[0]
+        element = self.wait_for(by=By.ID, text=f"add-{requisition.panel_name}")
         element.click()
         subject_requisition = self.fill_subject_requisition(subject_visit)
 
@@ -120,20 +118,17 @@ class MySeleniumTests(
 
     def test_tmg(self):
 
-        self.login(group_names=self.clinic_user_group_names,
-                   site_names=[settings.TOWN])
+        self.login(group_names=self.clinic_user_group_names, site_names=[settings.TOWN])
 
         # go to dashboard as a clinic user
         appointment = self.go_to_subject_visit_schedule_dashboard()
         subject_identifier = appointment.subject_identifier
 
         # open popover
-        self.selenium.find_element_by_link_text(
-            "Add Action linked PRN").click()
+        self.selenium.find_element_by_link_text("Add Action linked PRN").click()
 
         # start an AE Initial report
-        self.selenium.find_element_by_link_text(
-            "Submit AE Initial Report").click()
+        self.selenium.find_element_by_link_text("Submit AE Initial Report").click()
 
         # Save the action Item
         self.selenium.find_element_by_name("_save").click()
@@ -163,14 +158,11 @@ class MySeleniumTests(
         self.login(group_names=self.tmg_user_group_names)
 
         # got to TMG listboard from Home page
-        self.selenium.find_element_by_id(
-            "home_list_group_tmg_listboard").click()
+        self.selenium.find_element_by_id("home_list_group_tmg_listboard").click()
 
-        self.login(group_names=self.tmg_user_group_names,
-                   site_names=[settings.TOWN])
+        self.login(group_names=self.tmg_user_group_names, site_names=[settings.TOWN])
 
-        self.selenium.find_element_by_id(
-            "home_list_group_tmg_listboard").click()
+        self.selenium.find_element_by_id("home_list_group_tmg_listboard").click()
 
         self.selenium.save_screenshot("screenshots/tmg_screenshot1.png")
 
@@ -185,14 +177,12 @@ class MySeleniumTests(
         self.selenium.save_screenshot("screenshots/tmg_screenshot2.png")
 
         # view AE Initial
-        self.selenium.find_element_by_partial_link_text(
-            f"AE Initial Report").click()
+        self.selenium.find_element_by_partial_link_text(f"AE Initial Report").click()
 
         # assert on Django Admin AE Initial change-form with
         # VIEW permissions
         if "View AE Initial Report" not in self.selenium.page_source:
-            self.fail(
-                f"Unexpectedly did not find text. Expected 'View AE Initial'")
+            self.fail(f"Unexpectedly did not find text. Expected 'View AE Initial'")
 
         self.selenium.back()
 
@@ -200,9 +190,11 @@ class MySeleniumTests(
 
         obj = self.fill_form(
             model="ambition_ae.aetmg",
-            values={"report_status": OPEN,
-                    "ae_classification": "anaemia",
-                    "original_report_agreed": YES},
+            values={
+                "report_status": OPEN,
+                "ae_classification": "anaemia",
+                "original_report_agreed": YES,
+            },
         )
 
         open_tab = self.selenium.find_element_by_css_selector(
@@ -223,7 +215,7 @@ class MySeleniumTests(
                 "report_closed_datetime": get_utcnow(),
                 "original_report_agreed": YES,
             },
-            exclude=['action_identifier'],
+            exclude=["action_identifier"],
         )
 
         closed_tab = self.selenium.find_element_by_css_selector(
@@ -237,8 +229,7 @@ class MySeleniumTests(
 
     def test_to_specimens_clinic(self):
 
-        self.login(group_names=self.lab_user_group_names,
-                   site_names=[settings.TOWN])
+        self.login(group_names=self.lab_user_group_names, site_names=[settings.TOWN])
 
         self.selenium.find_element_by_id("consented_subject")
         self.selenium.find_element_by_id("specimens")
@@ -258,8 +249,7 @@ class MySeleniumTests(
         self.selenium.find_element_by_id("aliquot")
 
         # CLINIC user
-        self.login(group_names=self.clinic_user_group_names,
-                   site_names=[settings.TOWN])
+        self.login(group_names=self.clinic_user_group_names, site_names=[settings.TOWN])
         self.selenium.find_element_by_id("consented_subject")
         self.selenium.find_element_by_id("screened_subject")
         self.selenium.find_element_by_id("specimens")
@@ -274,8 +264,7 @@ class MySeleniumTests(
             )
 
         # TMG user
-        self.login(group_names=self.tmg_user_group_names,
-                   site_names=[settings.TOWN])
+        self.login(group_names=self.tmg_user_group_names, site_names=[settings.TOWN])
 
         for id_label in ["home_list_group_requisition_listboard"]:
             self.assertRaises(
@@ -284,22 +273,19 @@ class MySeleniumTests(
 
     """ Action Item / AE """
 
-    @tag('1')
+    @tag("1")
     def test_action_item(self):
 
-        self.login(group_names=self.clinic_user_group_names,
-                   site_names=[settings.TOWN])
+        self.login(group_names=self.clinic_user_group_names, site_names=[settings.TOWN])
 
         appointment = self.go_to_subject_visit_schedule_dashboard()
         subject_identifier = appointment.subject_identifier
 
         # open popover
-        self.selenium.find_element_by_link_text(
-            "Add Action linked PRN").click()
+        self.selenium.find_element_by_link_text("Add Action linked PRN").click()
 
         # start an AE Initial report
-        self.selenium.find_element_by_link_text(
-            "Submit AE Initial Report").click()
+        self.selenium.find_element_by_link_text("Submit AE Initial Report").click()
 
         # Save the action Item
         self.selenium.find_element_by_name("_save").click()
@@ -325,8 +311,7 @@ class MySeleniumTests(
             model=action_item.reference_model, obj=obj, verbose=False
         )
 
-        self.assertEqual(action_item.action_identifier,
-                         model_obj.action_identifier)
+        self.assertEqual(action_item.action_identifier, model_obj.action_identifier)
 
         # verify no longer on dashboard
         action_item_control_id = (
@@ -354,8 +339,7 @@ class MySeleniumTests(
         """Asserts the form label on WEEK10 changes according to the
         configuration in FollowupAdmin.
         """
-        self.login(group_names=self.clinic_user_group_names,
-                   site_names=[settings.TOWN])
+        self.login(group_names=self.clinic_user_group_names, site_names=[settings.TOWN])
         # get visit_codes for where followup form is administered
         for visit_code, visit in (
             site_visit_schedules.get_visit_schedule(VISIT_SCHEDULE)
@@ -390,21 +374,3 @@ class MySeleniumTests(
                         "Were any of the following antibiotics",
                         self.selenium.page_source,
                     )
-
-    @tag('2')
-    def test_study_termination(self):
-
-        model = 'ambition_prn.studyterminationconclusion'
-
-        self.login(group_names=self.clinic_user_group_names,
-                   site_names=[settings.TOWN])
-        appointment = self.go_to_subject_visit_schedule_dashboard()
-        subject_identifier = appointment.subject_identifier
-
-        # open popover
-        self.selenium.find_element_by_link_text(
-            "Study Termination/Conclusion").click()
-
-        # fill form, AE Initial
-        obj = mommy.prepare_recipe(model)
-        model_obj = self.fill_form(model=model, obj=obj, verbose=False)
