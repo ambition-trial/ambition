@@ -61,4 +61,3 @@ edc-subject-dashboard  #0.1.19
 edc-timepoint  #0.1.6
 edc-visit-schedule  #0.2.18
 edc-visit-tracking  #0.2.18
-git+https://github.com/treyhunner/django-simple-history@master

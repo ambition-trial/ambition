@@ -71,6 +71,16 @@ Login as non-root account ``ambition`` and install dependencies.
 	sudo apt-get -y install mysql-client-5.7 libmysqlclient-dev libcups2-dev ipython3 python3-pip python3-dev python3-venv python3-cups python3-venv redis-server nginx curl
 
 
+As of Feb 2019 ``ambition`` and ``edc`` modules are tested on python versions 3.7 and above. Ubuntu 18.04 LTS uses python 3.6.7.
+
+To upgrade to python3.7:
+
+.. code-block:: bash
+
+	sudo apt-get update
+	sudo apt-get install build-essential libpq-dev libssl-dev openssl libffi-dev zlib1g-dev python3.7 python3.7-venv python3-pip python3.7-dev
+
+
 Prepare mysql
 +++++++++++++
 
@@ -111,7 +121,7 @@ login as non-root account ``ambition``
 
 create and source the virtualenv `ambition`::
 
-	python3 -m venv ~/.venvs/$VENV
+	python3.7 -m venv ~/.venvs/$VENV
 
 activate the environment::
 
@@ -310,7 +320,7 @@ Log in as user ``uat``.::
 
 As user ``uat`` create a new virtualenv in the same way as above::
 
-	python3 -m venv ~/.venvs/ambition
+	python3.7 -m venv ~/.venvs/ambition
 
 	source ~/.venvs/ambition/bin/activate
 

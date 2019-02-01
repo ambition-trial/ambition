@@ -57,8 +57,7 @@ class EdcProtocolAppConfig(BaseEdcProtocolAppConfig):
     protocol_number = "092"
     protocol_title = ""
     study_open_datetime = datetime(2016, 12, 31, 0, 0, 0, tzinfo=gettz("UTC"))
-    study_close_datetime = datetime(
-        2022, 12, 31, 23, 59, 59, tzinfo=gettz("UTC"))
+    study_close_datetime = datetime(2022, 12, 31, 23, 59, 59, tzinfo=gettz("UTC"))
 
 
 class EdcLabAppConfig(BaseEdcLabAppConfig):
@@ -104,8 +103,7 @@ class EdcFacilityAppConfig(BaseEdcFacilityAppConfig):
     country = "botswana"
     definitions = {
         "7-day clinic": dict(
-            days=[MO, TU, WE, TH, FR, SA, SU], slots=[
-                100, 100, 100, 100, 100, 100, 100]
+            days=[MO, TU, WE, TH, FR, SA, SU], slots=[100, 100, 100, 100, 100, 100, 100]
         ),
         "5-day clinic": dict(
             days=[MO, TU, WE, TH, FR], slots=[100, 100, 100, 100, 100]
