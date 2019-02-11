@@ -1,30 +1,50 @@
 language: python
+
 python:
 - 3.7
+
 dist: xenial
+
 sudo: true
+
+addons:
+  firefox: latest
+  apt_packages:
+  - libcups2-dev
+
 env:
   - MOZ_HEADLESS=1
 addons:
-  firefox: latest
-apt_packages:
-  - libcups2-dev
+
 services:
 - mysql
+
 before_install:
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
   - mkdir geckodriver
   - tar -xzf geckodriver-v0.23.0-linux64.tar.gz -C geckodriver
   - export PATH=$PATH:$PWD/geckodriver
   - geckodriver --version
+
 install:
 - pip install --upgrade pip
-- pip install flake8 edc-selenium model-mommy faker coveralls tox-travis
-- pip install -e .
+- pip install flake8 coveralls tox-travis
+
 before_script:
-- flake8 ambition_edc
+- flake8 ambition_ae
 - mysql -e 'create database edc character set utf8;'
+
 script:
-- coverage run manage.py test
+- coverage run -m tox
+
 after_success:
-- coveralls
+- codecov
+
+matrix:
+  include:
+    - python: 3.7
+      env: TOXENV=py37-django21
+    - python: 3.7
+      env: TOXENV=py37-django22
+    - python: 3.7
+      env: TOXENV=py37-djangotrunk

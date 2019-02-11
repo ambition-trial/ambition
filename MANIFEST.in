@@ -3,9 +3,7 @@ include MANIFEST.in
 include *.rst
 include *.txt
 include requirements/*.txt
-recursive-include docs *.rst
-recursive-include ambition_edc/templates *.*
-recursive-include ambition_edc/templates *.*
-recursive-include ambition_edc/static *.*
+recursive-include ambition_edc/templates *
+recursive-include ambition_edc/static *
 recursive-include label_templates *.*
 recursive-exclude etc *.*
