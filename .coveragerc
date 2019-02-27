@@ -1,4 +1,4 @@
 [run]
 include = ambition_edc/*
-omit = ambition_edc/tests/*
+omit = ambition_edc/tests/*,fabfile/*,ambition_edc/logging/*
 branch = 1
