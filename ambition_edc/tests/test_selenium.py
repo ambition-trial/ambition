@@ -42,7 +42,6 @@ try:
 except KeyError:
     TRAVIS = None
 
-
 if not TRAVIS:
 
     @tag("selenium")
