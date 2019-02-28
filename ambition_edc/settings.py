@@ -35,6 +35,7 @@ env = environ.Env(
     SAUCE_ENABLED=(bool, False),
     SENTRY_ENABLED=(bool, False),
     TWILIO_ENABLED=(bool, False),
+    SIMPLE_HISTORY_PERMISSIONS_ENABLED=(bool, False),
 )
 
 # copy your .env file from .envs/ to BASE_DIR
@@ -378,6 +379,10 @@ if not DEBUG:
     AUTO_CREATE_KEYS = env.str("DJANGO_AUTO_CREATE_KEYS")
 
 EXPORT_FOLDER = env.str("DJANGO_EXPORT_FOLDER") or os.path.expanduser("~/")
+
+# django_simple_history
+SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str("SIMPLE_HISTORY_PERMISSIONS_ENABLED")
+SIMPLE_HISTORY_REVERT_DISABLED = env.str("SIMPLE_HISTORY_REVERT_DISABLED")
 
 FQDN = env.str("DJANGO_FQDN")
 INDEX_PAGE = env.str("DJANGO_INDEX_PAGE")

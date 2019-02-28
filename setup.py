@@ -9,10 +9,11 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 with open(os.path.join(os.path.dirname(__file__), 'VERSION')) as f:
     VERSION = f.read().strip()
 
-tests_require = ['django-storages', 'model-mommy', 'faker', 'django_environ']
-with open(os.path.join(os.path.dirname(__file__), 'requirements', f'stable.txt')) as f:
-    for line in f:
-        tests_require.append(line.strip())
+tests_require = ['django-storages', 'model-mommy',
+                 'faker', 'django_environ', "django_webtest"]
+# with open(os.path.join(os.path.dirname(__file__), 'requirements', f'trunk.txt')) as f:
+#     for line in f:
+#         tests_require.append(line.strip())
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
