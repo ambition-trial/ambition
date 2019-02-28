@@ -8,7 +8,7 @@ Ambition Edc
 
 http://www.isrctn.com/ISRCTN72509687
 
-See docs folder.
+See requirements and docs folder.
 
 
 .. |pypi| image:: https://img.shields.io/pypi/v/ambition-edc.svg
