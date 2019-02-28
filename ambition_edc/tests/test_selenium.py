@@ -32,9 +32,9 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import Firefox
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
+from unittest.case import skipIf
 
 from .mixins import AmbitionEdcSeleniumMixin
-from unittest.case import skipIf
 
 style = color_style()
 
