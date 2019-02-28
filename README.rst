@@ -1,4 +1,4 @@
-|pypi| |travis| |coverage| |downloads|
+|pypi| |travis| |codecov| |downloads|
 
 
 Ambition Edc
@@ -17,8 +17,8 @@ See docs folder.
 .. |travis| image:: https://travis-ci.com/ambition-trial/ambition-edc.svg?branch=develop
     :target: https://travis-ci.com/ambition-trial/ambition-edc
     
-.. |coverage| image:: https://coveralls.io/repos/github/ambition-trial/ambition-edc/badge.svg?branch=develop
-    :target: https://coveralls.io/github/ambition-trial/ambition-edc?branch=develop
+.. |codecov| image:: https://codecov.io/gh/ambition-trial/ambition-edc/branch/develop/graph/badge.svg
+  :target: https://codecov.io/gh/ambition-trial/ambition-edc
 
 .. |downloads| image:: https://pepy.tech/badge/ambition-edc
    :target: https://pepy.tech/project/ambition-edc
