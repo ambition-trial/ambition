@@ -8,30 +8,18 @@ dist: xenial
 sudo: true
 
 addons:
-  firefox: latest
   apt_packages:
   - libcups2-dev
-
-env:
-  - MOZ_HEADLESS=1
-addons:
 
 services:
 - mysql
 
-before_install:
-  - wget https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
-  - mkdir geckodriver
-  - tar -xzf geckodriver-v0.23.0-linux64.tar.gz -C geckodriver
-  - export PATH=$PATH:$PWD/geckodriver
-  - geckodriver --version
-
 install:
 - pip install --upgrade pip
-- pip install flake8 coveralls tox-travis
+- pip install flake8 coverage codecov tox-travis
 
 before_script:
-- flake8 ambition_ae
+- flake8 ambition_edc
 - mysql -e 'create database edc character set utf8;'
 
 script:
@@ -46,5 +34,5 @@ matrix:
       env: TOXENV=py37-django21
     - python: 3.7
       env: TOXENV=py37-django22
-;    - python: 3.7
-;      env: TOXENV=py37-djangotrunk
+;   - python: 3.7
+;     env: TOXENV=py37-djangotrunk
