@@ -14,8 +14,6 @@ from django.urls.base import reverse
 from django_webtest import WebTest
 from edc_appointment.constants import IN_PROGRESS_APPT, SCHEDULED_APPT
 from edc_appointment.models.appointment import Appointment
-from edc_base.sites.utils import add_or_update_django_sites
-from edc_base.utils import get_utcnow
 from edc_facility.import_holidays import import_holidays
 from edc_list_data.site_list_data import site_list_data
 from edc_permissions.constants.group_names import (
@@ -26,6 +24,8 @@ from edc_permissions.constants.group_names import (
     EXPORT,
     LAB,
 )
+from edc_sites.utils import add_or_update_django_sites
+from edc_utils import get_utcnow
 from model_mommy import mommy
 
 
@@ -42,7 +42,8 @@ def login(testcase, user=None, superuser=None, groups=None):
         for group_name in groups:
             group = Group.objects.get(name=group_name)
             user.groups.add(group)
-    form = testcase.app.get(reverse(settings.LOGIN_REDIRECT_URL)).maybe_follow().form
+    form = testcase.app.get(
+        reverse(settings.LOGIN_REDIRECT_URL)).maybe_follow().form
     form["username"] = user.username
     form["password"] = "pass"
     return form.submit()
@@ -51,7 +52,8 @@ def login(testcase, user=None, superuser=None, groups=None):
 @override_settings(SIMPLE_HISTORY_PERMISSIONS_ENABLED=True)
 class AdminSiteTest(WebTest):
     def setUp(self):
-        self.user = User.objects.create_superuser("user_login", "u@example.com", "pass")
+        self.user = User.objects.create_superuser(
+            "user_login", "u@example.com", "pass")
 
     def login(self, **kwargs):
         return login(self, **kwargs)
@@ -59,7 +61,8 @@ class AdminSiteTest(WebTest):
     @tag("webtest")
     def test_home_everyone(self):
         self.login(superuser=False, groups=[EVERYONE])
-        response = self.app.get(reverse("home_url"), user=self.user, status=200)
+        response = self.app.get(reverse("home_url"),
+                                user=self.user, status=200)
         self.assertNotIn("Screening", response)
         self.assertNotIn("Subjects", response)
         self.assertNotIn("Specimens", response)
@@ -75,7 +78,8 @@ class AdminSiteTest(WebTest):
     @tag("webtest")
     def test_home_auditor(self):
         self.login(superuser=False, groups=[EVERYONE, AUDITOR])
-        response = self.app.get(reverse("home_url"), user=self.user, status=200)
+        response = self.app.get(reverse("home_url"),
+                                user=self.user, status=200)
         self.assertIn("Screening", response)
         self.assertIn("Subjects", response)
         self.assertIn("Specimens", response)
@@ -91,7 +95,8 @@ class AdminSiteTest(WebTest):
     @tag("webtest")
     def test_home_clinic(self):
         self.login(superuser=False, groups=[EVERYONE, CLINIC, PII])
-        response = self.app.get(reverse("home_url"), user=self.user, status=200)
+        response = self.app.get(reverse("home_url"),
+                                user=self.user, status=200)
         self.assertIn("Screening", response)
         self.assertIn("Subjects", response)
         self.assertIn("Specimens", response)
@@ -107,7 +112,8 @@ class AdminSiteTest(WebTest):
     @tag("webtest")
     def test_home_export(self):
         self.login(superuser=False, groups=[EVERYONE, EXPORT])
-        response = self.app.get(reverse("home_url"), user=self.user, status=200)
+        response = self.app.get(reverse("home_url"),
+                                user=self.user, status=200)
         self.assertNotIn("Screening", response)
         self.assertNotIn("Subjects", response)
         self.assertNotIn("Specimens", response)
@@ -123,7 +129,8 @@ class AdminSiteTest(WebTest):
     @tag("webtest")
     def test_home_tmg(self):
         self.login(superuser=False, groups=[EVERYONE, TMG])
-        response = self.app.get(reverse("home_url"), user=self.user, status=200)
+        response = self.app.get(reverse("home_url"),
+                                user=self.user, status=200)
         self.assertIn("Screening", response)
         self.assertIn("Subjects", response)
         self.assertNotIn("Specimens", response)
@@ -139,7 +146,8 @@ class AdminSiteTest(WebTest):
     @tag("webtest")
     def test_home_lab(self):
         self.login(superuser=False, groups=[EVERYONE, LAB])
-        response = self.app.get(reverse("home_url"), user=self.user, status=200)
+        response = self.app.get(reverse("home_url"),
+                                user=self.user, status=200)
         self.assertIn("Screening", response)
         self.assertIn("Subjects", response)
         self.assertIn("Specimens", response)
@@ -155,17 +163,21 @@ class AdminSiteTest(WebTest):
     @tag("webtest")
     def test_screening_no_pii(self):
         self.login(superuser=False, groups=[EVERYONE, CLINIC])
-        home_page = self.app.get(reverse("home_url"), user=self.user, status=200)
+        home_page = self.app.get(
+            reverse("home_url"), user=self.user, status=200)
         screening_page = home_page.click(description="Screening", index=1)
         self.assertNotIn("Add SubjectScreening", screening_page)
 
     @tag("webtest")
     def test_screening_form(self):
-        subject_screening = mommy.prepare_recipe("ambition_screening.subjectscreening")
+        subject_screening = mommy.prepare_recipe(
+            "ambition_screening.subjectscreening")
         self.login(superuser=False, groups=[EVERYONE, CLINIC, PII])
 
-        home_page = self.app.get(reverse("home_url"), user=self.user, status=200)
-        screening_listboard_page = home_page.click(description="Screening", index=1)
+        home_page = self.app.get(
+            reverse("home_url"), user=self.user, status=200)
+        screening_listboard_page = home_page.click(
+            description="Screening", index=1)
         add_screening_page = screening_listboard_page.click(
             description="Add Subject Screening"
         )
@@ -177,7 +189,8 @@ class AdminSiteTest(WebTest):
         # submit completed form
         for field, _ in add_screening_page.form.fields.items():
             try:
-                add_screening_page.form[field] = getattr(subject_screening, field)
+                add_screening_page.form[field] = getattr(
+                    subject_screening, field)
             except AttributeError:
                 pass
         page = add_screening_page.form.submit()
@@ -189,7 +202,8 @@ class AdminSiteTest(WebTest):
 
         # new screened subject is available
         obj = SubjectScreening.objects.all().last()
-        screening_listboard_page = home_page.click(description="Screening", index=1)
+        screening_listboard_page = home_page.click(
+            description="Screening", index=1)
         self.assertIn(obj.screening_identifier, screening_listboard_page)
 
         add_subjectconsent_page = screening_listboard_page.click(
@@ -200,17 +214,21 @@ class AdminSiteTest(WebTest):
 
     @tag("webtest")
     def test_to_subject_dashboard(self):
-        add_or_update_django_sites(apps=django_apps, sites=ambition_sites, fqdn=fqdn)
+        add_or_update_django_sites(
+            apps=django_apps, sites=ambition_sites, fqdn=fqdn)
         RandomizationListImporter()
         PermissionsUpdater(verbose=False)
         import_holidays()
         site_list_data.autodiscover()
         self.login(superuser=False, groups=[EVERYONE, CLINIC, PII])
 
-        subject_screening = mommy.make_recipe("ambition_screening.subjectscreening")
+        subject_screening = mommy.make_recipe(
+            "ambition_screening.subjectscreening")
 
-        home_page = self.app.get(reverse("home_url"), user=self.user, status=200)
-        screening_listboard_page = home_page.click(description="Screening", index=1)
+        home_page = self.app.get(
+            reverse("home_url"), user=self.user, status=200)
+        screening_listboard_page = home_page.click(
+            description="Screening", index=1)
 
         add_subjectconsent_page = screening_listboard_page.click(
             description="Consent", index=1
@@ -231,8 +249,10 @@ class AdminSiteTest(WebTest):
             consent_datetime=get_utcnow(),
         )
 
-        home_page = self.app.get(reverse("home_url"), user=self.user, status=200)
-        screening_listboard_page = home_page.click(description="Screening", index=1)
+        home_page = self.app.get(
+            reverse("home_url"), user=self.user, status=200)
+        screening_listboard_page = home_page.click(
+            description="Screening", index=1)
 
         self.assertIn("Dashboard", screening_listboard_page)
         self.assertIn(
@@ -240,10 +260,13 @@ class AdminSiteTest(WebTest):
             screening_listboard_page,
         )
 
-        home_page = self.app.get(reverse("home_url"), user=self.user, status=200)
-        subject_listboard_page = home_page.click(description="Subjects", index=1)
+        home_page = self.app.get(
+            reverse("home_url"), user=self.user, status=200)
+        subject_listboard_page = home_page.click(
+            description="Subjects", index=1)
 
-        self.assertIn(subject_consent.subject_identifier, subject_listboard_page)
+        self.assertIn(subject_consent.subject_identifier,
+                      subject_listboard_page)
 
         href = reverse(
             "ambition_dashboard:subject_dashboard_url",
@@ -307,6 +330,5 @@ class AdminSiteTest(WebTest):
             status=200,
         )
 
-        crf_page = subject_dashboard_page.click(description="Forms")
-        self.assertIn(crf_page, "CRFs")
-        self.assertIn(crf_page, "Requisitions")
+        self.assertIn("CRFs", subject_dashboard_page)
+        self.assertIn("Requisitions", subject_dashboard_page)

@@ -15,6 +15,8 @@ ambition-sites  #0.1.5
 ambition-subject  #0.1.38
 ambition-validators  #0.1.10
 ambition-visit-schedule  #0.1.10
+# django-crypto-fields
+# django-audit-fields
 edc-action-item  #0.1.24
 edc-appointment  #0.2.21
 edc-auth  #0.1.15
@@ -38,6 +40,7 @@ edc-list-data  #0.1.4
 edc-locator  #0.2.15
 edc-metadata  #0.2.23
 edc-metadata-rules  #0.1.12
+edc-model
 edc-model-admin  #0.1.10
 edc-model-fields  #0.1.4
 edc-model-wrapper  #0.1.12
@@ -57,7 +60,9 @@ edc-reports  #0.1.6
 edc-rest  #0.1.3
 edc-search  #0.1.7
 edc-selenium  #0.1.2
+edc-sites
 edc-subject-dashboard  #0.1.19
 edc-timepoint  #0.1.6
+edc-utils
 edc-visit-schedule  #0.2.18
 edc-visit-tracking  #0.2.18
