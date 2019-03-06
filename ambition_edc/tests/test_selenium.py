@@ -17,15 +17,15 @@ from django.test.utils import override_settings, tag
 from django.urls.base import reverse
 from django.urls.exceptions import NoReverseMatch
 from edc_action_item.models.action_item import ActionItem
-from edc_base import get_utcnow
-from edc_base.sites.utils import add_or_update_django_sites
-from edc_base.tests.site_test_case_mixin import SiteTestCaseMixin
 from edc_constants.constants import NEW, OPEN, CLOSED, YES
 from edc_facility.import_holidays import import_holidays
 from edc_lab_dashboard.dashboard_urls import dashboard_urls
 from edc_list_data.site_list_data import site_list_data
 from edc_metadata.constants import REQUIRED
 from edc_metadata.models import RequisitionMetadata
+from edc_sites.tests import SiteTestCaseMixin
+from edc_sites.utils import add_or_update_django_sites
+from edc_utils import get_utcnow
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 from model_mommy import mommy
 from selenium.common.exceptions import NoSuchElementException

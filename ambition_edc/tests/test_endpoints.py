@@ -14,8 +14,6 @@ from django.urls.base import reverse
 from django_webtest import WebTest
 from edc_appointment.constants import IN_PROGRESS_APPT, SCHEDULED_APPT
 from edc_appointment.models.appointment import Appointment
-from edc_base.sites.utils import add_or_update_django_sites
-from edc_base.utils import get_utcnow
 from edc_facility.import_holidays import import_holidays
 from edc_list_data.site_list_data import site_list_data
 from edc_permissions.constants.group_names import (
@@ -26,9 +24,9 @@ from edc_permissions.constants.group_names import (
     EXPORT,
     LAB,
 )
+from edc_sites.utils import add_or_update_django_sites
+from edc_utils import get_utcnow
 from model_mommy import mommy
-from edc_metadata.models.crf_metadata import CrfMetadata
-from django.utils.safestring import mark_safe
 
 
 User = get_user_model()

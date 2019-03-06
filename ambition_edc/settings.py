@@ -14,7 +14,8 @@ except AssertionError:
         "Incorrect python version. Expected 3.6 or 3.7. Check your environment."
     )
 
-BASE_DIR = str(Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+BASE_DIR = str(Path(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))))
 
 env = environ.Env(
     AWS_ENABLED=(bool, False),
@@ -36,6 +37,7 @@ env = environ.Env(
     SENTRY_ENABLED=(bool, False),
     TWILIO_ENABLED=(bool, False),
     SIMPLE_HISTORY_PERMISSIONS_ENABLED=(bool, False),
+    SIMPLE_HISTORY_REVERT_DISABLED=(bool, False),
 )
 
 # copy your .env file from .envs/ to BASE_DIR
@@ -273,7 +275,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = env.str("DJANGO_LANGUAGE_CODE")
 
-LANGUAGES = [x.split(":") for x in env.list("DJANGO_LANGUAGES")] or (("en", "English"),)
+LANGUAGES = [x.split(":") for x in env.list(
+    "DJANGO_LANGUAGES")] or (("en", "English"),)
 
 TIME_ZONE = env.str("DJANGO_TIME_ZONE")
 
@@ -327,7 +330,8 @@ DJANGO_COLLECT_OFFLINE_SERVER_IP = env.str("DJANGO_COLLECT_OFFLINE_SERVER_IP")
 DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST"
 )
-DJANGO_COLLECT_OFFLINE_FILES_USER = env.str("DJANGO_COLLECT_OFFLINE_FILES_USER")
+DJANGO_COLLECT_OFFLINE_FILES_USER = env.str(
+    "DJANGO_COLLECT_OFFLINE_FILES_USER")
 DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME"
 )
@@ -338,7 +342,8 @@ DASHBOARD_URL_NAMES = env.dict("DJANGO_DASHBOARD_URL_NAMES")
 DASHBOARD_BASE_TEMPLATES = env.dict("DJANGO_DASHBOARD_BASE_TEMPLATES")
 LAB_DASHBOARD_BASE_TEMPLATES = env.dict("DJANGO_LAB_DASHBOARD_BASE_TEMPLATES")
 LAB_DASHBOARD_URL_NAMES = env.dict("DJANGO_LAB_DASHBOARD_URL_NAMES")
-LAB_DASHBOARD_REQUISITION_MODEL = env.str("DJANGO_LAB_DASHBOARD_REQUISITION_MODEL")
+LAB_DASHBOARD_REQUISITION_MODEL = env.str(
+    "DJANGO_LAB_DASHBOARD_REQUISITION_MODEL")
 
 # edc_facility
 HOLIDAY_FILE = env.str("DJANGO_HOLIDAY_FILE")
@@ -381,7 +386,8 @@ if not DEBUG:
 EXPORT_FOLDER = env.str("DJANGO_EXPORT_FOLDER") or os.path.expanduser("~/")
 
 # django_simple_history
-SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str("SIMPLE_HISTORY_PERMISSIONS_ENABLED")
+SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str(
+    "SIMPLE_HISTORY_PERMISSIONS_ENABLED")
 SIMPLE_HISTORY_REVERT_DISABLED = env.str("SIMPLE_HISTORY_REVERT_DISABLED")
 
 FQDN = env.str("DJANGO_FQDN")
@@ -410,7 +416,8 @@ if SENTRY_ENABLED:
     from .logging.raven import LOGGING  # noqa
 
     SENTRY_DSN = env.str("SENTRY_DSN")
-    RAVEN_CONFIG = {"dsn": SENTRY_DSN, "release": raven.fetch_git_sha(BASE_DIR)}
+    RAVEN_CONFIG = {"dsn": SENTRY_DSN,
+                    "release": raven.fetch_git_sha(BASE_DIR)}
 else:
     if env("DJANGO_LOGGING_ENABLED"):
         from .logging.standard import LOGGING  # noqa
