@@ -64,3 +64,4 @@ edc-timepoint==0.1.10
 edc-utils==0.1.3
 edc-visit-schedule==0.2.29
 edc-visit-tracking==0.2.24
+git+https://github.com/erikvw/django-simple-history@admin_revert_permissions
