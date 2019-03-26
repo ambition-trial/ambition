@@ -2,6 +2,7 @@ from ambition_dashboard.navbars import navbar as ambition_dashboard_navbar
 from copy import copy
 from django.conf import settings
 from edc_lab_dashboard.navbars import navbar as lab_navbar
+from edc_review_dashboard.navbars import navbar as review_navbar
 from edc_navbar import site_navbars, Navbar
 
 navbar = Navbar(name=settings.APP_NAME)
@@ -30,5 +31,8 @@ navbar.append_item(
 navbar.append_item(
     [item for item in ambition_dashboard_navbar.items if item.name == "tmg_home"][0]
 )
+
+for item in review_navbar.items:
+    navbar.append_item(item)
 
 site_navbars.register(navbar)
