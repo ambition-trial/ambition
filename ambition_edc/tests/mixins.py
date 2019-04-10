@@ -65,8 +65,7 @@ class AmbitionEdcSeleniumMixin(
             self.selenium.get("%s%s" % (self.live_server_url, url))
             if screenshot:
                 self.selenium.save_screenshot(
-                    os.path.join(settings.BASE_DIR, "screenshots",
-                                 "new_subject1.png")
+                    os.path.join(settings.BASE_DIR, "screenshots", "new_subject1.png")
                 )
             element = self.wait_for("Add Subject Screening")
             element.click()
@@ -75,8 +74,7 @@ class AmbitionEdcSeleniumMixin(
         subject_screening = self.fill_subject_screening(save_only=save_only)
         if screenshot:
             self.selenium.save_screenshot(
-                os.path.join(settings.BASE_DIR, "screenshots",
-                             "new_subject2.png")
+                os.path.join(settings.BASE_DIR, "screenshots", "new_subject2.png")
             )
 
         if not save_only:
@@ -92,8 +90,7 @@ class AmbitionEdcSeleniumMixin(
         )
         if screenshot:
             self.selenium.save_screenshot(
-                os.path.join(settings.BASE_DIR, "screenshots",
-                             "new_subject3.png")
+                os.path.join(settings.BASE_DIR, "screenshots", "new_subject3.png")
             )
         subject_identifier = subject_consent.subject_identifier
 
@@ -109,8 +106,7 @@ class AmbitionEdcSeleniumMixin(
         )
         if screenshot:
             self.selenium.save_screenshot(
-                os.path.join(settings.BASE_DIR, "screenshots",
-                             "new_subject4.png")
+                os.path.join(settings.BASE_DIR, "screenshots", "new_subject4.png")
             )
         return appointment
 
@@ -131,19 +127,16 @@ class AmbitionEdcSeleniumMixin(
             **kwargs,
         )
         if save_only:
-            subject_visit = self.fill_subject_visit(
-                appointment, save_only=save_only)
+            subject_visit = self.fill_subject_visit(appointment, save_only=save_only)
         else:
             self.selenium.save_screenshot(
-                os.path.join(settings.BASE_DIR, "screenshots",
-                             "new_subject5.png")
+                os.path.join(settings.BASE_DIR, "screenshots", "new_subject5.png")
             )
             self.selenium.find_element_by_partial_link_text("Start").click()
             subject_visit = self.fill_subject_visit(appointment)
             if screenshot:
                 self.selenium.save_screenshot(
-                    os.path.join(settings.BASE_DIR, "screenshots",
-                                 "new_subject6.png")
+                    os.path.join(settings.BASE_DIR, "screenshots", "new_subject6.png")
                 )
             self.wait_for_edc()
         return subject_visit
@@ -211,8 +204,7 @@ class AmbitionEdcSeleniumMixin(
             appointment = self.fill_form(
                 model=self.appointment_model,
                 obj=appointment,
-                values={"appt_status": IN_PROGRESS_APPT,
-                        "appt_reason": SCHEDULED_APPT},
+                values={"appt_status": IN_PROGRESS_APPT, "appt_reason": SCHEDULED_APPT},
                 exclude=[
                     "subject_identifier",
                     "timepoint_datetime",
@@ -265,8 +257,7 @@ class AmbitionEdcSeleniumMixin(
     def fill_action_item(self, subject_identifier=None, name=None, click_add=None):
         # add action item
         if click_add:
-            self.selenium.find_element_by_id(
-                "edc_action_item_actionitem_add").click()
+            self.selenium.find_element_by_id("edc_action_item_actionitem_add").click()
         action_type = ActionType.objects.get(name=name)
         obj = mommy.prepare_recipe(
             self.action_item_model,
@@ -299,8 +290,7 @@ class AmbitionEdcSeleniumMixin(
                 .schedules.get(schedule_name)
                 .visits
             )
-            subject_visit_model_cls = django_apps.get_model(
-                self.subject_visit_model)
+            subject_visit_model_cls = django_apps.get_model(self.subject_visit_model)
             for code in visit_codes:
                 if visit_code == code:
                     break
@@ -312,8 +302,7 @@ class AmbitionEdcSeleniumMixin(
                         subject_identifier, save_only=True
                     )
                     try:
-                        subject_visit_model_cls.objects.get(
-                            appointment=appointment)
+                        subject_visit_model_cls.objects.get(appointment=appointment)
                     except ObjectDoesNotExist:
                         self.fill_subject_visit(appointment, save_only=True)
                         appointment.appt_status = INCOMPLETE_APPT
