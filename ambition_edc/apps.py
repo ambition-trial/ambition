@@ -34,9 +34,9 @@ def post_migrate_update_sites(sender=None, **kwargs):
 
 
 def post_migrate_update_edc_permissions(sender=None, **kwargs):
-    from ambition_permissions.permissions_updater import PermissionsUpdater
+    from ambition_permissions.updaters import update_permissions
 
-    PermissionsUpdater(verbose=True)
+    update_permissions(verbose=True)
 
 
 class AppConfig(DjangoAppConfig):
