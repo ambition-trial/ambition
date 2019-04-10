@@ -1,11 +1,12 @@
 ambition-ae
-ambition-auth
+ambition-permissions
 ambition-dashboard
 ambition-export
 ambition-form-validators
 ambition-labs
 ambition-lists
 ambition-metadata-rules
+ambition-permissions
 ambition-pharmacy  #0.1.3
 ambition-prn  #0.1.21
 ambition-rando  #0.1.13
@@ -58,6 +59,7 @@ edc-registration  #0.2.19
 edc-reportable  #0.1.7
 edc-reports  #0.1.6
 edc-rest  #0.1.3
+edc-review-dashboard
 edc-search  #0.1.7
 edc-selenium  #0.1.2
 edc-sites
@@ -66,3 +68,4 @@ edc-timepoint  #0.1.6
 edc-utils
 edc-visit-schedule  #0.2.18
 edc-visit-tracking  #0.2.18
+git+https://github.com/erikvw/django-simple-history@admin_revert_permissions

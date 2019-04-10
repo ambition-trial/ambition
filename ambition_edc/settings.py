@@ -14,8 +14,7 @@ except AssertionError:
         "Incorrect python version. Expected 3.6 or 3.7. Check your environment."
     )
 
-BASE_DIR = str(Path(os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__)))))
+BASE_DIR = str(Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 env = environ.Env(
     AWS_ENABLED=(bool, False),
@@ -70,6 +69,7 @@ if TOWN:
 else:
     SITE_ID = env.int("DJANGO_SITE_ID")
 
+DEFAULT_APPOINTMENT_TYPE = "hospital"
 
 REVIEWER_SITE_ID = env.int("DJANGO_REVIEWER_SITE_ID")
 
@@ -121,8 +121,8 @@ INSTALLED_APPS = [
     "edc_subject_dashboard.apps.AppConfig",
     "edc_timepoint.apps.AppConfig",
     "edc_list_data.apps.AppConfig",
+    "edc_review_dashboard.apps.AppConfig",
     "ambition_lists.apps.AppConfig",
-    "ambition_auth.apps.AppConfig",
     "ambition_dashboard.apps.AppConfig",
     "ambition_labs.apps.AppConfig",
     "ambition_metadata_rules.apps.AppConfig",
@@ -132,11 +132,11 @@ INSTALLED_APPS = [
     "ambition_form_validators.apps.AppConfig",
     "ambition_visit_schedule.apps.AppConfig",
     "ambition_ae.apps.AppConfig",
+    "ambition_permissions.apps.AppConfig",
     "ambition_prn.apps.AppConfig",
     "ambition_export.apps.AppConfig",
     "ambition_screening.apps.AppConfig",
     "ambition_edc.apps.EdcAppointmentAppConfig",
-    "ambition_edc.apps.EdcBaseAppConfig",
     "ambition_edc.apps.EdcDeviceAppConfig",
     "ambition_edc.apps.EdcIdentifierAppConfig",
     "ambition_edc.apps.EdcLabAppConfig",
@@ -275,8 +275,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = env.str("DJANGO_LANGUAGE_CODE")
 
-LANGUAGES = [x.split(":") for x in env.list(
-    "DJANGO_LANGUAGES")] or (("en", "English"),)
+LANGUAGES = [x.split(":") for x in env.list("DJANGO_LANGUAGES")] or (("en", "English"),)
 
 TIME_ZONE = env.str("DJANGO_TIME_ZONE")
 
@@ -330,11 +329,14 @@ DJANGO_COLLECT_OFFLINE_SERVER_IP = env.str("DJANGO_COLLECT_OFFLINE_SERVER_IP")
 DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST"
 )
-DJANGO_COLLECT_OFFLINE_FILES_USER = env.str(
-    "DJANGO_COLLECT_OFFLINE_FILES_USER")
+DJANGO_COLLECT_OFFLINE_FILES_USER = env.str("DJANGO_COLLECT_OFFLINE_FILES_USER")
 DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME"
 )
+
+SUBJECT_CONSENT_MODEL = env.str("DJANGO_SUBJECT_CONSENT_MODEL")
+SUBJECT_REQUISITION_MODEL = env.str("DJANGO_SUBJECT_REQUISITION_MODEL")
+SUBJECT_VISIT_MODEL = env.str("DJANGO_SUBJECT_VISIT_MODEL")
 
 # dashboards
 EDC_BOOTSTRAP = env("DJANGO_EDC_BOOTSTRAP")
@@ -342,8 +344,8 @@ DASHBOARD_URL_NAMES = env.dict("DJANGO_DASHBOARD_URL_NAMES")
 DASHBOARD_BASE_TEMPLATES = env.dict("DJANGO_DASHBOARD_BASE_TEMPLATES")
 LAB_DASHBOARD_BASE_TEMPLATES = env.dict("DJANGO_LAB_DASHBOARD_BASE_TEMPLATES")
 LAB_DASHBOARD_URL_NAMES = env.dict("DJANGO_LAB_DASHBOARD_URL_NAMES")
-LAB_DASHBOARD_REQUISITION_MODEL = env.str(
-    "DJANGO_LAB_DASHBOARD_REQUISITION_MODEL")
+# is this needed?
+SUBJECT_REQUISITION_MODEL = env.str("DJANGO_SUBJECT_REQUISITION_MODEL")
 
 # edc_facility
 HOLIDAY_FILE = env.str("DJANGO_HOLIDAY_FILE")
@@ -386,8 +388,7 @@ if not DEBUG:
 EXPORT_FOLDER = env.str("DJANGO_EXPORT_FOLDER") or os.path.expanduser("~/")
 
 # django_simple_history
-SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str(
-    "SIMPLE_HISTORY_PERMISSIONS_ENABLED")
+SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str("SIMPLE_HISTORY_PERMISSIONS_ENABLED")
 SIMPLE_HISTORY_REVERT_DISABLED = env.str("SIMPLE_HISTORY_REVERT_DISABLED")
 
 FQDN = env.str("DJANGO_FQDN")
@@ -416,8 +417,7 @@ if SENTRY_ENABLED:
     from .logging.raven import LOGGING  # noqa
 
     SENTRY_DSN = env.str("SENTRY_DSN")
-    RAVEN_CONFIG = {"dsn": SENTRY_DSN,
-                    "release": raven.fetch_git_sha(BASE_DIR)}
+    RAVEN_CONFIG = {"dsn": SENTRY_DSN, "release": raven.fetch_git_sha(BASE_DIR)}
 else:
     if env("DJANGO_LOGGING_ENABLED"):
         from .logging.standard import LOGGING  # noqa

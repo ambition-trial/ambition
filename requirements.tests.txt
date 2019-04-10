@@ -1,0 +1,6 @@
+edc-test-utils
+django-storages
+model-mommy
+faker
+django-environ
+django-webtest
