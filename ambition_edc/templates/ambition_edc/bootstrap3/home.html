@@ -35,13 +35,13 @@
 
       <div class="list-group">
       {% if perms.edc_dashboard.view_screening_listboard %}
-        <a id="home_list_group_screening_listboard" href="{% url screening_listboard_url %}" class="list-group-item"><i class="fas fa-user-plus fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Screening</a>
+        <a id="home_list_group_screening_listboard" href="{% url screening_listboard_url|default:'screening_listboard_url_cannot_be_none' %}" class="list-group-item"><i class="fas fa-user-plus fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Screening</a>
       {% endif %}
       {% if perms.edc_dashboard.view_subject_listboard %}
-        <a id="home_list_group_subject_listboard" href="{% url subject_listboard_url %}" class="list-group-item"><i class="fas fa-user-circle fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Subjects</a>
+        <a id="home_list_group_subject_listboard" href="{% url subject_listboard_url|default:'subject_listboard_url_cannot_be_none' %}" class="list-group-item"><i class="fas fa-user-circle fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Subjects</a>
       {% endif %}
       {% if perms.edc_navbar.nav_lab_section %}
-        <a id="home_list_group_requisition_listboard" href="{% url requisition_listboard_url %}" class="list-group-item"><i class="fas fa-flask fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Specimens</a>
+        <a id="home_list_group_requisition_listboard" href="{% url requisition_listboard_url|default:'requisition_listboard_url_cannot_be_none' %}" class="list-group-item"><i class="fas fa-flask fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Specimens</a>
       {% endif %}
       {% if perms.ambition_ae %}
         <a href="{% url 'ambition_ae:home_url' %}" class="list-group-item"><i class="fas fa-heartbeat fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Adverse events</a>

@@ -33,9 +33,11 @@ setup(
     keywords='django ambition EDC',
     install_requires=[
         'boto3',
-        'django-storages',
+        'django-environ',
         'django-redis',
+        'django-storages',
         'gunicorn',
+        'python-memcached',
         'raven',
     ],
     classifiers=[

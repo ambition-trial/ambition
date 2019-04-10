@@ -39,6 +39,7 @@
 -e /Users/erikvw/source/django-collect-offline-files  #develop#egg=django-collect-offline-files
 -e /Users/erikvw/source/django-collect-offline  #develop#egg=django-collect-offline
 -e /Users/erikvw/source/edc-rest  #develop#egg=edc-rest
+-e /Users/erikvw/source/edc-test-utils
 -e /Users/erikvw/source/edc-timepoint  #develop#egg=edc-timepoint
 -e /Users/erikvw/source/edc-visit-schedule  #develop#egg=edc-visit-schedule
 -e /Users/erikvw/source/edc-visit-tracking  #develop#egg=edc-visit-tracking
@@ -49,6 +50,7 @@
 -e /Users/erikvw/source/ambition-export
 -e /Users/erikvw/source/ambition-labs  #develop#egg=ambition-labs
 -e /Users/erikvw/source/ambition-metadata-rules  #develop#egg=ambition-metadata-rules
+-e /Users/erikvw/source/ambition-permissions
 -e /Users/erikvw/source/ambition-prn  #develop#egg=ambition-prn
 -e /Users/erikvw/source/ambition-pharmacy  #develop#egg=ambition-pharmacy
 -e /Users/erikvw/source/ambition-rando  #develop#egg=ambition-rando

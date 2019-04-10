@@ -50,7 +50,6 @@ def update_develop_virtualenv():
                 'edc-navbar',
                 'edc-protocol',
                 'edc-reports',
-                'edc-rest',
                 'edc-search',
                 'edc-subject-dashboard',
                 'edc-timepoint',

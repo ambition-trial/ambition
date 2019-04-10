@@ -1,5 +1,5 @@
 ambition-ae
-ambition-auth
+ambition-permissions
 ambition-dashboard
 ambition-export
 ambition-form-validators
@@ -67,3 +67,4 @@ edc-timepoint  #0.1.6
 edc-utils
 edc-visit-schedule  #0.2.18
 edc-visit-tracking  #0.2.18
+git+https://github.com/erikvw/django-simple-history@admin_revert_permissions

@@ -1,5 +1,5 @@
 ambition-ae==0.3.16
-ambition-auth==0.1.16
+ambition-permissions==0.1.16
 ambition-dashboard==0.1.20
 ambition-export==0.1.5
 ambition-form-validators==0.1.24

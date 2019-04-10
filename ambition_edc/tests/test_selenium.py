@@ -1,7 +1,7 @@
 # import os
 # import sys
 # from ambition_ae.action_items import AE_INITIAL_ACTION
-# from ambition_auth.permissions_updater import PermissionsUpdater
+# from ambition_permissions.permissions_updater import PermissionsUpdater
 # from ambition_rando.randomization_list_importer import RandomizationListImporter
 # from ambition_sites import ambition_sites, fqdn
 # from ambition_subject.models.follow_up import FollowUp
