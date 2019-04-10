@@ -1,0 +1,27 @@
+
+
+
+
+Changes to .env
+
+	AWS_DEFAULT_ACL=None
+
+
+Subject review listboard template home is now edc_review_dashboard
+
+	DJANGO_DASHBOARD_BASE_TEMPLATES=... g/summary_listboard.html,subject_review_listboard_template=edc_review_dashboard/subject_review_listboard.html
+
+
+`DJANGO_DASHBOARD_URL_NAMES` no longer needed:
+
+	DJANGO_DASHBOARD_URL_NAMES=
+	# DJANGO_DASHBOARD_URL_NAMES=...
+
+
+Widely used models are hardcoded:
+
+	DJANGO_SUBJECT_CONSENT_MODEL=ambition_subject.subjectconsent
+	DJANGO_SUBJECT_REQUISITION_MODEL=ambition_subject.subjectrequisition
+	DJANGO_SUBJECT_VISIT_MODEL=ambition_subject.subjectvisit
+
+
