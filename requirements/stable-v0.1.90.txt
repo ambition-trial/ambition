@@ -1,3 +1,5 @@
+ambition-ae==0.3.24
+ambition-dashboard==0.1.27
 ambition-export==0.1.7
 ambition-form-validators==0.1.26
 ambition-labs==0.1.11
