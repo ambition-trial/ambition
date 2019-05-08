@@ -31,6 +31,30 @@ from edc_visit_schedule.admin_site import edc_visit_schedule_admin
 from .views import HomeView
 
 
+def handler403(request, exception=None):
+    """403 error handler which includes ``request`` in the context.
+
+    Templates: `403.html`
+    Context: None
+    """
+
+    context = {"request": request}
+    template_name = "403.html"  # You need to create a 500.html template.
+    return TemplateResponse(request, template_name, context, status=403)
+
+
+def handler404(request, exception=None):
+    """404 error handler which includes ``request`` in the context.
+
+    Templates: `404.html`
+    Context: None
+    """
+
+    context = {"request": request}
+    template_name = "404.html"  # You need to create a 500.html template.
+    return TemplateResponse(request, template_name, context, status=404)
+
+
 def handler500(request):
     """500 error handler which includes ``request`` in the context.
 
@@ -70,7 +94,8 @@ urlpatterns = [
     path(
         "admin/django_collect_offline_files/", django_collect_offline_files_admin.urls
     ),
-    path("administration/", AdministrationView.as_view(), name="administration_url"),
+    path("administration/", AdministrationView.as_view(),
+         name="administration_url"),
     path(
         "admin/ambition_subject/",
         RedirectView.as_view(url="admin/ambition_subject/"),
@@ -104,7 +129,8 @@ urlpatterns = [
     path("edc_registration/", include("edc_registration.urls")),
     path("edc_subject_dashboard/", include("edc_subject_dashboard.urls")),
     path("django_collect_offline/", include("django_collect_offline.urls")),
-    path("django_collect_offline_files/", include("django_collect_offline_files.urls")),
+    path("django_collect_offline_files/",
+         include("django_collect_offline_files.urls")),
     path("edc_visit_schedule/", include("edc_visit_schedule.urls")),
     path(
         "switch_sites/",
