@@ -414,6 +414,8 @@ if env("AWS_ENABLED"):
     AWS_LOCATION = env.str("AWS_LOCATION")
     AWS_IS_GZIPPED = True
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    STATIC_ROOT = os.path.join(AWS_S3_ENDPOINT_URL, AWS_LOCATION).replace(
+        'ams3.', f"{AWS_STORAGE_BUCKET_NAME}.ams3.")
 else:
     # run collectstatic, check nginx LOCATION
     STATIC_URL = env.str("DJANGO_STATIC_URL")
