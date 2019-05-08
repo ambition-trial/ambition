@@ -1,3 +1,5 @@
+import sys
+
 from ambition_sites import ambition_sites, fqdn
 from datetime import datetime
 from dateutil.relativedelta import MO, TU, WE, TH, FR, SA, SU
@@ -27,16 +29,24 @@ style = color_style()
 
 def post_migrate_update_sites(sender=None, **kwargs):
     from edc_sites.utils import add_or_update_django_sites
-
+    sys.stdout.write(
+        style.MIGRATE_HEADING("Updating sites:\n")
+    )
     add_or_update_django_sites(
         apps=django_apps, sites=ambition_sites, fqdn=fqdn, verbose=True
     )
+    sys.stdout.write("Done.\n")
+    sys.stdout.flush()
 
 
 def post_migrate_update_edc_permissions(sender=None, **kwargs):
     from ambition_permissions.updaters import update_permissions
-
+    sys.stdout.write(
+        style.MIGRATE_HEADING("Updating permissions:\n")
+    )
     update_permissions()
+    sys.stdout.write("Done.\n")
+    sys.stdout.flush()
 
 
 class AppConfig(DjangoAppConfig):
