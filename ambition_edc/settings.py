@@ -406,16 +406,22 @@ DJANGO_LOG_FOLDER = env.str("DJANGO_LOG_FOLDER")
 
 # static
 if env("AWS_ENABLED"):
+    # see
+    # https://www.digitalocean.com/community/tutorials/
+    # how-to-set-up-a-scalable-django-app-with-digitalocean-
+    # managed-databases-and-spaces
     AWS_ACCESS_KEY_ID = env.str("AWS_ACCESS_KEY_ID")
+    AWS_DEFAULT_ACL = 'public-read'
     AWS_SECRET_ACCESS_KEY = env.str("AWS_SECRET_ACCESS_KEY")
     AWS_STORAGE_BUCKET_NAME = env.str("AWS_STORAGE_BUCKET_NAME")
     AWS_S3_ENDPOINT_URL = env.str("AWS_S3_ENDPOINT_URL")
+    AWS_S3_CUSTOM_DOMAIN = env.str("AWS_S3_CUSTOM_DOMAIN")
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
     AWS_LOCATION = env.str("AWS_LOCATION")
     AWS_IS_GZIPPED = True
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    STATIC_ROOT = os.path.join(AWS_S3_ENDPOINT_URL, AWS_LOCATION).replace(
-        'ams3.', f"{AWS_STORAGE_BUCKET_NAME}.ams3.")
+    STATIC_URL = os.path.join(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+    STATIC_ROOT = ""
 else:
     # run collectstatic, check nginx LOCATION
     STATIC_URL = env.str("DJANGO_STATIC_URL")
