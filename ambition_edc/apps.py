@@ -29,9 +29,8 @@ style = color_style()
 
 def post_migrate_update_sites(sender=None, **kwargs):
     from edc_sites.utils import add_or_update_django_sites
-    sys.stdout.write(
-        style.MIGRATE_HEADING("Updating sites:\n")
-    )
+
+    sys.stdout.write(style.MIGRATE_HEADING("Updating sites:\n"))
     add_or_update_django_sites(
         apps=django_apps, sites=ambition_sites, fqdn=fqdn, verbose=True
     )
@@ -41,9 +40,8 @@ def post_migrate_update_sites(sender=None, **kwargs):
 
 def post_migrate_update_edc_permissions(sender=None, **kwargs):
     from ambition_permissions.updaters import update_permissions
-    sys.stdout.write(
-        style.MIGRATE_HEADING("Updating permissions:\n")
-    )
+
+    sys.stdout.write(style.MIGRATE_HEADING("Updating permissions:\n"))
     update_permissions()
     sys.stdout.write("Done.\n")
     sys.stdout.flush()
@@ -74,8 +72,7 @@ class EdcProtocolAppConfig(BaseEdcProtocolAppConfig):
         "Non-Inferiority Trial (P.I. Joe Jarvis)."
     )
     study_open_datetime = datetime(2016, 12, 31, 0, 0, 0, tzinfo=gettz("UTC"))
-    study_close_datetime = datetime(
-        2022, 12, 31, 23, 59, 59, tzinfo=gettz("UTC"))
+    study_close_datetime = datetime(2022, 12, 31, 23, 59, 59, tzinfo=gettz("UTC"))
 
 
 class EdcLabAppConfig(BaseEdcLabAppConfig):
@@ -115,8 +112,7 @@ class EdcFacilityAppConfig(BaseEdcFacilityAppConfig):
     country = "botswana"
     definitions = {
         "7-day clinic": dict(
-            days=[MO, TU, WE, TH, FR, SA, SU], slots=[
-                100, 100, 100, 100, 100, 100, 100]
+            days=[MO, TU, WE, TH, FR, SA, SU], slots=[100, 100, 100, 100, 100, 100, 100]
         ),
         "5-day clinic": dict(
             days=[MO, TU, WE, TH, FR], slots=[100, 100, 100, 100, 100]
