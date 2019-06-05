@@ -7,7 +7,6 @@ from ambition_subject.admin_site import ambition_subject_admin
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
-from django.template.response import TemplateResponse
 from django.urls.conf import path, include
 from django.views.defaults import page_not_found, server_error  # noqa
 from django.views.generic.base import RedirectView
@@ -27,47 +26,25 @@ from edc_pharmacy.admin_site import edc_pharmacy_admin
 from edc_reference.admin_site import edc_reference_admin
 from edc_registration.admin_site import edc_registration_admin
 from edc_visit_schedule.admin_site import edc_visit_schedule_admin
+from edc_data_manager.admin_site import edc_data_manager_admin
 
 from .views import HomeView
 
 
-def handler403(request, exception=None):
-    """403 error handler which includes ``request`` in the context.
-
-    Templates: `403.html`
-    Context: None
-    """
-
-    context = {"request": request}
-    template_name = "403.html"  # You need to create a 500.html template.
-    return TemplateResponse(request, template_name, context, status=403)
+def trigger_error(request):
+    division_by_zero = 1 / 0  # noqa
 
 
-def handler404(request, exception=None):
-    """404 error handler which includes ``request`` in the context.
+handler403 = "edc_dashboard.views.edc_handler403"
+handler404 = "edc_dashboard.views.edc_handler404"
 
-    Templates: `404.html`
-    Context: None
-    """
-
-    context = {"request": request}
-    template_name = "404.html"  # You need to create a 500.html template.
-    return TemplateResponse(request, template_name, context, status=404)
-
-
-def handler500(request):
-    """500 error handler which includes ``request`` in the context.
-
-    Templates: `500.html`
-    Context: None
-    """
-
-    context = {"request": request}
-    template_name = "500.html"  # You need to create a 500.html template.
-    return TemplateResponse(request, template_name, context, status=500)
-
+if settings.SENTRY_ENABLED:
+    handler500 = "edc_dashboard.views.error_handlers.sentry.handler500"
+else:
+    handler500 = "edc_dashboard.views.edc_handler500"
 
 urlpatterns = [
+    path('sentry-debug/', trigger_error),
     path("accounts/", include("edc_auth.urls")),
     path("admin/", include("edc_auth.urls")),
     path("admin/", admin.site.urls),
@@ -79,6 +56,7 @@ urlpatterns = [
     path("admin/", ambition_prn_admin.urls),
     path("admin/", ambition_screening_admin.urls),
     path("admin/", edc_lab_admin.urls),
+    path("admin/", edc_data_manager_admin.urls),
     path("admin/", edc_export_admin.urls),
     path("admin/", edc_locator_admin.urls),
     path("admin/", edc_identifier_admin.urls),
@@ -94,7 +72,8 @@ urlpatterns = [
     path(
         "admin/django_collect_offline_files/", django_collect_offline_files_admin.urls
     ),
-    path("administration/", AdministrationView.as_view(), name="administration_url"),
+    path("administration/", AdministrationView.as_view(),
+         name="administration_url"),
     path(
         "admin/ambition_subject/",
         RedirectView.as_view(url="admin/ambition_subject/"),
@@ -111,6 +90,7 @@ urlpatterns = [
     path("edc_action_item/", include("edc_action_item.urls")),
     path("edc_dashboard/", include("edc_dashboard.urls")),
     path("edc_consent/", include("edc_consent.urls")),
+    path("edc_data_manager/", include("edc_data_manager.urls")),
     path("edc_device/", include("edc_device.urls")),
     path("edc_export/", include("edc_export.urls")),
     path("edc_pdutils/", include("edc_pdutils.urls")),
@@ -128,7 +108,8 @@ urlpatterns = [
     path("edc_registration/", include("edc_registration.urls")),
     path("edc_subject_dashboard/", include("edc_subject_dashboard.urls")),
     path("django_collect_offline/", include("django_collect_offline.urls")),
-    path("django_collect_offline_files/", include("django_collect_offline_files.urls")),
+    path("django_collect_offline_files/",
+         include("django_collect_offline_files.urls")),
     path("edc_visit_schedule/", include("edc_visit_schedule.urls")),
     path(
         "switch_sites/",

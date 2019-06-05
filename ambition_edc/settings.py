@@ -101,6 +101,7 @@ INSTALLED_APPS = [
     "edc_auth.apps.AppConfig",
     "edc_consent.apps.AppConfig",
     "edc_dashboard.apps.AppConfig",
+    "edc_data_manager.apps.AppConfig",
     "edc_export.apps.AppConfig",
     "edc_fieldsets.apps.AppConfig",
     "edc_form_validators.apps.AppConfig",
@@ -428,16 +429,30 @@ else:
     STATIC_ROOT = env.str("DJANGO_STATIC_ROOT")
 
 SENTRY_DSN = None
-if SENTRY_ENABLED:
-    import raven  # noqa
-    from .logging.raven import LOGGING  # noqa
 
-    SENTRY_DSN = env.str("SENTRY_DSN")
-    RAVEN_CONFIG = {"dsn": SENTRY_DSN,
-                    "release": raven.fetch_git_sha(BASE_DIR)}
+if SENTRY_ENABLED:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+        send_default_pii=True,
+    )
 else:
     if env("DJANGO_LOGGING_ENABLED"):
         from .logging.standard import LOGGING  # noqa
+
+
+# if SENTRY_ENABLED:
+#     import raven  # noqa
+#     from .logging.raven import LOGGING  # noqa
+#
+#     SENTRY_DSN = env.str("SENTRY_DSN")
+#     RAVEN_CONFIG = {"dsn": SENTRY_DSN,
+#                     "release": raven.fetch_git_sha(BASE_DIR)}
+# else:
+#     if env("DJANGO_LOGGING_ENABLED"):
+#         from .logging.standard import LOGGING  # noqa
 
 if "test" in sys.argv:
 
