@@ -24,10 +24,8 @@
 
 
 
-
-<div class="container bg-3">
-
 <div class="row">
+
   <div class="col-sm-4">&nbsp;</div>
   <div class="col-sm-4">
     <div class="panel panel-default">
@@ -55,8 +53,8 @@
       {% if perms.edc_action_item %}
         <a href="{% url 'edc_action_item:home_url' %}" class="list-group-item"><i class="fas fa-bolt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Action items</a>
       {% endif %}
-      {% if request.user|has_group:"DATA_MANAGER" %}
-        <a href="{% url 'edc_data_manager:home_url' %}" class="list-group-item"><i class="fas fa-database fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Data Management</a>
+      {% if perms.edc_navbar.nav_data_manager_section %}
+        <a href="{% url 'ambition_dashboard:dm_home_url' %}" class="list-group-item"><i class="fas fa-database fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Data Management</a>
       {% endif %}
       {% if perms.edc_navbar.nav_pharmacy_section %}
         <a href="#" class="list-group-item"><i class="fas fa-medkit fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Pharmacy</a>
@@ -68,14 +66,13 @@
         <a href="{% url 'django_collect_offline:home_url' %}" class="list-group-item"><i class="fas fa-exchange-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Synchronization</a>
       {% endif %}
         <a href="/switch_sites/" class="list-group-item"><i class="fas fa-arrows-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Switch sites</a>
-        <a href="{% url 'logout' %}"" class="list-group-item"><i class="fas fa-sign-out-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Log out</a>
+        <a href="{% url 'logout' %}" class="list-group-item"><i class="fas fa-sign-out-alt fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Log out</a>
 
       </div>
     </div>
   </div>
   <div class="col-sm-4">&nbsp;
   </div>
-</div>
 </div>
 
 

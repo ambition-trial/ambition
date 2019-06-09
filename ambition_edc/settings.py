@@ -99,9 +99,9 @@ INSTALLED_APPS = [
     "django_collect_offline_files.apps.AppConfig",
     "edc_action_item.apps.AppConfig",
     "edc_auth.apps.AppConfig",
+    "edc_data_manager.apps.AppConfig",
     "edc_consent.apps.AppConfig",
     "edc_dashboard.apps.AppConfig",
-    "edc_data_manager.apps.AppConfig",
     "edc_export.apps.AppConfig",
     "edc_fieldsets.apps.AppConfig",
     "edc_form_validators.apps.AppConfig",
@@ -150,8 +150,8 @@ INSTALLED_APPS = [
     "ambition_edc.apps.AppConfig",
 ]
 
-if env("SENTRY_ENABLED"):
-    INSTALLED_APPS.append("raven.contrib.django.raven_compat")
+# if env("SENTRY_ENABLED"):
+#     INSTALLED_APPS.append("raven.contrib.django.raven_compat")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -164,13 +164,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-if env("SENTRY_ENABLED"):
-    MIDDLEWARE.extend(
-        [
-            "raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware",
-            "raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware",
-        ]
-    )
+# if env("SENTRY_ENABLED"):
+#     MIDDLEWARE.extend(
+#         [
+#             "raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware",
+#             "raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware",
+#         ]
+#     )
 
 MIDDLEWARE.extend(
     [
@@ -404,6 +404,17 @@ FQDN = env.str("DJANGO_FQDN")
 INDEX_PAGE = env.str("DJANGO_INDEX_PAGE")
 INDEX_PAGE_LABEL = env.str("DJANGO_INDEX_PAGE_LABEL")
 DJANGO_LOG_FOLDER = env.str("DJANGO_LOG_FOLDER")
+
+
+# edc_data_manager
+DATA_DICTIONARY_APP_LABELS = [
+    "ambition_subject",
+    "ambition_prn",
+    "ambition_screening",
+    "ambition_ae",
+    "edc_appointment",
+]
+
 
 # static
 if env("AWS_ENABLED"):

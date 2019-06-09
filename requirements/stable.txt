@@ -26,6 +26,7 @@ edc-base  #0.2.43
 edc-consent  #0.2.17
 edc-constants  #0.2.10
 edc-dashboard  #0.2.23
+edc-data-manager
 edc-device  #0.2.11
 edc-export  #0.2.12
 edc-fabric  #0.1.5a1
