@@ -39,4 +39,12 @@ navbar.append_item(
     [item for item in ambition_dashboard_navbar.items if item.name == "ae_home"][0]
 )
 
+navbar.append_item(
+    [
+        item
+        for item in ambition_dashboard_navbar.items
+        if item.name == "data_manager_home"
+    ][0]
+)
+
 site_navbars.register(navbar)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+
 from setuptools import setup
 from setuptools import find_packages
 
@@ -38,7 +39,7 @@ setup(
         'django-storages',
         'gunicorn',
         'python-memcached',
-        'raven',
+        'sentry_sdk==0.9.0',
     ],
     classifiers=[
         'Environment :: Web Environment',
