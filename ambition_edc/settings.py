@@ -2,8 +2,9 @@ import environ
 import os
 import sys
 
-from ambition_sites.get_site_id import get_site_id
+from ambition_sites import ambition_sites
 from django.core.exceptions import ImproperlyConfigured
+from edc_sites import get_site_id
 from pathlib import Path
 
 # simple version check
@@ -65,7 +66,7 @@ ENFORCE_RELATED_ACTION_ITEM_EXISTS = False
 # get site ID from more familiar town name
 TOWN = env.str("DJANGO_TOWN")
 if TOWN:
-    SITE_ID = get_site_id(TOWN)
+    SITE_ID = get_site_id(TOWN, sites=ambition_sites)
 else:
     SITE_ID = env.int("DJANGO_SITE_ID")
 
