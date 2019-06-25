@@ -33,6 +33,7 @@
 -e /Users/erikvw/source/edc-pharmacy-dashboard  #develop#egg=edc-pharmacy-dashboard
 -e /Users/erikvw/source/edc-reports  #develop#egg=edc-reports
 -e /Users/erikvw/source/edc-reportable  #develop#egg=edc-reportable
+-e /Users/erikvw/source/edc-screening
 -e /Users/erikvw/source/edc-search  #develop#egg=edc-search
 -e /Users/erikvw/source/edc-selenium  #develop#egg=edc-selenium
 -e /Users/erikvw/source/edc-subject-dashboard  #develop#egg=edc-subject-dashboard
@@ -55,7 +56,7 @@
 -e /Users/erikvw/source/ambition-pharmacy  #develop#egg=ambition-pharmacy
 -e /Users/erikvw/source/ambition-rando  #develop#egg=ambition-rando
 -e /Users/erikvw/source/ambition-reference  #develop#egg=ambition-reference
--e /Users/erikvw/source/ambition-screening  #develop#egg=ambition-screening
+-e /Users/erikvw/source/ambition-screening
 -e /Users/erikvw/source/ambition-sites
 -e /Users/erikvw/source/ambition-subject  #develop#egg=ambition-subject
 -e /Users/erikvw/source/ambition-form-validators  #develop#egg=ambition-form-validators
