@@ -48,13 +48,13 @@ edc-navbar==0.1.26
 edc-notification==0.1.29
 edc-offstudy==0.2.19
 edc-pdutils==0.1.16
-edc-permissions==0.1.31
+edc-permissions==0.1.32
 edc-pharmacy==0.1.2a8
 edc-pharmacy-dashboard==0.1.1a10
 edc-prn==0.1.9
 edc-protocol==0.1.16
 edc-reference==0.1.33
-edc-registration==0.2.31
+edc-registration==0.2.32
 edc-reportable==0.1.16
 edc-reports==0.1.13
 edc-rest==0.1.3
