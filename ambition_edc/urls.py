@@ -21,6 +21,7 @@ from edc_lab.admin_site import edc_lab_admin
 from edc_locator.admin_site import edc_locator_admin
 from edc_metadata.admin_site import edc_metadata_admin
 from edc_notification.admin_site import edc_notification_admin
+from edc_offstudy.admin_site import edc_offstudy_admin
 from edc_pdutils.admin_site import edc_pdutils_admin
 from edc_pharmacy.admin_site import edc_pharmacy_admin
 from edc_reference.admin_site import edc_reference_admin
@@ -62,6 +63,7 @@ urlpatterns = [
     path("admin/", edc_identifier_admin.urls),
     path("admin/", edc_metadata_admin.urls),
     path("admin/", edc_notification_admin.urls),
+    path("admin/", edc_offstudy_admin.urls),
     path("admin/", edc_registration_admin.urls),
     path("admin/", edc_reference_admin.urls),
     path("admin/", django_collect_offline_admin.urls),
@@ -84,14 +86,16 @@ urlpatterns = [
     path("ambition_lists/", include("ambition_lists.urls")),
     path("ambition_prn/", include("ambition_prn.urls")),
     path("ambition_screening/", include("ambition_screening.urls")),
+    path("ambition_rando/", include("ambition_rando.urls")),
     path("subject/", include("ambition_dashboard.urls")),
     path("edc_appointment/", include("edc_appointment.urls")),
     path("edc_action_item/", include("edc_action_item.urls")),
     path("edc_dashboard/", include("edc_dashboard.urls")),
     path("edc_consent/", include("edc_consent.urls")),
-    path("edc_data_manager/", include("edc_data_manager.urls")),
+    path("dm/", include("edc_data_manager.urls")),
     path("edc_device/", include("edc_device.urls")),
     path("edc_export/", include("edc_export.urls")),
+    path("edc_offstudy/", include("edc_offstudy.urls")),
     path("edc_pdutils/", include("edc_pdutils.urls")),
     path("edc_lab/", include("edc_lab.urls")),
     path("edc_lab_dashboard/", include("edc_lab_dashboard.urls")),
