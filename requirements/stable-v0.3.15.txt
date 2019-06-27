@@ -16,14 +16,14 @@ ambition-sites==0.1.11
 ambition-subject==0.1.71
 ambition-validators==0.1.10
 ambition-visit-schedule==0.1.20
-edc-action-item==0.1.47
-edc-appointment==0.2.53
+edc-action-item==0.1.48
+edc-appointment==0.2.54
 edc-auth==0.1.27
 edc-base==0.3.12
-edc-consent==0.2.29
+edc-consent==0.2.30
 edc-constants==0.2.14
 edc-dashboard==0.2.47
-edc-data-manager==0.2.1
+edc-data-manager==0.2.2
 edc-device==0.2.22
 edc-export==0.2.28
 edc-fabric==0.1.5a1
@@ -38,7 +38,7 @@ edc-lab-dashboard==0.1.29
 edc-label==0.1.26
 edc-list-data==0.1.9
 edc-locator==0.2.29
-edc-metadata==0.2.39
+edc-metadata==0.2.40
 edc-metadata-rules==0.1.16
 edc-model==0.1.15
 edc-model-admin==0.2.15
@@ -68,5 +68,5 @@ edc-subject-model-wrappers==0.1.8
 edc-timepoint==0.1.13
 edc-utils==0.1.9
 edc-visit-schedule==0.2.41
-edc-visit-tracking==0.2.35
+edc-visit-tracking==0.2.36
 git+https://github.com/erikvw/django-simple-history@admin_revert_permissions
