@@ -74,7 +74,8 @@ urlpatterns = [
     path(
         "admin/django_collect_offline_files/", django_collect_offline_files_admin.urls
     ),
-    path("administration/", AdministrationView.as_view(), name="administration_url"),
+    path("administration/", AdministrationView.as_view(),
+         name="administration_url"),
     path(
         "admin/ambition_subject/",
         RedirectView.as_view(url="admin/ambition_subject/"),
@@ -111,7 +112,8 @@ urlpatterns = [
     path("edc_registration/", include("edc_registration.urls")),
     path("edc_subject_dashboard/", include("edc_subject_dashboard.urls")),
     path("django_collect_offline/", include("django_collect_offline.urls")),
-    path("django_collect_offline_files/", include("django_collect_offline_files.urls")),
+    path("django_collect_offline_files/",
+         include("django_collect_offline_files.urls")),
     path("edc_visit_schedule/", include("edc_visit_schedule.urls")),
     path(
         "switch_sites/",
@@ -121,3 +123,9 @@ urlpatterns = [
     path("home/", HomeView.as_view(), name="home_url"),
     path("", HomeView.as_view(), name="home_url"),
 ]
+
+# if settings.DEBUG:
+#     import debug_toolbar
+#     urlpatterns = [
+#         path('__debug__/', include(debug_toolbar.urls)),
+#     ] + urlpatterns

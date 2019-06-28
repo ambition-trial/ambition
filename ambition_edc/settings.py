@@ -15,7 +15,8 @@ except AssertionError:
         "Incorrect python version. Expected 3.6 or 3.7. Check your environment."
     )
 
-BASE_DIR = str(Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+BASE_DIR = str(Path(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))))
 
 env = environ.Env(
     AWS_ENABLED=(bool, False),
@@ -48,6 +49,11 @@ else:
     env.read_env(os.path.join(BASE_DIR, ".env"))
 
 DEBUG = env("DJANGO_DEBUG")
+
+if DEBUG:
+    INTERNAL_IPS = [
+        '127.0.0.1',
+    ]
 
 SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 
@@ -88,6 +94,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django_crypto_fields.apps.AppConfig",
     "django_revision.apps.AppConfig",
+    # "debug_toolbar",
     "django_extensions",
     "logentry_admin",
     "simple_history",
@@ -150,10 +157,8 @@ INSTALLED_APPS = [
     "ambition_edc.apps.AppConfig",
 ]
 
-# if env("SENTRY_ENABLED"):
-#     INSTALLED_APPS.append("raven.contrib.django.raven_compat")
-
 MIDDLEWARE = [
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -163,14 +168,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-# if env("SENTRY_ENABLED"):
-#     MIDDLEWARE.extend(
-#         [
-#             "raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware",
-#             "raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware",
-#         ]
-#     )
 
 MIDDLEWARE.extend(
     [
@@ -278,7 +275,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = env.str("DJANGO_LANGUAGE_CODE")
 
-LANGUAGES = [x.split(":") for x in env.list("DJANGO_LANGUAGES")] or (("en", "English"),)
+LANGUAGES = [x.split(":") for x in env.list(
+    "DJANGO_LANGUAGES")] or (("en", "English"),)
 
 TIME_ZONE = env.str("DJANGO_TIME_ZONE")
 
@@ -335,7 +333,8 @@ DJANGO_COLLECT_OFFLINE_SERVER_IP = env.str("DJANGO_COLLECT_OFFLINE_SERVER_IP")
 DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST"
 )
-DJANGO_COLLECT_OFFLINE_FILES_USER = env.str("DJANGO_COLLECT_OFFLINE_FILES_USER")
+DJANGO_COLLECT_OFFLINE_FILES_USER = env.str(
+    "DJANGO_COLLECT_OFFLINE_FILES_USER")
 DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME"
 )
@@ -394,7 +393,8 @@ if not DEBUG:
 EXPORT_FOLDER = env.str("DJANGO_EXPORT_FOLDER") or os.path.expanduser("~/")
 
 # django_simple_history
-SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str("SIMPLE_HISTORY_PERMISSIONS_ENABLED")
+SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str(
+    "SIMPLE_HISTORY_PERMISSIONS_ENABLED")
 SIMPLE_HISTORY_REVERT_DISABLED = env.str("SIMPLE_HISTORY_REVERT_DISABLED")
 
 FQDN = env.str("DJANGO_FQDN")
@@ -449,17 +449,6 @@ else:
     if env("DJANGO_LOGGING_ENABLED"):
         from .logging.standard import LOGGING  # noqa
 
-
-# if SENTRY_ENABLED:
-#     import raven  # noqa
-#     from .logging.raven import LOGGING  # noqa
-#
-#     SENTRY_DSN = env.str("SENTRY_DSN")
-#     RAVEN_CONFIG = {"dsn": SENTRY_DSN,
-#                     "release": raven.fetch_git_sha(BASE_DIR)}
-# else:
-#     if env("DJANGO_LOGGING_ENABLED"):
-#         from .logging.standard import LOGGING  # noqa
 
 if "test" in sys.argv:
 
