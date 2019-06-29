@@ -49,6 +49,9 @@ else:
 
 DEBUG = env("DJANGO_DEBUG")
 
+if DEBUG:
+    INTERNAL_IPS = ["127.0.0.1"]
+
 SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 
 APP_NAME = env.str("DJANGO_APP_NAME")
@@ -88,6 +91,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django_crypto_fields.apps.AppConfig",
     "django_revision.apps.AppConfig",
+    # "debug_toolbar",
     "django_extensions",
     "logentry_admin",
     "simple_history",
@@ -150,10 +154,8 @@ INSTALLED_APPS = [
     "ambition_edc.apps.AppConfig",
 ]
 
-# if env("SENTRY_ENABLED"):
-#     INSTALLED_APPS.append("raven.contrib.django.raven_compat")
-
 MIDDLEWARE = [
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -163,14 +165,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-# if env("SENTRY_ENABLED"):
-#     MIDDLEWARE.extend(
-#         [
-#             "raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware",
-#             "raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware",
-#         ]
-#     )
 
 MIDDLEWARE.extend(
     [
@@ -449,17 +443,6 @@ else:
     if env("DJANGO_LOGGING_ENABLED"):
         from .logging.standard import LOGGING  # noqa
 
-
-# if SENTRY_ENABLED:
-#     import raven  # noqa
-#     from .logging.raven import LOGGING  # noqa
-#
-#     SENTRY_DSN = env.str("SENTRY_DSN")
-#     RAVEN_CONFIG = {"dsn": SENTRY_DSN,
-#                     "release": raven.fetch_git_sha(BASE_DIR)}
-# else:
-#     if env("DJANGO_LOGGING_ENABLED"):
-#         from .logging.standard import LOGGING  # noqa
 
 if "test" in sys.argv:
 
