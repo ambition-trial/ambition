@@ -1,9 +1,9 @@
-ambition-ae==0.3.30
+ambition-ae==0.3.31
 ambition-dashboard==0.1.38
 ambition-export==0.1.8
 ambition-form-validators==0.1.35
 ambition-labs==0.1.12
-ambition-lists==0.1.12
+ambition-lists==0.1.13
 ambition-metadata-rules==0.1.18
 ambition-permissions==0.1.26
 ambition-pharmacy==0.1.4
