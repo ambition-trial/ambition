@@ -23,7 +23,7 @@ edc-base==0.3.12
 edc-consent==0.2.30
 edc-constants==0.2.14
 edc-dashboard==0.2.47
-edc-data-manager==0.2.13
+edc-data-manager==0.2.14
 edc-device==0.2.23
 edc-export==0.2.29
 edc-fabric==0.1.5a1
@@ -53,7 +53,7 @@ edc-pharmacy==0.1.2a8
 edc-pharmacy-dashboard==0.1.1a10
 edc-prn==0.1.10
 edc-protocol==0.1.16
-edc-reference==0.1.37
+edc-reference==0.1.39
 edc-registration==0.2.33
 edc-reportable==0.1.16
 edc-reports==0.1.13
