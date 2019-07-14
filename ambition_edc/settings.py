@@ -20,6 +20,7 @@ BASE_DIR = str(Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 env = environ.Env(
     AWS_ENABLED=(bool, False),
     CDN_ENABLED=(bool, False),
+    CELERY_ENABLED=(bool, False),
     DATABASE_SQLITE_ENABLED=(bool, False),
     DJANGO_AUTO_CREATE_KEYS=(bool, False),
     DJANGO_CSRF_COOKIE_SECURE=(bool, True),
@@ -93,6 +94,8 @@ INSTALLED_APPS = [
     "django_revision.apps.AppConfig",
     # "debug_toolbar",
     "django_extensions",
+    "django_celery_results",
+    "django_celery_beat",
     "logentry_admin",
     "simple_history",
     "storages",
@@ -192,6 +195,7 @@ TEMPLATES = [
         },
     }
 ]
+
 
 if env("DATABASE_SQLITE_ENABLED"):
     DATABASES = {
@@ -443,6 +447,23 @@ else:
     if env("DJANGO_LOGGING_ENABLED"):
         from .logging.standard import LOGGING  # noqa
 
+# CELERY
+# see docs on setting up the broker
+CELERY_ENABLED = env("CELERY_ENABLED")
+if CELERY_ENABLED:
+    CELERY_BROKER_USER = env.str("CELERY_BROKER_USER")
+    CELERY_BROKER_PASSWORD = env.str("CELERY_BROKER_PASSWORD")
+    CELERY_BROKER_HOST = env.str("CELERY_BROKER_HOST")
+    CELERY_BROKER_PORT = env.str("CELERY_BROKER_PORT")
+    if DEBUG:
+        CELERY_BROKER_VHOST = f"{APP_NAME}_debug"
+    elif LIVE_SYSTEM:
+        CELERY_BROKER_VHOST = f"{APP_NAME}_production"
+    else:
+        CELERY_BROKER_VHOST = f"{APP_NAME}_uat"
+    CELERY_BROKER_URL = f"amqp://{CELERY_BROKER_USER}:{CELERY_BROKER_PASSWORD}@{CELERY_BROKER_HOST}:{CELERY_BROKER_PORT}/{CELERY_BROKER_VHOST}"  # noqa
+    DJANGO_CELERY_RESULTS_TASK_ID_MAX_LENGTH = 191
+    CELERY_RESULT_BACKEND = "django-db"
 
 if "test" in sys.argv:
 

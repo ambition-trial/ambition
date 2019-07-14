@@ -37,8 +37,12 @@ setup(
         'django-environ',
         'django-redis',
         'django-storages',
+        'celery',
+        'django-celery-beat',
+        'django-celery-results',
         'gunicorn',
         'python-memcached',
+        'pyrabbit',
         'sentry_sdk==0.9.0',
     ],
     classifiers=[

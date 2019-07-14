@@ -31,6 +31,7 @@ from django.urls.exceptions import NoReverseMatch
 import sys
 from ambition_edc.apps import style
 from edc_dashboard.url_names import url_names
+from webtest.app import AppError
 
 
 User = get_user_model()
@@ -319,12 +320,21 @@ class AdminSiteTest(WebTest):
         """
         self.login(superuser=False, groups=[EVERYONE, CLINIC, PII])
         for url_name in url_names.registry.values():
+            sys.stdout.write(style.MIGRATE_HEADING(f" - '{url_name}' ...\r"))
             try:
                 url = reverse(url_name)
             except NoReverseMatch:
                 sys.stdout.write(
-                    style.ERROR(f"NoReverseMatch: {url_name} without kwargs.\n")
+                    style.ERROR(
+                        f" - '{url_name}'. Got `NoReverseMatch` when reversed without kwargs.\n"
+                    )
                 )
             else:
-                sys.stdout.write(style.SUCCESS(f"{url_name} {url}\n"))
-                self.app.get(url, user=self.user, status=200)
+                try:
+                    self.app.get(url, user=self.user, status=200)
+                except AppError as e:
+                    sys.stdout.write(
+                        style.ERROR(f" - '{url_name}'. Got `AppError`: {e}\n")
+                    )
+                else:
+                    sys.stdout.write(style.SUCCESS(f" - '{url_name}'->{url}\n"))
