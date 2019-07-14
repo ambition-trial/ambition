@@ -1,3 +1,4 @@
+celerybeat-schedule.db
 export/*
 geckodriver.log
 freeze*
