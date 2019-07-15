@@ -13,7 +13,7 @@ ambition-reference==0.1.12
 ambition-reports==0.1.3
 ambition-screening==0.1.32
 ambition-sites==0.1.11
-ambition-subject==0.1.75
+ambition-subject==0.1.76
 ambition-validators==0.1.10
 ambition-visit-schedule==0.1.20
 edc-action-item==0.1.50
@@ -23,7 +23,7 @@ edc-base==0.3.12
 edc-consent==0.2.30
 edc-constants==0.2.14
 edc-dashboard==0.2.47
-edc-data-manager==0.2.14
+edc-data-manager==0.2.15
 edc-device==0.2.23
 edc-export==0.2.29
 edc-fabric==0.1.5a1
