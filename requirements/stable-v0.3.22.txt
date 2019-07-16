@@ -23,7 +23,7 @@ edc-base==0.3.12
 edc-consent==0.2.30
 edc-constants==0.2.14
 edc-dashboard==0.2.47
-edc-data-manager==0.2.16
+edc-data-manager==0.2.17
 edc-device==0.2.23
 edc-export==0.2.29
 edc-fabric==0.1.5a1
@@ -67,6 +67,6 @@ edc-subject-dashboard==0.1.35
 edc-subject-model-wrappers==0.1.8
 edc-timepoint==0.1.13
 edc-utils==0.1.9
-edc-visit-schedule==0.2.47
+edc-visit-schedule==0.2.48
 edc-visit-tracking==0.2.36
 git+https://github.com/erikvw/django-simple-history@admin_revert_permissions
