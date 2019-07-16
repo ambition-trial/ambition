@@ -45,11 +45,18 @@ Daemonizing with systemd
 
 See http://docs.celeryproject.org/en/latest/userguide/daemonizing.html#usage-systemd
 
+Celery User
++++++++++++
+
 Create a user ``celery``
 
 .. code-block:: bash
 
-	adduser celery
+	sudo adduser celery
+
+
+Celery Folders
+++++++++++++++
 
 Create working folders under the home folder:
 
@@ -65,6 +72,10 @@ Create ``/etc/celery``
 .. code-block:: bash
 
 	sudo mkdir /etc/celery
+
+
+Celery Configuration
+++++++++++++++++++++
 
 Create ``/etc/celery/celery.conf``
 
@@ -82,6 +93,7 @@ Create ``/etc/celery/celery.conf``
 
 	CELERYD_PID_FILE="/home/celery/pid/%n.uat.pid"
 	CELERYD_LOG_FILE="/home/celery/log/%n%I.uat.log"
+	CELERYD_LOG_LEVEL="INFO"
 
 	CELERYBEAT_PID_FILE="/home/celery/pid/beat.uat.pid"
 	CELERYBEAT_LOG_FILE="/home/celery/log/beat.uat.log"
@@ -103,10 +115,13 @@ Create ``/etc/celery/celery_uat.conf``
 
 	CELERYD_PID_FILE="/home/celery/pid/uat/%n.uat.pid"
 	CELERYD_LOG_FILE="/home/celery/log/uat/%n%I.uat.log"
+	CELERYD_LOG_LEVEL="INFO"
 
 	CELERYBEAT_PID_FILE="/home/celery/pid/uat/beat.uat.pid"
 	CELERYBEAT_LOG_FILE="/home/celery/log/uat/beat.uat.log"
 
+Celery Services
++++++++++++++++
 
 Copy service file to ``/etc/systemd/system/celery.service``
 
@@ -165,6 +180,10 @@ Copy service file to ``/etc/systemd/system/celery-uat.service``
 	[Install]
 	WantedBy=multi-user.target
 
+CeleryBeat Services
++++++++++++++++++++
+
+Copy
 
 Load services
 
