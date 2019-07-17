@@ -1,7 +1,6 @@
 [
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "0b9e8ae5-9517-4c47-94a5-ea6d4d6aeba4",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-07-10T02:53:05.923Z",
@@ -47,7 +46,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "2b80d2a0-0a80-419f-8907-a706c2002968",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-07-10T02:26:41.738Z",
@@ -151,7 +149,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "3136dcd1-caa2-46d8-a021-65c66e8c1bba",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-07-10T02:27:55.202Z",
@@ -250,7 +247,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "3bd0cc9d-7640-443d-b81f-7889692b47f5",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-07-10T02:46:52.418Z",
@@ -296,7 +292,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "50cf52ca-1aa4-425c-b07c-410d40f9750f",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-06-25T22:50:15.521Z",
@@ -416,7 +411,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "76881bc3-869d-4df9-8ef4-137644c80d1c",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-06-25T22:51:19.891Z",
@@ -540,7 +534,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "864381d6-8203-4b0d-8fdb-745f87748569",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-07-10T02:21:43.152Z",
@@ -656,7 +649,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "8d4820e2-0af4-4292-a4cb-f1722e8f3f52",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-07-10T02:44:32.318Z",
@@ -710,7 +702,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "8e5616cb-928b-4f2c-bd5f-194ef467d3e2",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-07-10T02:48:48.998Z",
@@ -756,7 +747,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "e45945a7-2118-45f0-b1ad-8a2c2d688796",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-06-25T22:53:11.655Z",
@@ -884,7 +874,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "f037f8d0-40ba-4827-93b7-b246574c3c11",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-07-10T02:59:47.033Z",
@@ -951,7 +940,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "fad5728c-adaf-4936-9e88-599e72a79aae",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-07-10T02:25:41.399Z",
@@ -1055,7 +1043,6 @@
 },
 {
     "model": "edc_data_manager.queryrule",
-    "pk": "fdb1822b-096a-41d5-9665-d0c060d53663",
     "fields": {
         "revision": "0.3.16-1-ge2edcd5:develop:e2edcd595578749a46ad0a158d7403e527b25361",
         "created": "2019-07-10T02:47:43.506Z",
