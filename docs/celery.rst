@@ -64,8 +64,8 @@ Create working folders under the home folder:
 
 	sudo su - celery
 	mkdir -p working/uat && \
-	mkdir -p log/uat && \
-	mkdir -p pid/uat
+	mkdir log/ && \
+	mkdir pid/
 
 Create ``/etc/celery``
 
@@ -91,12 +91,12 @@ Create ``/etc/celery/celery.conf``
 
 	CELERYD_OPTS="--time-limit=300 --concurrency=8"
 
-	CELERYD_PID_FILE="/home/celery/pid/%n.uat.pid"
-	CELERYD_LOG_FILE="/home/celery/log/%n%I.uat.log"
+	CELERYD_PID_FILE="/home/celery/pid/%n.pid"
+	CELERYD_LOG_FILE="/home/celery/log/%n%I.log"
 	CELERYD_LOG_LEVEL="INFO"
 
-	CELERYBEAT_PID_FILE="/home/celery/pid/beat.uat.pid"
-	CELERYBEAT_LOG_FILE="/home/celery/log/beat.uat.log"
+	CELERYBEAT_PID_FILE="/home/celery/pid/beat.pid"
+	CELERYBEAT_LOG_FILE="/home/celery/log/beat.log"
 
 
 Create ``/etc/celery/celery_uat.conf``
@@ -113,15 +113,15 @@ Create ``/etc/celery/celery_uat.conf``
 
 	CELERYD_OPTS="--time-limit=300 --concurrency=8"
 
-	CELERYD_PID_FILE="/home/celery/pid/uat/%n.uat.pid"
-	CELERYD_LOG_FILE="/home/celery/log/uat/%n%I.uat.log"
+	CELERYD_PID_FILE="/home/celery/pid/%n.uat.pid"
+	CELERYD_LOG_FILE="/home/celery/log/%n%I.uat.log"
 	CELERYD_LOG_LEVEL="INFO"
 
-	CELERYBEAT_PID_FILE="/home/celery/pid/uat/beat.uat.pid"
-	CELERYBEAT_LOG_FILE="/home/celery/log/uat/beat.uat.log"
+	CELERYBEAT_PID_FILE="/home/celery/pid/beat.uat.pid"
+	CELERYBEAT_LOG_FILE="/home/celery/log/beat.uat.log"
 
-Celery Services
-+++++++++++++++
+Celery systemd services
++++++++++++++++++++++++
 
 Copy service file to ``/etc/systemd/system/celery.service``
 
@@ -183,14 +183,63 @@ Copy service file to ``/etc/systemd/system/celery-uat.service``
 CeleryBeat Services
 +++++++++++++++++++
 
-Copy
-
-Load services
-
+Copy service file ``/etc/systemd/system/celerybeat.service``
 
 .. code-block:: bash
 
-	sudo systemctl daemon-reload && \
-	sudo systemctl restart celery-uat.service && \
+	# see https://docs.celeryproject.org/en/latest/userguide/daemonizing.html#daemon-systemd-generic
+
+	[Unit]
+	Description=Celery Beat Service
+	After=network.target
+
+	[Service]
+	Type=simple
+	User=celery
+	Group=celery
+	EnvironmentFile=/etc/celery/celery.conf
+	WorkingDirectory=/home/celery/working
+	ExecStart=/bin/sh -c '${CELERY_BIN} beat  \
+	  -A ${CELERY_APP} --pidfile=${CELERYBEAT_PID_FILE} \
+	  --logfile=${CELERYBEAT_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL}'
+
+	[Install]
+	WantedBy=multi-user.target
+
+
+Copy service file ``/etc/systemd/system/celerybeat-uat.service``
+
+.. code-block:: bash
+
+	# see https://docs.celeryproject.org/en/latest/userguide/daemonizing.html#daemon-systemd-generic
+
+	[Unit]
+	Description=Celery Beat Service
+	After=network.target
+
+	[Service]
+	Type=simple
+	User=celery
+	Group=celery
+	EnvironmentFile=/etc/celery/celery_uat.conf
+	WorkingDirectory=/home/celery/working/uat
+	ExecStart=/bin/sh -c '${CELERY_BIN} beat  \
+	  -A ${CELERY_APP} --pidfile=${CELERYBEAT_PID_FILE} \
+	  --logfile=${CELERYBEAT_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL}'
+
+	[Install]
+	WantedBy=multi-user.target
+
+
+Load services
++++++++++++++
+
+.. code-block:: bash
+
+	sudo systemctl daemon-reload
+
+	sudo systemctl restart celery-uat.service
 	sudo systemctl restart celery.service
 
+	sudo systemctl restart celerybeat-uat.service
+	sudo systemctl restart celerybeat.service
