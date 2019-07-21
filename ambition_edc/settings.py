@@ -442,9 +442,12 @@ SENTRY_DSN = None
 if SENTRY_ENABLED:
     import sentry_sdk
     from sentry_sdk.integrations.django import DjangoIntegration
+    from sentry_sdk.integrations.celery import CeleryIntegration
 
     sentry_sdk.init(
-        dsn=SENTRY_DSN, integrations=[DjangoIntegration()], send_default_pii=True
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration(), CeleryIntegration()],
+        send_default_pii=True,
     )
 else:
     if env("DJANGO_LOGGING_ENABLED"):

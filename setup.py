@@ -43,7 +43,7 @@ setup(
         'gunicorn',
         'python-memcached',
         'pyrabbit',
-        'sentry_sdk==0.9.0',
+        'sentry_sdk',
     ],
     classifiers=[
         'Environment :: Web Environment',
