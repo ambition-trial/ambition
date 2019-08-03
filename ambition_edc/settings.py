@@ -15,7 +15,8 @@ except AssertionError:
         "Incorrect python version. Expected 3.6 or 3.7. Check your environment."
     )
 
-BASE_DIR = str(Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+BASE_DIR = str(Path(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))))
 
 env = environ.Env(
     AWS_ENABLED=(bool, False),
@@ -107,6 +108,7 @@ INSTALLED_APPS = [
     "django_collect_offline.apps.AppConfig",
     "django_collect_offline_files.apps.AppConfig",
     "edc_action_item.apps.AppConfig",
+    "edc_adverse_event.apps.AppConfig",
     "edc_auth.apps.AppConfig",
     "edc_data_manager.apps.AppConfig",
     "edc_consent.apps.AppConfig",
@@ -278,7 +280,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = env.str("DJANGO_LANGUAGE_CODE")
 
-LANGUAGES = [x.split(":") for x in env.list("DJANGO_LANGUAGES")] or (("en", "English"),)
+LANGUAGES = [x.split(":") for x in env.list(
+    "DJANGO_LANGUAGES")] or (("en", "English"),)
 
 TIME_ZONE = env.str("DJANGO_TIME_ZONE")
 
@@ -335,7 +338,8 @@ DJANGO_COLLECT_OFFLINE_SERVER_IP = env.str("DJANGO_COLLECT_OFFLINE_SERVER_IP")
 DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST"
 )
-DJANGO_COLLECT_OFFLINE_FILES_USER = env.str("DJANGO_COLLECT_OFFLINE_FILES_USER")
+DJANGO_COLLECT_OFFLINE_FILES_USER = env.str(
+    "DJANGO_COLLECT_OFFLINE_FILES_USER")
 DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME"
 )
@@ -394,7 +398,8 @@ if not DEBUG:
 EXPORT_FOLDER = env.str("DJANGO_EXPORT_FOLDER") or os.path.expanduser("~/")
 
 # django_simple_history
-SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str("SIMPLE_HISTORY_PERMISSIONS_ENABLED")
+SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str(
+    "SIMPLE_HISTORY_PERMISSIONS_ENABLED")
 SIMPLE_HISTORY_REVERT_DISABLED = env.str("SIMPLE_HISTORY_REVERT_DISABLED")
 
 FQDN = env.str("DJANGO_FQDN")
