@@ -45,7 +45,7 @@ env = environ.Env(
 )
 
 # copy your .env file from .envs/ to BASE_DIR
-if "test" in sys.argv:
+if "test" in sys.argv or "runtests.py" in sys.argv:
     env.read_env(os.path.join(BASE_DIR, ".env-tests"))
     print(f"Reading env from {os.path.join(BASE_DIR, '.env-tests')}")
 else:
@@ -62,7 +62,10 @@ APP_NAME = env.str("DJANGO_APP_NAME")
 
 LIVE_SYSTEM = env.str("DJANGO_LIVE_SYSTEM")
 
-ETC_DIR = env.str("DJANGO_ETC_FOLDER")
+if env.str("DJANGO_ETC_FOLDER"):
+    ETC_DIR = env.str("DJANGO_ETC_FOLDER")
+else:
+    ETC_DIR = BASE_DIR
 
 TEST_DIR = os.path.join(BASE_DIR, APP_NAME, "tests")
 
@@ -479,7 +482,7 @@ if CELERY_ENABLED:
     DJANGO_CELERY_RESULTS_TASK_ID_MAX_LENGTH = 191
     CELERY_RESULT_BACKEND = "django-db"
 
-if "test" in sys.argv:
+if "test" in sys.argv or "runtests.py" in sys.argv:
 
     class DisableMigrations:
         def __contains__(self, item):

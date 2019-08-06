@@ -1,3 +1,4 @@
+django_crypto_fields
 celerybeat-schedule.db
 export/*
 geckodriver.log
