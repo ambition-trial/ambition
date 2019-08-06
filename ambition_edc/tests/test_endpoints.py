@@ -326,7 +326,8 @@ class AdminSiteTest(WebTest):
             except NoReverseMatch:
                 sys.stdout.write(
                     style.ERROR(
-                        f" - '{url_name}'. Got `NoReverseMatch` when reversed without kwargs.\n"
+                        f" - '{url_name}'. Got `NoReverseMatch` "
+                        f"when reversed without kwargs.\n"
                     )
                 )
             else:
