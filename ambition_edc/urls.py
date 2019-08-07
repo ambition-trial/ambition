@@ -13,6 +13,7 @@ from django.views.generic.base import RedirectView
 from django_collect_offline.admin import django_collect_offline_admin
 from django_collect_offline_files.admin_site import django_collect_offline_files_admin
 from edc_action_item.admin_site import edc_action_item_admin
+from edc_adverse_event.admin_site import edc_adverse_event_admin
 from edc_appointment.admin_site import edc_appointment_admin
 from edc_dashboard.views import AdministrationView
 from edc_export.admin_site import edc_export_admin
@@ -56,6 +57,7 @@ urlpatterns = [
     path("admin/", ambition_export_admin.urls),
     path("admin/", ambition_prn_admin.urls),
     path("admin/", ambition_screening_admin.urls),
+    path("admin/", edc_adverse_event_admin.urls),
     path("admin/", edc_lab_admin.urls),
     path("admin/", edc_data_manager_admin.urls),
     path("admin/", edc_export_admin.urls),
@@ -90,6 +92,7 @@ urlpatterns = [
     path("subject/", include("ambition_dashboard.urls")),
     path("edc_appointment/", include("edc_appointment.urls")),
     path("edc_action_item/", include("edc_action_item.urls")),
+    path("edc_adverse_event/", include("edc_adverse_event.urls")),
     path("edc_dashboard/", include("edc_dashboard.urls")),
     path("edc_consent/", include("edc_consent.urls")),
     path("dm/", include("edc_data_manager.urls")),
