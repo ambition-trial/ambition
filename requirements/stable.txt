@@ -22,6 +22,7 @@ ambition-visit-schedule  #0.1.10
 edc-action-item  #0.1.24
 edc-appointment  #0.2.21
 edc-auth  #0.1.15
+edc-adverse-event
 edc-base  #0.2.43
 edc-consent  #0.2.17
 edc-constants  #0.2.10
