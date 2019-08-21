@@ -1,4 +1,4 @@
--e /Users/erikvw/source/edc-base  #develop#egg=edc-base
+-e /Users/erikvw/source/edc-adverse-event  #develop#egg=edc-base
 -e /Users/erikvw/source/edc-navbar  #develop#egg=edc-navbar
 -e /Users/erikvw/source/edc-device  #develop#egg=edc-device
 -e /Users/erikvw/source/edc-protocol  #develop#egg=edc-protocol
