@@ -7,7 +7,7 @@ Clone the repo, if required:
 
 .. code-block:: bash
 
-	$ git clone https://github.com/ambition-trial/ambition.git
+	$ git clone https://github.com/ambition-trial/ambition-edc.git
 
 .. code-block:: bash
 

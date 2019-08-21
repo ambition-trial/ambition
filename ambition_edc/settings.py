@@ -5,6 +5,7 @@ import sys
 from ambition_sites import ambition_sites
 from django.core.exceptions import ImproperlyConfigured
 from edc_sites import get_site_id
+from kombu import Queue, Exchange
 from pathlib import Path
 
 # simple version check
@@ -477,6 +478,18 @@ if CELERY_ENABLED:
     )
     DJANGO_CELERY_RESULTS_TASK_ID_MAX_LENGTH = 191
     CELERY_RESULT_BACKEND = "django-db"
+    #     CELERY_QUEUES = (
+    #         Queue('high', Exchange('high'), routing_key='high'),
+    #         Queue('normal', Exchange('normal'), routing_key='normal'),
+    #         Queue('low', Exchange('low'), routing_key='low'),
+    #     )
+    #     CELERY_DEFAULT_QUEUE = 'normal'
+    #     CELERY_DEFAULT_EXCHANGE = 'normal'
+    #     CELERY_DEFAULT_ROUTING_KEY = 'normal'
+    #     CELERY_ROUTES = {
+    #         'edc_data_manager.tasks.*': {'queue': 'normal'},
+    #     }
+
 
 if "test" in sys.argv or "runtests.py" in sys.argv:
 
