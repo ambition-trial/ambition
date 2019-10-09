@@ -1,3 +1,6 @@
+import sys
+
+from ambition_edc.apps import style
 from ambition_permissions import TMG
 from ambition_permissions.updaters import update_permissions
 from ambition_rando.randomization_list_importer import RandomizationListImporter
@@ -11,9 +14,11 @@ from django.contrib.auth.models import Group
 from django.test import tag
 from django.test.utils import override_settings
 from django.urls.base import reverse
+from django.urls.exceptions import NoReverseMatch
 from django_webtest import WebTest
 from edc_appointment.constants import IN_PROGRESS_APPT, SCHEDULED_APPT
 from edc_appointment.models import Appointment
+from edc_dashboard.url_names import url_names
 from edc_facility.import_holidays import import_holidays
 from edc_list_data.site_list_data import site_list_data
 from edc_permissions.constants.group_names import (
@@ -24,13 +29,9 @@ from edc_permissions.constants.group_names import (
     EXPORT,
     LAB,
 )
-from edc_sites.utils import add_or_update_django_sites
+from edc_sites import add_or_update_django_sites
 from edc_utils import get_utcnow
 from model_mommy import mommy
-from django.urls.exceptions import NoReverseMatch
-import sys
-from ambition_edc.apps import style
-from edc_dashboard.url_names import url_names
 from webtest.app import AppError
 
 

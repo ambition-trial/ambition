@@ -5,7 +5,6 @@ import sys
 from ambition_sites import ambition_sites
 from django.core.exceptions import ImproperlyConfigured
 from edc_sites import get_site_id
-from kombu import Queue, Exchange
 from pathlib import Path
 
 # simple version check
@@ -139,6 +138,7 @@ INSTALLED_APPS = [
     "edc_timepoint.apps.AppConfig",
     "edc_list_data.apps.AppConfig",
     "edc_review_dashboard.apps.AppConfig",
+    "edc_sites.apps.AppConfig",
     "ambition_lists.apps.AppConfig",
     "ambition_dashboard.apps.AppConfig",
     "ambition_labs.apps.AppConfig",
@@ -407,6 +407,9 @@ INDEX_PAGE = env.str("DJANGO_INDEX_PAGE")
 INDEX_PAGE_LABEL = env.str("DJANGO_INDEX_PAGE_LABEL")
 DJANGO_LOG_FOLDER = env.str("DJANGO_LOG_FOLDER")
 
+# edc_adverse_event
+ADVERSE_EVENT_ADMIN_SITE = env.str("EDC_ADVERSE_EVENT_ADMIN_SITE")
+ADVERSE_EVENT_APP_LABEL = env.str("EDC_ADVERSE_EVENT_APP_LABEL")
 
 # edc_data_manager
 DATA_MANAGER_ENABLED = env("DATA_MANAGER_ENABLED")
