@@ -1,4 +1,4 @@
-ambition-ae==0.3.41
+ambition-ae==0.3.42
 ambition-dashboard==0.1.42
 ambition-export==0.1.8
 ambition-form-validators==0.1.41
@@ -7,7 +7,7 @@ ambition-lists==0.1.14
 ambition-metadata-rules==0.1.22
 ambition-permissions==0.1.27
 ambition-pharmacy==0.1.5
-ambition-prn==0.1.63
+ambition-prn==0.1.66
 ambition-rando==0.1.31
 ambition-reference==0.1.14
 ambition-reports==0.1.8
@@ -16,8 +16,8 @@ ambition-sites==0.1.13
 ambition-subject==0.1.89
 ambition-validators==0.1.10
 ambition-visit-schedule==0.1.22
-edc-action-item==0.1.59
-edc-adverse-event==0.1.7
+edc-action-item==0.1.60
+edc-adverse-event==0.1.9
 edc-appointment==0.2.57
 edc-auth==0.1.27
 edc-base==0.3.12
