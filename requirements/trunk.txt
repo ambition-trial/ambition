@@ -1,3 +1,4 @@
+git+https://github.com/clinicedc/edc-auth@develop#egg=edc-auth
 git+https://github.com/clinicedc/edc-base@develop#egg=edc-base
 git+https://github.com/clinicedc/edc-navbar@develop#egg=edc-navbar
 git+https://github.com/clinicedc/edc-device@develop#egg=edc-device
@@ -28,7 +29,6 @@ git+https://github.com/clinicedc/edc-metadata-rules@develop#egg=edc-metadata-rul
 git+https://github.com/clinicedc/edc-model-fields@develop#egg=edc-model-fields
 git+https://github.com/clinicedc/edc-model-wrapper@develop#egg=edc-model-wrapper
 git+https://github.com/clinicedc/edc-offstudy@develop#egg=edc-offstudy
-git+https://github.com/clinicedc/edc-permissions@develop#egg=edc-pharmacy
 git+https://github.com/clinicedc/edc-reports@develop#egg=edc-reports
 git+https://github.com/clinicedc/edc-reportable@develop#egg=edc-reportable
 git+https://github.com/clinicedc/edc-search@develop#egg=edc-search

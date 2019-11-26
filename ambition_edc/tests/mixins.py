@@ -1,7 +1,6 @@
 import os
 
-from ambition_permissions.group_names import CLINIC_USER_GROUPS
-from ambition_permissions.group_names import LAB_USER_GROUPS, TMG_USER_GROUPS
+from edc_auth.group_names import CLINIC_USER_GROUPS, LAB_USER_GROUPS, TMG_USER_GROUPS
 from ambition_sites.sites import ambition_sites
 from ambition_subject.constants import PATIENT
 from django.apps import apps as django_apps

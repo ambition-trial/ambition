@@ -1,14 +1,9 @@
-import sys
-
-from ambition_sites import ambition_sites, fqdn
 from datetime import datetime
 from dateutil.relativedelta import MO, TU, WE, TH, FR, SA, SU
 from dateutil.tz import gettz
-from django.apps import AppConfig as DjangoAppConfig
-from django.apps import apps as django_apps
+from django.apps import AppConfig as DjangoAppConfig, apps as django_apps
 from django.core.checks import register
 from django.core.management.color import color_style
-from django.db.models.signals import post_migrate
 from django_collect_offline.apps import AppConfig as BaseDjangoCollectOfflineAppConfig
 from edc_appointment.appointment_config import AppointmentConfig
 from edc_appointment.apps import AppConfig as BaseEdcAppointmentAppConfig
@@ -20,6 +15,9 @@ from edc_lab.apps import AppConfig as BaseEdcLabAppConfig
 from edc_metadata.apps import AppConfig as BaseEdcMetadataAppConfig
 from edc_protocol.apps import AppConfig as BaseEdcProtocolAppConfig
 from edc_visit_tracking.apps import AppConfig as BaseEdcVisitTrackingAppConfig
+from django.db.models.signals import post_migrate
+from edc_auth.group_permissions_updater import GroupPermissionsUpdater
+
 
 from .system_checks import ambition_check
 
@@ -27,36 +25,22 @@ from .system_checks import ambition_check
 style = color_style()
 
 
-def post_migrate_update_sites(sender=None, **kwargs):
-    from edc_sites.add_or_update_django_sites import add_or_update_django_sites
+def post_migrate_update_edc_auth(sender=None, **kwargs):
+    from ambition_auth.codenames_by_group import get_codenames_by_group
 
-    sys.stdout.write(style.MIGRATE_HEADING("Updating sites:\n"))
-    add_or_update_django_sites(
-        apps=django_apps, sites=ambition_sites, fqdn=fqdn, verbose=True
+    GroupPermissionsUpdater(
+        codenames_by_group=get_codenames_by_group(), verbose=True, apps=django_apps
     )
-    sys.stdout.write("Done.\n")
-    sys.stdout.flush()
-
-
-def post_migrate_update_edc_permissions(sender=None, **kwargs):
-    from ambition_permissions.updaters import update_permissions
-
-    sys.stdout.write(style.MIGRATE_HEADING("Updating permissions:\n"))
-    update_permissions()
-    sys.stdout.write("Done.\n")
-    sys.stdout.flush()
 
 
 class AppConfig(DjangoAppConfig):
     name = "ambition_edc"
 
     def ready(self):
-        from ambition_rando.system_checks import randomization_list_check
-
-        register(randomization_list_check)(["ambition_edc"])
+        # from ambition_rando.system_checks import randomization_list_check
+        # register(randomization_list_check)(["ambition_edc"])
+        post_migrate.connect(post_migrate_update_edc_auth, sender=self)
         register(ambition_check)
-        post_migrate.connect(post_migrate_update_sites, sender=self)
-        post_migrate.connect(post_migrate_update_edc_permissions, sender=self)
 
 
 class EdcProtocolAppConfig(BaseEdcProtocolAppConfig):

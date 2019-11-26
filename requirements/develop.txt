@@ -51,7 +51,7 @@
 -e /Users/erikvw/source/ambition-export
 -e /Users/erikvw/source/ambition-labs  #develop#egg=ambition-labs
 -e /Users/erikvw/source/ambition-metadata-rules  #develop#egg=ambition-metadata-rules
--e /Users/erikvw/source/ambition-permissions
+-e /Users/erikvw/source/ambition-auth
 -e /Users/erikvw/source/ambition-prn  #develop#egg=ambition-prn
 -e /Users/erikvw/source/ambition-pharmacy  #develop#egg=ambition-pharmacy
 -e /Users/erikvw/source/ambition-rando  #develop#egg=ambition-rando
