@@ -1,9 +1,6 @@
 import sys
 
 from ambition_edc.apps import style
-from ambition_permissions import TMG
-from ambition_permissions.updaters import update_permissions
-from ambition_rando.randomization_list_importer import RandomizationListImporter
 from ambition_screening.models.subject_screening import SubjectScreening
 from ambition_sites.sites import ambition_sites, fqdn
 from dateutil.relativedelta import relativedelta
@@ -21,18 +18,21 @@ from edc_appointment.models import Appointment
 from edc_dashboard.url_names import url_names
 from edc_facility.import_holidays import import_holidays
 from edc_list_data.site_list_data import site_list_data
-from edc_permissions.constants.group_names import (
+from edc_randomization.randomization_list_importer import RandomizationListImporter
+from edc_auth import (
     EVERYONE,
     AUDITOR,
     CLINIC,
     PII,
     EXPORT,
     LAB,
+    TMG,
 )
 from edc_sites import add_or_update_django_sites
 from edc_utils import get_utcnow
 from model_mommy import mommy
 from webtest.app import AppError
+from edc_auth.group_permissions_updater import GroupPermissionsUpdater
 
 
 User = get_user_model()
@@ -208,7 +208,7 @@ class AdminSiteTest(WebTest):
     def test_to_subject_dashboard(self):
         add_or_update_django_sites(apps=django_apps, sites=ambition_sites, fqdn=fqdn)
         RandomizationListImporter()
-        update_permissions()
+        GroupPermissionsUpdater()
         import_holidays()
         site_list_data.autodiscover()
         self.login(superuser=False, groups=[EVERYONE, CLINIC, PII])

@@ -15,7 +15,8 @@ except AssertionError:
         "Incorrect python version. Expected 3.6 or 3.7. Check your environment."
     )
 
-BASE_DIR = str(Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+BASE_DIR = str(Path(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))))
 
 env = environ.Env(
     AWS_ENABLED=(bool, False),
@@ -107,8 +108,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
-    "django_collect_offline.apps.AppConfig",
-    "django_collect_offline_files.apps.AppConfig",
+    # "django_collect_offline.apps.AppConfig",
+    # "django_collect_offline_files.apps.AppConfig",
     "edc_action_item.apps.AppConfig",
     "edc_adverse_event.apps.AppConfig",
     "edc_auth.apps.AppConfig",
@@ -131,14 +132,16 @@ INSTALLED_APPS = [
     "edc_visit_schedule.apps.AppConfig",
     "edc_pdutils.apps.AppConfig",
     "edc_pharmacy.apps.AppConfig",
-    "edc_pharmacy_dashboard.apps.AppConfig",
+    # "edc_pharmacy_dashboard.apps.AppConfig",
     "edc_prn.apps.AppConfig",
+    "edc_randomization.apps.AppConfig",
     "edc_registration.apps.AppConfig",
     "edc_subject_dashboard.apps.AppConfig",
     "edc_timepoint.apps.AppConfig",
     "edc_list_data.apps.AppConfig",
     "edc_review_dashboard.apps.AppConfig",
     "edc_sites.apps.AppConfig",
+    "ambition_auth.apps.AppConfig",
     "ambition_lists.apps.AppConfig",
     "ambition_dashboard.apps.AppConfig",
     "ambition_labs.apps.AppConfig",
@@ -149,7 +152,6 @@ INSTALLED_APPS = [
     "ambition_form_validators.apps.AppConfig",
     "ambition_visit_schedule.apps.AppConfig",
     "ambition_ae.apps.AppConfig",
-    "ambition_permissions.apps.AppConfig",
     "ambition_prn.apps.AppConfig",
     "ambition_export.apps.AppConfig",
     "ambition_screening.apps.AppConfig",
@@ -181,6 +183,7 @@ MIDDLEWARE.extend(
         "edc_dashboard.middleware.DashboardMiddleware",
         "edc_subject_dashboard.middleware.DashboardMiddleware",
         "edc_lab_dashboard.middleware.DashboardMiddleware",
+        "edc_adverse_event.middleware.DashboardMiddleware",
         # 'simple_history.middleware.HistoryRequestMiddleware'
     ]
 )
@@ -283,7 +286,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = env.str("DJANGO_LANGUAGE_CODE")
 
-LANGUAGES = [x.split(":") for x in env.list("DJANGO_LANGUAGES")] or (("en", "English"),)
+LANGUAGES = [x.split(":") for x in env.list(
+    "DJANGO_LANGUAGES")] or (("en", "English"),)
 
 TIME_ZONE = env.str("DJANGO_TIME_ZONE")
 
@@ -340,7 +344,8 @@ DJANGO_COLLECT_OFFLINE_SERVER_IP = env.str("DJANGO_COLLECT_OFFLINE_SERVER_IP")
 DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST"
 )
-DJANGO_COLLECT_OFFLINE_FILES_USER = env.str("DJANGO_COLLECT_OFFLINE_FILES_USER")
+DJANGO_COLLECT_OFFLINE_FILES_USER = env.str(
+    "DJANGO_COLLECT_OFFLINE_FILES_USER")
 DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME"
 )
@@ -348,6 +353,8 @@ DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME = env.str(
 SUBJECT_CONSENT_MODEL = env.str("DJANGO_SUBJECT_CONSENT_MODEL")
 SUBJECT_REQUISITION_MODEL = env.str("DJANGO_SUBJECT_REQUISITION_MODEL")
 SUBJECT_VISIT_MODEL = env.str("DJANGO_SUBJECT_VISIT_MODEL")
+
+EDC_NAVBAR_DEFAULT = env("EDC_NAVBAR_DEFAULT")
 
 # dashboards
 EDC_BOOTSTRAP = env("DJANGO_EDC_BOOTSTRAP")
@@ -378,28 +385,27 @@ if TWILIO_ENABLED:
     TWILIO_AUTH_TOKEN = env.str("TWILIO_AUTH_TOKEN")
     TWILIO_SENDER = env.str("TWILIO_SENDER")
 
-if DEBUG:
-    RANDOMIZATION_LIST_PATH = os.path.join(
-        TEST_DIR, env.str("DJANGO_RANDOMIZATION_LIST_FILE")
-    )
-else:
-    RANDOMIZATION_LIST_PATH = os.path.join(
-        ETC_DIR, env.str("DJANGO_RANDOMIZATION_LIST_FILE")
-    )
 
+EDC_RANDOMIZATION_REGISTER_DEFAULT = False
+EDC_RANDOMIZATION_LIST_FILE = env.str("EDC_RANDOMIZATION_LIST_FILE")
+EDC_RANDOMIZATION_BLINDED_TRIAL = env.str("EDC_RANDOMIZATION_BLINDED_TRIAL")
+EDC_RANDOMIZATION_UNBLINDED_USERS = env.list(
+    "EDC_RANDOMIZATION_UNBLINDED_USERS")
+EDC_RANDOMIZATION_LIST_MODEL = "ambition_rando.randomizationlist"
+EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER = False
 
 # django_revision
 GIT_DIR = BASE_DIR
 
 # django_crypto_fields
-if not DEBUG:
-    KEY_PATH = env.str("DJANGO_KEY_FOLDER")
-    AUTO_CREATE_KEYS = env.str("DJANGO_AUTO_CREATE_KEYS")
+KEY_PATH = env.str("DJANGO_KEY_FOLDER")
+AUTO_CREATE_KEYS = env.str("DJANGO_AUTO_CREATE_KEYS")
 
 EXPORT_FOLDER = env.str("DJANGO_EXPORT_FOLDER") or os.path.expanduser("~/")
 
 # django_simple_history
-SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str("SIMPLE_HISTORY_PERMISSIONS_ENABLED")
+SIMPLE_HISTORY_PERMISSIONS_ENABLED = env.str(
+    "SIMPLE_HISTORY_PERMISSIONS_ENABLED")
 SIMPLE_HISTORY_REVERT_DISABLED = env.str("SIMPLE_HISTORY_REVERT_DISABLED")
 
 FQDN = env.str("DJANGO_FQDN")
