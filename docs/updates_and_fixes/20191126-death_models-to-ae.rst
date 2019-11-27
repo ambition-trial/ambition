@@ -48,4 +48,4 @@
 
 .. code-block:: sql
 
-	update edc_registration_registeredsubject set randomizationlist_model="ambition_rando.randomizationlist";
+	update edc_registration_registeredsubject set randomization_list_model="ambition_rando.randomizationlist";
