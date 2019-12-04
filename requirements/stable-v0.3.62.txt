@@ -21,6 +21,7 @@ edc-action-item==0.1.65
 edc-adverse-event==0.1.19
 edc-appointment==0.2.59
 edc-auth==0.1.42
+edc-base==0.3.12
 edc-consent==0.2.37
 edc-constants==0.2.23
 edc-dashboard==0.2.63
@@ -41,7 +42,7 @@ edc-list-data==0.1.18
 edc-locator==0.2.32
 edc-metadata==0.2.49
 edc-metadata-rules==0.1.19
-edc-model==0.1.18
+edc-model==0.1.19
 edc-model-admin==0.2.21
 edc-model-fields==0.1.9
 edc-model-wrapper==0.1.29
