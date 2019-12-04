@@ -9,7 +9,7 @@ After=network.target
 User=ambition
 Group=www-data
 WorkingDirectory=/home/ambition/app
-ExecStart=/home/ambition/.venvs/ambition/bin/gunicorn \
+ExecStart=/home/ambition/miniconda3/envs/edc/bin/gunicorn \
     --access-logfile - \
     --workers 3 \
     --timeout=300 \
