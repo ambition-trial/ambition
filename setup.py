@@ -34,6 +34,7 @@ setup(
     keywords='django ambition EDC',
     install_requires=[
         'boto3',
+        'django==2.2.8',
         'django-environ',
         'django-redis',
         'django-storages',
