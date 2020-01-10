@@ -71,5 +71,5 @@ edc-timepoint
 edc-utils
 edc-visit-schedule
 edc-visit-tracking
-Django==2.2.8
+Django==2.2.9
 git+https://github.com/erikvw/django-simple-history@admin_revert_permissions
