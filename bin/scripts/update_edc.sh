@@ -6,6 +6,21 @@ reset=`tput sgr0`
 
 eval "$(conda shell.bash hook)"
 
+read -p "Version? [master]" version
+if [ "${version}" = "" ]; then
+  version="master"
+fi
+echo "Selected ${version}"
+
+while true; do
+    read -p "Continue with version ${version}? [y/n]" yn
+    case $yn in
+        [y]* ) version_ok="y"; break;;
+        [n]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
 while true; do
     read -p "Update this script? [y/n]" yn
     case $yn in

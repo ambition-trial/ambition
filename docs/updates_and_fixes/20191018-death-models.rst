@@ -1,41 +1,46 @@
+* Update ``ActionItem`` model to refer to "ambition_prn.deathreport" as "ambition_ae.deathreport".
+* Update ``ActionItem model`` to refer to "ambition_prn.deathreporttmg" as "ambition_ae.deathreporttmg".
+* Resave action items so they update any missing references to their parent actions
+* Update ``RegisteredSubject`` field ``randomization_list_model``
+
+.. code-block:: python
+
+    from edc_registration.models import RegisteredSubject
+    from edc_constants.constants import CANCELLED
+    from edc_action_item.models import ActionItem
+    from edc_adverse_event.constants import (
+        DEATH_REPORT_ACTION, DEATH_REPORT_TMG_ACTION, DEATH_REPORT_TMG_SECOND_ACTION,
+        AE_INITIAL_ACTION,
+        AE_FOLLOWUP_ACTION,
+    )
+
+    from ambition_ae.models import AeFollowup
+
+    ActionItem.objects.filter(
+        reference_model="ambition_prn.deathreport").update(
+            reference_model="ambition_ae.deathreport")
+
+    ActionItem.objects.filter(
+        reference_model="ambition_prn.deathreporttmg").update(
+            reference_model="ambition_ae.deathreporttmg")
+
+    for obj in ActionItem.objects.filter(action_type__name=DEATH_REPORT_ACTION):
+        obj.save()
+
+    for obj in ActionItem.objects.filter(action_type__name=DEATH_REPORT_TMG_ACTION):
+        obj.save()
+
+    for obj in ActionItem.objects.filter(action_type__name=AE_INITIAL_ACTION):
+        obj.save()
+
+    for obj in ActionItem.objects.filter(action_type__name=AE_FOLLOWUP_ACTION):
+        obj.save()
 
 
-from edc_registration.models import RegisteredSubject
-from edc_constants.constants import CANCELLED
-from edc_action_item.models import ActionItem
-from edc_adverse_event.constants import (
-    DEATH_REPORT_ACTION, DEATH_REPORT_TMG_ACTION, DEATH_REPORT_TMG_SECOND_ACTION,
-    AE_INITIAL_ACTION,
-    AE_FOLLOWUP_ACTION,
-)
+    for obj in ActionItem.objects.filter(status=CANCELLED):
+        obj.delete()
 
-from ambition_ae.models import AeFollowup
-
-ActionItem.objects.filter(
-    reference_model="ambition_prn.deathreport").update(
-        reference_model="ambition_ae.deathreport")
-
-ActionItem.objects.filter(
-    reference_model="ambition_prn.deathreporttmg").update(
-        reference_model="ambition_ae.deathreporttmg")        
-
-for obj in ActionItem.objects.filter(action_type__name=DEATH_REPORT_ACTION):
-    obj.save()        
-
-for obj in ActionItem.objects.filter(action_type__name=DEATH_REPORT_TMG_ACTION):
-    obj.save()    
-
-for obj in ActionItem.objects.filter(action_type__name=AE_INITIAL_ACTION):
-    obj.save()        
-
-for obj in ActionItem.objects.filter(action_type__name=AE_FOLLOWUP_ACTION):
-    obj.save()            
-
-
-for obj in ActionItem.objects.filter(status=CANCELLED):
-    obj.delete()
-
-RegisteredSubject.objects.all().update(randomization_list_model="ambition_rando.randomizationlist")
+    RegisteredSubject.objects.all().update(randomization_list_model="ambition_rando.randomizationlist")
 
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,7 +50,7 @@ update .env
 ------------
 
 Delete::
-    
+
     DJANGO_RANDOMIZATIONLIST_FILE= ...
 
 Add::

@@ -3,6 +3,8 @@ Installation
 ++++++++++++
 
 
+	sudo apt-get install libcups2-dev
+
 Install CUPS Print Server::
 
 	sudo apt-get install 
