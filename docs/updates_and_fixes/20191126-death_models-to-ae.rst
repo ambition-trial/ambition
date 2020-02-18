@@ -1,4 +1,8 @@
 
+SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS=1;
+
+
 .. code-block:: sql
 
 	INSERT INTO ambition_ae_deathreport (revision, created, modified, user_created, user_modified, hostname_created, hostname_modified, device_created, device_modified, id, subject_identifier, tracking_identifier, action_identifier, parent_action_identifier, related_action_identifier, action_item_reason, report_datetime, death_datetime, study_day, death_as_inpatient, cause_of_death_other, narrative, cause_of_death_old, tb_site, action_item_id, cause_of_death_id, parent_action_item_id, related_action_item_id, site_id)
