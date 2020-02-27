@@ -1,0 +1,12 @@
+{% comment %}Button to add a subject consent{% endcomment %}
+
+<a id="subjectconsent_add_{{ screening_identifier }}" 
+ 	title="{{ title }}"
+    class="btn btn-warning btn-sm" data-toggle="tooltip"  data-placement="right"
+        {% if perms.ambition_subject.view_subjectconsent or perms.ambition_subject.change_subjectconsent %}
+        	href="{{ href }}"
+        {% else %}
+        	disabled
+        {% endif %}>
+     Consent (v{{ consent_version }})
+</a>

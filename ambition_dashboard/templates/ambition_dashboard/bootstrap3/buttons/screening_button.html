@@ -1,0 +1,5 @@
+<a id="subjectscreening_change_{{ screening_identifier }}" title="{{ title }}" role="button" 
+   class="btn btn-default btn-sm"
+       {% if perms.ambition_screening.view_subjectscreening or perms.ambition_screening.change_subjectscreening %}href="{{ href }}"{% else %} disabled {% endif %}>
+    <i class="fas fa-pencil-alt fa-sm"></i>
+</a>

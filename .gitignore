@@ -8,6 +8,7 @@ static/*
 .etc/*
 .envs/*
 .env
+.env-live
 secrets.json
 notebooks/*
 etc/*

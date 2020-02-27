@@ -1,21 +1,3 @@
-ambition-ae
-ambition-auth
-ambition-dashboard
-ambition-export
-ambition-form-validators
-ambition-labs
-ambition-lists
-ambition-metadata-rules
-ambition-permissions
-ambition-pharmacy
-ambition-prn
-ambition-rando
-ambition-reference
-ambition-screening
-ambition-sites
-ambition-subject
-ambition-validators
-ambition-visit-schedule
 # django-crypto-fields
 # django-audit-fields
 edc-action-item
