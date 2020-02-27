@@ -1,7 +1,7 @@
 from ambition_visit_schedule import DAY1
 from django import forms
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import TestCase, tag
 from edc_constants.constants import YES, NO, POS, NOT_APPLICABLE, OTHER
 from edc_registration.models import RegisteredSubject
 from edc_utils import get_utcnow
@@ -11,6 +11,7 @@ from ..form_validators import MicrobiologyFormValidator
 from .models import SubjectVisit, Appointment
 
 
+@tag("ambition_form_validators")
 class TestMicrobiologyFormValidator(TestCase):
     def setUp(self):
         self.subject_identifier = "1234"

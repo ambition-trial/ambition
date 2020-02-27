@@ -6,9 +6,9 @@ from django_collect_offline.tests import OfflineTestHelper
 from model_mommy import mommy
 
 
+@tag("ambition_screening")
 @override_settings(SITE_ID="10")
 class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
-
     offline_test_helper = OfflineTestHelper()
 
     def test_natural_key_attrs(self):

@@ -1,11 +1,12 @@
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import TestCase, tag
 from edc_constants.constants import NO, OTHER, YES
 
 from .. import PreviousOpportunisticInfectionFormValidator
 from .models import PatientHistory
 
 
+@tag("ambition_form_validators")
 class TestPreviousOpportunisticInfection(TestCase):
     def setUp(self):
         self.patient_history = PatientHistory()

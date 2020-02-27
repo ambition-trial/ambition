@@ -1,7 +1,7 @@
 from ambition_visit_schedule import DAY1
 from django import forms
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import TestCase, tag
 from edc_constants.constants import YES, OTHER, NO
 from edc_form_validators import REQUIRED_ERROR
 from edc_utils import get_utcnow
@@ -10,6 +10,7 @@ from ..form_validators import SignificantDiagnosesFormValidator
 from .models import SubjectVisit, TestModel, Appointment
 
 
+@tag("ambition_form_validators")
 class TestSignificantDiagnosesFormValidator(TestCase):
     def setUp(self):
         appointment = Appointment.objects.create(

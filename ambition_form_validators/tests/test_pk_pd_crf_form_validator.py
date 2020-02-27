@@ -6,6 +6,7 @@ from edc_utils import get_utcnow
 from ..form_validators import PkPdCrfFormValidator
 
 
+@tag("ambition_form_validators")
 class TestPkPdCrfFormValidator(TestCase):
     def test_flucytosine_dose_given_yes_datetime_required(self):
         cleaned_data = {"flucytosine_dose": 4500}

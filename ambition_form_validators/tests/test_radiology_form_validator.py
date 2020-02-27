@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import TestCase, tag
 from edc_constants.constants import YES, NO, NORMAL, OTHER, NOT_APPLICABLE
 from edc_utils import get_utcnow
 
@@ -7,6 +7,7 @@ from ..form_validators import RadiologyFormValidator
 from .models import ListModel
 
 
+@tag("ambition_form_validators")
 class TestRadiolodyFormValidator(TestCase):
     def test_cxr_type_none(self):
         options = {"cxr_done": YES, "cxr_date": get_utcnow(), "cxr_type": None}

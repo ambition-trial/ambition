@@ -6,6 +6,7 @@ from edc_utils import get_utcnow
 from ..form_validators import SubjectScreeningFormValidator
 
 
+@tag("ambition_form_validators")
 class TestSubjectScreeningFormValidator(TestCase):
     def test_gender(self):
         options = {"gender": MALE, "pregnancy": YES}

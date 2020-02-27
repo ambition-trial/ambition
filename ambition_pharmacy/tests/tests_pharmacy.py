@@ -1,6 +1,7 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 
 
-class TetsPharmacy(TestCase):
+@tag("ambition_pharmacy")
+class TestPharmacy(TestCase):
     def test_(self):
         pass

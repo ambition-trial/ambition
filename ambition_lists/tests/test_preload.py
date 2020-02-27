@@ -18,9 +18,9 @@ from ..models import (
 )
 
 
+@tag("ambition_lists")
 class TestPreload(TestCase):
     def test_preload(self):
-
         PreloadData(list_data=list_data)
         self.assertGreater(AbnormalResultsReason.objects.count(), 0)
         self.assertGreater(Antibiotic.objects.count(), 0)

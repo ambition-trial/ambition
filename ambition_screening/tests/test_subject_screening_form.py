@@ -1,13 +1,12 @@
 from ambition_rando.tests import AmbitionTestCaseMixin
+from ambition_screening.forms import SubjectScreeningForm
 from copy import copy
 from django.test import TestCase, tag
-from edc_utils import get_utcnow
 from edc_constants.constants import YES, FEMALE, NO, NOT_APPLICABLE, MALE, NORMAL
+from edc_utils import get_utcnow
 
-from ..forms import SubjectScreeningForm
 
-
-@tag("1")
+@tag("ambition_screening")
 class TestSubjectScreeningForm(AmbitionTestCaseMixin, TestCase):
     def setUp(self):
         self.male_data = dict(
@@ -73,10 +72,10 @@ class TestSubjectScreeningForm(AmbitionTestCaseMixin, TestCase):
         ]
         for pregnancy, preg_test_date, breast_feeding, error_key in options:
             with self.subTest(
-                pregnancy=pregnancy,
-                preg_test_date=preg_test_date,
-                breast_feeding=breast_feeding,
-                error_key=error_key,
+                    pregnancy=pregnancy,
+                    preg_test_date=preg_test_date,
+                    breast_feeding=breast_feeding,
+                    error_key=error_key,
             ):
                 data.update(
                     pregnancy=pregnancy,

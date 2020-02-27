@@ -1,8 +1,9 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 from edc_reportable import site_reportables, ParserError
 from tempfile import mkdtemp
 
 
+@tag("ambition_labs")
 class TestReportables(TestCase):
     def test(self):
         try:

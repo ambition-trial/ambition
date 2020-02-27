@@ -32,8 +32,8 @@ from .models import SubjectConsent
 RandomizationList = get_randomizationlist_model()
 
 
+@tag("ambition_rando")
 class TestRandomizer(AmbitionTestCaseMixin, TestCase):
-
     import_randomization_list = False
 
     def setUp(self):
@@ -336,9 +336,9 @@ class TestRandomizer(AmbitionTestCaseMixin, TestCase):
                 ).order_by("sid")
             ]
             for index, obj in enumerate(
-                SubjectConsent.objects.filter(site__name=site_name).order_by(
-                    "consent_datetime"
-                )
+                    SubjectConsent.objects.filter(site__name=site_name).order_by(
+                        "consent_datetime"
+                    )
             ):
                 rs = RegisteredSubject.objects.get(
                     subject_identifier=obj.subject_identifier

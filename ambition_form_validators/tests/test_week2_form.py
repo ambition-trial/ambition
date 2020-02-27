@@ -1,7 +1,7 @@
 from ambition_visit_schedule import DAY1
 from django import forms
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import TestCase, tag
 from edc_constants.constants import YES, OTHER
 from edc_utils import get_utcnow
 
@@ -10,6 +10,7 @@ from ..form_validators import FluconazoleMissedDosesFormValidator
 from .models import SubjectVisit, TestModel, Appointment
 
 
+@tag("ambition_form_validators")
 class TestWeek2Form(TestCase):
     def test_discharged_yes_require_discharged_date(self):
         cleaned_data = {"discharged": YES, "discharge_date": None}
@@ -72,6 +73,7 @@ class TestWeek2Form(TestCase):
             self.fail(f"ValidationError unexpectedly raised. Got{e}")
 
 
+@tag("ambition_form_validators")
 class TestSignificantDiagnosesForm(TestCase):
     def setUp(self):
         appointment = Appointment.objects.create(

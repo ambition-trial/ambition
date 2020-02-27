@@ -9,10 +9,10 @@ from edc_registration.models import RegisteredSubject
 from tempfile import mkdtemp
 
 
+@tag("ambition_export")
 @override_settings(EXPORT_FOLDER=mkdtemp())
 class TestExport(TestCase):
     def setUp(self):
-
         user = User.objects.create(username="erikvw")
         RegisteredSubject.objects.create(subject_identifier="12345")
 
@@ -20,7 +20,6 @@ class TestExport(TestCase):
         self.exported = ArchiveExporter(models=models, user=user, archive=True)
 
     def test_request_archive(self):
-
         folder = mkdtemp()
         shutil.unpack_archive(self.exported.archive_filename, folder, "zip")
         filenames = os.listdir(folder)

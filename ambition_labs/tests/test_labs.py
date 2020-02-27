@@ -1,10 +1,11 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 from edc_lab.site_labs import site_labs
 from edc_lab.models import Panel
 
 from ..lab_profiles import subject_lab_profile
 
 
+@tag("ambition_labs")
 class TestLabs(TestCase):
     def setUp(self):
         site_labs._registry = {}
@@ -21,7 +22,7 @@ class TestLabs(TestCase):
 
     def test_panel_model(self):
         for panel in site_labs.get(
-            lab_profile_name="subject_lab_profile"
+                lab_profile_name="subject_lab_profile"
         ).panels.values():
             self.assertEqual(
                 panel.requisition_model, "ambition_subject.subjectrequisition"

@@ -16,7 +16,7 @@ from ..form_validators import BloodResultFormValidator
 from .models import SubjectVisit, SubjectConsent, BloodResult, Appointment
 
 
-@tag("4")
+@tag("ambition_form_validators")
 class TestBloodResultFormValidator(TestCase):
     @classmethod
     def setUpClass(cls):

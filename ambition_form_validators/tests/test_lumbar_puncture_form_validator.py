@@ -21,6 +21,7 @@ from .models import (
 )
 
 
+@tag("ambition_form_validators")
 class TestLumbarPunctureFormValidator(TestCase):
     @classmethod
     def setUpClass(cls):

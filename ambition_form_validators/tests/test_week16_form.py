@@ -1,11 +1,12 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import TestCase, tag
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
 
 from ..form_validators import Week16FormValidator
 
 
+@tag("ambition_form_validators")
 class TestWeek16Form(TestCase):
     def test_patient_alive_activities_help(self):
         cleaned_data = {

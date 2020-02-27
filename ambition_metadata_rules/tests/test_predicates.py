@@ -18,8 +18,8 @@ from edc_sites import add_or_update_django_sites, get_site_id
 from ..predicates import Predicates
 
 
+@tag("ambition_metadata_rules")
 class TestPredicates(AmbitionTestCaseMixin, TestCase):
-
     app_label = "ambition_subject"
     import_randomization_list = True
     reference_helper_cls = ReferenceTestHelper
@@ -36,8 +36,8 @@ class TestPredicates(AmbitionTestCaseMixin, TestCase):
         RandomizationList.objects.update(site_name=site.name, subject_identifier=None)
         rando = (
             RandomizationList.objects.filter(site_name=site.name, assignment=arm)
-            .order_by("sid")
-            .first()
+                .order_by("sid")
+                .first()
         )
         rando.subject_identifier = self.subject_identifier
         rando.save()
@@ -90,7 +90,7 @@ class TestPredicates(AmbitionTestCaseMixin, TestCase):
             visit_code=self.subject_visits[0].visit_code,
             timepoint=self.subject_visits[0].timepoint,
             cd4_date=(
-                self.subject_visits[0].report_datetime - relativedelta(months=4)
+                    self.subject_visits[0].report_datetime - relativedelta(months=4)
             ).date(),
         )
         self.assertTrue(pc.func_require_cd4(self.subject_visits[0]))
@@ -118,7 +118,7 @@ class TestPredicates(AmbitionTestCaseMixin, TestCase):
             visit_code=self.subject_visits[0].visit_code,
             timepoint=self.subject_visits[0].timepoint,
             viral_load_date=(
-                self.subject_visits[0].report_datetime - relativedelta(months=4)
+                    self.subject_visits[0].report_datetime - relativedelta(months=4)
             ).date(),
         )
         self.assertTrue(pc.func_require_vl(self.subject_visits[0]))

@@ -1,5 +1,4 @@
 from ambition_sites import ambition_sites, fqdn
-from ambition_rando.constants import SINGLE_DOSE, CONTROL
 from django.apps import apps as django_apps
 from django.contrib.sites.models import Site
 from edc_facility.import_holidays import import_holidays
@@ -12,6 +11,7 @@ from edc_utils import get_utcnow
 from faker import Faker
 from model_mommy import mommy
 
+from ..constants import SINGLE_DOSE, CONTROL
 from ..models import RandomizationList
 from ..randomizer import Randomizer
 
@@ -19,7 +19,6 @@ fake = Faker()
 
 
 class AmbitionTestCaseMixin:
-
     import_randomization_list = True
 
     @classmethod

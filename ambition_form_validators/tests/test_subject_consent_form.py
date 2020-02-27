@@ -7,6 +7,7 @@ from ..form_validators import SubjectConsentFormValidator
 from .models import SubjectScreening
 
 
+@tag("ambition_form_validators")
 class TestSubjectConsentForm(TestCase):
     def setUp(self):
         self.screening_identifier = "ABCDEF"

@@ -38,6 +38,7 @@ from ..codenames import (
 from ..codenames_by_group import get_codenames_by_group
 
 
+@tag("ambition_auth")
 class TestPermissions(TestCase):
     @classmethod
     def setUpClass(cls):

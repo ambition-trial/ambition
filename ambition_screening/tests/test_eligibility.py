@@ -1,11 +1,11 @@
 from ambition_rando.tests import AmbitionTestCaseMixin
+from ambition_screening.eligibility import Eligibility, EligibilityError
 from copy import copy
 from django.test import TestCase, tag
 from edc_constants.constants import FEMALE
 
-from ..eligibility import Eligibility, EligibilityError
 
-
+@tag("ambition_screening")
 class TestEligibility(AmbitionTestCaseMixin, TestCase):
     def setUp(self):
         self.evaluator_criteria = dict(

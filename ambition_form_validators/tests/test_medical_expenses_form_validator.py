@@ -6,6 +6,7 @@ from ..constants import WORKING
 from ..form_validators import MedicalExpensesFormValidator
 
 
+@tag("ambition_form_validators")
 class TestMedicalExpensesFormValidator(TestCase):
     def test_total_money_spent_error(self):
         """Assert raises exception if personal money spent and

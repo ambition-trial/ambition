@@ -11,6 +11,7 @@ from edc_registration.utils import get_registered_subject_model
 from dateutil.relativedelta import relativedelta
 
 
+@tag("ambition_form_validators")
 class TestPatientHistoryFormValidator(TestCase):
     def setUp(self):
         appointment = Appointment.objects.create(
