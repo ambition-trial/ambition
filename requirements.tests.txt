@@ -1,6 +1,6 @@
-edc-test-utils
+edc-test-utils==0.1.14
 django-storages
-model-mommy
+model-bakery
 faker
 django-environ
 django-webtest

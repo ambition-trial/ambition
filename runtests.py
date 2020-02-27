@@ -29,7 +29,6 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     ADVERSE_EVENT_ADMIN_SITE="ambition_ae_admin",
     ADVERSE_EVENT_APP_LABEL="ambition_ae",
     EDC_NAVBAR_DEFAULT="ambition_dashboard",
-    EDC_RANDOMIZATION_LIST_MODEL="ambition_rando.randomizationlist",
     DJANGO_LANGUAGES=dict(
         af="Afrikaans",
         ny="Chichewa",
@@ -58,10 +57,11 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     EMAIL_ENABLED=True,
     HOLIDAY_FILE=join(base_dir, "tests", "holidays.csv"),
     LIVE_SYSTEM=False,
+    EDC_RANDOMIZATION_ASSIGNMENT_MAP={CONTROL: 1, SINGLE_DOSE: 2},
+    EDC_RANDOMIZATION_LIST_MODEL="ambition_rando.randomizationlist",
     EDC_RANDOMIZATION_LIST_PATH=join(base_dir, "tests", "etc"),
     EDC_RANDOMIZATION_REGISTER_DEFAULT=False,
     EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER=False,
-    EDC_RANDOMIZATION_ASSIGNMENT_MAP={CONTROL: 1, SINGLE_DOSE: 2},
     INSTALLED_APPS=[
         "django.contrib.admin",
         "django.contrib.auth",
