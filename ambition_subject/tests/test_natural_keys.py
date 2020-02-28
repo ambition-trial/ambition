@@ -9,7 +9,7 @@ from edc_facility.import_holidays import import_holidays
 from edc_metadata.tests import CrfTestHelper
 from edc_utils import get_utcnow
 from edc_visit_tracking.constants import SCHEDULED
-from model_mommy import mommy
+from model_bakery import baker
 
 from ..models import SubjectVisit
 
@@ -46,10 +46,10 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
         )
 
     def complete_all_subject_visits(self):
-        screening = mommy.make_recipe(
+        screening = baker.make_recipe(
             "ambition_screening.subjectscreening", report_datetime=get_utcnow()
         )
-        consent = mommy.make_recipe(
+        consent = baker.make_recipe(
             "ambition_subject.subjectconsent",
             consent_datetime=get_utcnow(),
             screening_identifier=screening.screening_identifier,
@@ -58,7 +58,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
         self.subject_identifier = consent.subject_identifier
 
         for appointment in Appointment.objects.all().order_by("timepoint"):
-            mommy.make_recipe(
+            baker.make_recipe(
                 "ambition_subject.subjectvisit",
                 appointment=appointment,
                 subject_identifier=consent.subject_identifier,

@@ -3,7 +3,7 @@ from django.test import TestCase, tag
 from django.test.utils import override_settings
 from django_collect_offline.models import OutgoingTransaction
 from django_collect_offline.tests import OfflineTestHelper
-from model_mommy import mommy
+from model_bakery import baker
 
 
 @tag("ambition_screening")
@@ -20,7 +20,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
         )
 
     def test_deserialize_subject_screening(self):
-        ambition_screening = mommy.make_recipe("ambition_screening.subjectscreening")
+        ambition_screening = baker.make_recipe("ambition_screening.subjectscreening")
         outgoing_transaction = OutgoingTransaction.objects.get(
             tx_name=ambition_screening._meta.label_lower
         )

@@ -6,7 +6,7 @@ from edc_appointment.models import Appointment
 from edc_constants.constants import YES
 from edc_utils import get_utcnow
 from edc_visit_tracking.constants import SCHEDULED
-from model_mommy import mommy
+from model_bakery import baker
 from unittest.case import skip
 
 from ..forms import MicrobiologyForm
@@ -16,18 +16,18 @@ from ..forms import MicrobiologyForm
 @override_settings(SITE_ID="10")
 class TestMicrobiologyForm(AmbitionTestCaseMixin, TestCase):
     def setUp(self):
-        subject_screening = mommy.make_recipe("ambition_screening.subjectscreening")
+        subject_screening = baker.make_recipe("ambition_screening.subjectscreening")
         options = {
             "screening_identifier": subject_screening.screening_identifier,
             "consent_datetime": get_utcnow,
             "user_created": "erikvw",
         }
-        consent = mommy.make_recipe("ambition_subject.subjectconsent", **options)
+        consent = baker.make_recipe("ambition_subject.subjectconsent", **options)
         self.subject_identifier = consent.subject_identifier
         self.appointment = Appointment.objects.get(
             subject_identifier=self.subject_identifier, visit_code=DAY1
         )
-        self.subject_visit = mommy.make_recipe(
+        self.subject_visit = baker.make_recipe(
             "ambition_subject.subjectvisit",
             appointment=self.appointment,
             reason=SCHEDULED,

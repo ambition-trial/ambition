@@ -3,7 +3,7 @@ from ambition_subject.models import SubjectVisit, BloodResult
 from ambition_visit_schedule.constants import DAY1
 from django.test import TestCase, tag  # noqa
 from edc_reportable.units import IU_LITER, TEN_X_9_PER_LITER
-from model_mommy import mommy
+from model_bakery import baker
 
 from ..early_withdrawal_evaluator import (
     EarlyWithdrawalEvaluator, alt_ref, neutrophil_ref, platelets_ref)
@@ -60,7 +60,7 @@ class TestEarlyWithdrawalEvaluator(AmbitionTestCaseMixin, TestCase):
         self.assertTrue(platelets_ref.in_bounds(51, units=TEN_X_9_PER_LITER))
 
     def test_with_day1_blood_result_none(self):
-        subject_screening = mommy.make_recipe("ambition_screening.subjectscreening")
+        subject_screening = baker.make_recipe("ambition_screening.subjectscreening")
         subject_identifier = "12345"
         subject_visit = SubjectVisit.objects.create(
             subject_identifier=subject_identifier,
@@ -76,7 +76,7 @@ class TestEarlyWithdrawalEvaluator(AmbitionTestCaseMixin, TestCase):
         self.assertTrue(obj.eligible)
 
     def test_with_day1_blood_result1(self):
-        subject_screening = mommy.make_recipe("ambition_screening.subjectscreening")
+        subject_screening = baker.make_recipe("ambition_screening.subjectscreening")
         subject_identifier = "12345"
         subject_visit = SubjectVisit.objects.create(
             subject_identifier=subject_identifier,
@@ -91,7 +91,7 @@ class TestEarlyWithdrawalEvaluator(AmbitionTestCaseMixin, TestCase):
         self.assertIn("platelets", obj.reasons_ineligible)
 
     def test_with_day1_blood_result2(self):
-        subject_screening = mommy.make_recipe("ambition_screening.subjectscreening")
+        subject_screening = baker.make_recipe("ambition_screening.subjectscreening")
         subject_identifier = "12345"
         subject_visit = SubjectVisit.objects.create(
             subject_identifier=subject_identifier,
@@ -107,7 +107,7 @@ class TestEarlyWithdrawalEvaluator(AmbitionTestCaseMixin, TestCase):
         self.assertIn("platelets", obj.reasons_ineligible)
 
     def test_with_day1_blood_result3(self):
-        subject_screening = mommy.make_recipe("ambition_screening.subjectscreening")
+        subject_screening = baker.make_recipe("ambition_screening.subjectscreening")
         subject_identifier = "12345"
         subject_visit = SubjectVisit.objects.create(
             subject_identifier=subject_identifier,
@@ -126,7 +126,7 @@ class TestEarlyWithdrawalEvaluator(AmbitionTestCaseMixin, TestCase):
         self.assertIn("neutrophil", obj.reasons_ineligible)
 
     def test_with_day1_blood_result4(self):
-        subject_screening = mommy.make_recipe("ambition_screening.subjectscreening")
+        subject_screening = baker.make_recipe("ambition_screening.subjectscreening")
         subject_identifier = "12345"
         subject_visit = SubjectVisit.objects.create(
             subject_identifier=subject_identifier,

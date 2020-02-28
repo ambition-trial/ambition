@@ -4,7 +4,7 @@ from django.test.utils import override_settings
 from django_collect_offline.models import OutgoingTransaction
 from django_collect_offline.tests import OfflineTestHelper
 from edc_list_data.site_list_data import site_list_data
-from model_mommy import mommy
+from model_bakery import baker
 
 
 @tag("ambition_prn")
@@ -25,7 +25,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
 
     def test_deserialize_protocol_deviation(self):
         self.subject_identifier = self.create_subject()
-        protocol_deviation = mommy.make_recipe(
+        protocol_deviation = baker.make_recipe(
             "ambition_prn.protocoldeviationviolation",
             subject_identifier=self.subject_identifier,
         )

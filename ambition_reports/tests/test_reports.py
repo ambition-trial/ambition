@@ -4,7 +4,7 @@ from django.test import TestCase, tag
 from django.test.client import RequestFactory
 from edc_adverse_event.models import AeClassification
 from edc_list_data.site_list_data import site_list_data
-from model_mommy import mommy
+from model_bakery import baker
 
 from ..ae_report import AeReport
 
@@ -31,7 +31,7 @@ class TestReports(AmbitionTestCaseMixin, TestCase):
         request = rf.get("/")
         request.user = self.user
         ae_classification = AeClassification.objects.all()[0]
-        ae_initial = mommy.make_recipe(
+        ae_initial = baker.make_recipe(
             "ambition_ae.aeinitial",
             subject_identifier=self.subject_identifier,
             ae_classification=ae_classification,

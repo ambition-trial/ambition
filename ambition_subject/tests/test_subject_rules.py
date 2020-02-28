@@ -9,17 +9,17 @@ from edc_metadata.constants import REQUIRED
 from edc_metadata.models import CrfMetadata
 from edc_utils import get_utcnow
 from edc_visit_tracking.constants import SCHEDULED
-from model_mommy import mommy
+from model_bakery import baker
 
 
 @tag("ambition_subject")
 @override_settings(SITE_ID="10")
 class TestSubjectRules(AmbitionTestCaseMixin, TestCase):
     def setUp(self):
-        screening = mommy.make_recipe(
+        screening = baker.make_recipe(
             "ambition_screening.subjectscreening", report_datetime=get_utcnow()
         )
-        self.consent = mommy.make_recipe(
+        self.consent = baker.make_recipe(
             "ambition_subject.subjectconsent",
             consent_datetime=get_utcnow(),
             screening_identifier=screening.screening_identifier,
@@ -28,7 +28,7 @@ class TestSubjectRules(AmbitionTestCaseMixin, TestCase):
         self.visit_code = WEEK10
 
         for appointment in Appointment.objects.all().order_by("timepoint"):
-            self.subject_visit = mommy.make_recipe(
+            self.subject_visit = baker.make_recipe(
                 "ambition_subject.subjectvisit",
                 appointment=appointment,
                 reason=SCHEDULED,
@@ -42,7 +42,7 @@ class TestSubjectRules(AmbitionTestCaseMixin, TestCase):
         )
         self.subject_visit = SubjectVisit.objects.get(appointment=appointment)
 
-        mommy.make_recipe(
+        baker.make_recipe(
             "ambition_subject.medicalexpenses",
             subject_visit=self.subject_visit,
             care_before_hospital=YES,

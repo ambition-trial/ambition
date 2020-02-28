@@ -21,7 +21,7 @@ from edc_selenium.mixins import (
 from edc_utils import get_utcnow
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 from edc_visit_tracking.constants import SCHEDULED
-from model_mommy import mommy
+from model_bakery import baker
 from selenium.webdriver.common.by import By
 from edc_dashboard.url_names import url_names
 
@@ -143,7 +143,7 @@ class AmbitionEdcSeleniumMixin(
     def fill_subject_screening(self, save_only=None):
         """Add a subject screening form.
         """
-        model_obj = mommy.prepare_recipe(self.subject_screening_model)
+        model_obj = baker.prepare_recipe(self.subject_screening_model)
         if save_only:
             model_obj.save()
         else:
@@ -158,7 +158,7 @@ class AmbitionEdcSeleniumMixin(
     def fill_subject_consent(self, model_obj, save_only=None):
         """Add a subject consent for the newly screening subject.
         """
-        model_obj = mommy.prepare_recipe(
+        model_obj = baker.prepare_recipe(
             self.subject_consent_model,
             **{
                 "screening_identifier": model_obj.screening_identifier,
@@ -216,7 +216,7 @@ class AmbitionEdcSeleniumMixin(
         return appointment
 
     def fill_subject_visit(self, appointment, save_only=None):
-        model_obj = mommy.prepare_recipe(
+        model_obj = baker.prepare_recipe(
             self.subject_visit_model,
             **{"appointment": appointment, "reason": SCHEDULED, "info_source": PATIENT},
         )
@@ -230,7 +230,7 @@ class AmbitionEdcSeleniumMixin(
         return model_obj
 
     def fill_subject_requisition(self, subject_visit, save_only=None):
-        model_obj = mommy.prepare_recipe(
+        model_obj = baker.prepare_recipe(
             self.subject_requisition_model,
             **{
                 "subject_visit": subject_visit,
@@ -258,7 +258,7 @@ class AmbitionEdcSeleniumMixin(
         if click_add:
             self.selenium.find_element_by_id("edc_action_item_actionitem_add").click()
         action_type = ActionType.objects.get(name=name)
-        obj = mommy.prepare_recipe(
+        obj = baker.prepare_recipe(
             self.action_item_model,
             subject_identifier=subject_identifier,
             action_type=action_type,

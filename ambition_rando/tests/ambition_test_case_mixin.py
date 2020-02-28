@@ -9,7 +9,7 @@ from edc_randomization.utils import get_randomizationlist_model
 from edc_sites import add_or_update_django_sites
 from edc_utils import get_utcnow
 from faker import Faker
-from model_mommy import mommy
+from model_bakery import baker
 
 from ..constants import SINGLE_DOSE, CONTROL
 from ..models import RandomizationList
@@ -47,10 +47,10 @@ class AmbitionTestCaseMixin:
     def create_subject(self, consent_datetime=None, first_name=None):
         consent_datetime = consent_datetime or get_utcnow()
         first_name = first_name or fake.first_name()
-        subject_screening = mommy.make_recipe(
+        subject_screening = baker.make_recipe(
             "ambition_screening.subjectscreening", report_datetime=consent_datetime
         )
-        consent = mommy.make_recipe(
+        consent = baker.make_recipe(
             "ambition_subject.subjectconsent",
             screening_identifier=subject_screening.screening_identifier,
             consent_datetime=consent_datetime,

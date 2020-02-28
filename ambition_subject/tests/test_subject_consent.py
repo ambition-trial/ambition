@@ -8,7 +8,7 @@ from django.test.utils import override_settings
 from edc_constants.constants import UUID_PATTERN
 from edc_registration.models import RegisteredSubject
 from edc_utils import get_utcnow
-from model_mommy import mommy
+from model_bakery import baker
 
 from ..models import SubjectConsent
 
@@ -17,7 +17,7 @@ from ..models import SubjectConsent
 @override_settings(SITE_ID="10")
 class TestSubjectConsent(AmbitionTestCaseMixin, TestCase):
     def setUp(self):
-        self.subject_screening = mommy.make_recipe(
+        self.subject_screening = baker.make_recipe(
             "ambition_screening.subjectscreening"
         )
 
@@ -30,7 +30,7 @@ class TestSubjectConsent(AmbitionTestCaseMixin, TestCase):
             "consent_datetime": get_utcnow,
             "user_created": "erikvw",
         }
-        mommy.make_recipe("ambition_subject.subjectconsent", **options)
+        baker.make_recipe("ambition_subject.subjectconsent", **options)
         self.assertFalse(
             re.match(UUID_PATTERN, SubjectConsent.objects.all()[0].subject_identifier)
         )
@@ -42,7 +42,7 @@ class TestSubjectConsent(AmbitionTestCaseMixin, TestCase):
             "user_created": "erikvw",
         }
         self.assertEqual(RegisteredSubject.objects.all().count(), 0)
-        mommy.make_recipe("ambition_subject.subjectconsent", **options)
+        baker.make_recipe("ambition_subject.subjectconsent", **options)
         self.assertEqual(RegisteredSubject.objects.all().count(), 1)
 
     def test_consent_creates_registered_subject_sets_screening_subject_identifier(self):
@@ -56,7 +56,7 @@ class TestSubjectConsent(AmbitionTestCaseMixin, TestCase):
             "user_created": "erikvw",
         }
         # consent
-        mommy.make_recipe("ambition_subject.subjectconsent", **options)
+        baker.make_recipe("ambition_subject.subjectconsent", **options)
 
         rs = RegisteredSubject.objects.get(
             screening_identifier=self.subject_screening.screening_identifier
@@ -73,7 +73,7 @@ class TestSubjectConsent(AmbitionTestCaseMixin, TestCase):
         )
 
     def test_onschedule_created_on_consent(self):
-        subject_consent = mommy.make_recipe(
+        subject_consent = baker.make_recipe(
             "ambition_subject.subjectconsent",
             consent_datetime=get_utcnow,
             screening_identifier=self.subject_screening.screening_identifier,

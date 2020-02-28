@@ -3,7 +3,7 @@ from ambition_screening.identifiers import ScreeningIdentifier
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase, tag
 from edc_identifier.models import IdentifierModel
-from model_mommy import mommy
+from model_bakery import baker
 
 
 @tag("ambition_screening")
@@ -21,6 +21,6 @@ class TestIdentifiers(AmbitionTestCaseMixin, TestCase):
             self.fail("IdentifierHistory.DoesNotExist unexpectedly raised.")
 
     def test_model_allocates_identifier(self):
-        obj = mommy.make_recipe("ambition_screening.subjectscreening")
+        obj = baker.make_recipe("ambition_screening.subjectscreening")
         self.assertIsNotNone(obj.screening_identifier)
         self.assertTrue(obj.screening_identifier.startswith("S"))
