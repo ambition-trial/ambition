@@ -1,8 +1,11 @@
+from datetime import datetime
+
 import environ
 import os
 import sys
 
 from ambition_sites import ambition_sites
+from dateutil.tz import gettz
 from django.core.exceptions import ImproperlyConfigured
 from edc_sites import get_site_id
 from pathlib import Path
@@ -36,11 +39,13 @@ env = environ.Env(
     DJANGO_USE_I18N=(bool, True),
     DJANGO_USE_L10N=(bool, False),
     DJANGO_USE_TZ=(bool, True),
+    EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER=(bool, True),
     SAUCE_ENABLED=(bool, False),
     SENTRY_ENABLED=(bool, False),
     TWILIO_ENABLED=(bool, False),
     SIMPLE_HISTORY_PERMISSIONS_ENABLED=(bool, False),
     SIMPLE_HISTORY_REVERT_DISABLED=(bool, False),
+    DJANGO_COLLECT_OFFLINE_ENABLED=(bool, False),
 )
 
 # copy your .env file from .envs/ to BASE_DIR
@@ -107,15 +112,17 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
-    # "django_collect_offline.apps.AppConfig",
-    # "django_collect_offline_files.apps.AppConfig",
+    "django_collect_offline.apps.AppConfig",
+    "django_collect_offline_files.apps.AppConfig",
     "edc_action_item.apps.AppConfig",
     "edc_adverse_event.apps.AppConfig",
+    "edc_appointment.apps.AppConfig",
     "edc_auth.apps.AppConfig",
     "edc_data_manager.apps.AppConfig",
     "edc_consent.apps.AppConfig",
     "edc_dashboard.apps.AppConfig",
     "edc_export.apps.AppConfig",
+    "edc_facility.apps.AppConfig",
     "edc_fieldsets.apps.AppConfig",
     "edc_form_validators.apps.AppConfig",
     "edc_lab_dashboard.apps.AppConfig",
@@ -154,14 +161,13 @@ INSTALLED_APPS = [
     "ambition_prn.apps.AppConfig",
     "ambition_export.apps.AppConfig",
     "ambition_screening.apps.AppConfig",
-    "ambition_edc.apps.EdcAppointmentAppConfig",
+    # "ambition_edc.apps.EdcAppointmentAppConfig",
     "ambition_edc.apps.EdcDeviceAppConfig",
     "ambition_edc.apps.EdcIdentifierAppConfig",
     "ambition_edc.apps.EdcLabAppConfig",
     "ambition_edc.apps.EdcMetadataAppConfig",
     "ambition_edc.apps.EdcProtocolAppConfig",
     "ambition_edc.apps.EdcVisitTrackingAppConfig",
-    "ambition_edc.apps.EdcFacilityAppConfig",
     "ambition_edc.apps.AppConfig",
 ]
 
@@ -204,7 +210,6 @@ TEMPLATES = [
         },
     }
 ]
-
 
 if env("DATABASE_SQLITE_ENABLED"):
     DATABASES = {
@@ -338,6 +343,7 @@ LABEL_TEMPLATE_FOLDER = env.str("DJANGO_LABEL_TEMPLATE_FOLDER") or os.path.join(
 CUPS_SERVERS = env.dict("DJANGO_CUPS_SERVERS")
 
 # django_collect_offline / django_collect_offline files
+DJANGO_COLLECT_OFFLINE_ENABLED = env("DJANGO_COLLECT_OFFLINE_ENABLED")
 DJANGO_COLLECT_OFFLINE_SERVER_IP = env.str("DJANGO_COLLECT_OFFLINE_SERVER_IP")
 DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST = env.str(
     "DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST"
@@ -382,13 +388,29 @@ if TWILIO_ENABLED:
     TWILIO_AUTH_TOKEN = env.str("TWILIO_AUTH_TOKEN")
     TWILIO_SENDER = env.str("TWILIO_SENDER")
 
-
-EDC_RANDOMIZATION_REGISTER_DEFAULT = False
-EDC_RANDOMIZATION_LIST_FILE = env.str("EDC_RANDOMIZATION_LIST_FILE")
+EDC_FACILITY_USE_DEFAULTS = True
 EDC_RANDOMIZATION_BLINDED_TRIAL = env.str("EDC_RANDOMIZATION_BLINDED_TRIAL")
 EDC_RANDOMIZATION_UNBLINDED_USERS = env.list("EDC_RANDOMIZATION_UNBLINDED_USERS")
-EDC_RANDOMIZATION_LIST_MODEL = "ambition_rando.randomizationlist"
-EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER = False
+EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER = env(
+    "EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER"
+)
+EDC_RANDOMIZATION_LIST_PATH = env.str("EDC_RANDOMIZATION_LIST_PATH")
+
+# edc-protocol
+EDC_PROTOCOL = "BHP092"
+EDC_PROTOCOL_INSTITUTION_NAME = "London School of Hygiene & Tropical Medicine"
+EDC_PROTOCOL_NUMBER = "092"
+EDC_PROTOCOL_PROJECT_NAME = "Ambition"
+EDC_PROTOCOL_STUDY_OPEN_DATETIME = datetime(2016, 12, 31, 0, 0, 0, tzinfo=gettz("UTC"))
+EDC_PROTOCOL_STUDY_CLOSE_DATETIME = datetime(
+    2022, 12, 31, 23, 59, 59, tzinfo=gettz("UTC")
+)
+EDC_PROTOCOL_TITLE = (
+    "BHP092"
+    "High Dose AMBISOME on a Fluconazole Backbone for Cryptococcal Meningitis "
+    "Induction Therapy in sub-Saharan Africa: A Phase 3 Randomised Controlled "
+    "Non-Inferiority Trial (P.I. Joe Jarvis)."
+)
 
 # django_revision
 GIT_DIR = BASE_DIR
@@ -447,7 +469,6 @@ else:
     STATIC_ROOT = env.str("DJANGO_STATIC_ROOT")
 
 SENTRY_DSN = None
-
 if SENTRY_ENABLED:
     import sentry_sdk
     from sentry_sdk.integrations.django import DjangoIntegration
@@ -470,12 +491,12 @@ if CELERY_ENABLED:
     CELERY_BROKER_PASSWORD = env.str("CELERY_BROKER_PASSWORD")
     CELERY_BROKER_HOST = env.str("CELERY_BROKER_HOST")
     CELERY_BROKER_PORT = env.str("CELERY_BROKER_PORT")
-    if DEBUG:
-        CELERY_BROKER_VHOST = f"{APP_NAME}_debug"
-    elif LIVE_SYSTEM:
-        CELERY_BROKER_VHOST = f"{APP_NAME}_production"
-    else:
-        CELERY_BROKER_VHOST = f"{APP_NAME}_uat"
+if DEBUG:
+    CELERY_BROKER_VHOST = f"{APP_NAME}_debug"
+elif LIVE_SYSTEM:
+    CELERY_BROKER_VHOST = f"{APP_NAME}_production"
+else:
+    CELERY_BROKER_VHOST = f"{APP_NAME}_uat"
     CELERY_BROKER_URL = (
         f"amqp://{CELERY_BROKER_USER}:{CELERY_BROKER_PASSWORD}@"
         f"{CELERY_BROKER_HOST}:{CELERY_BROKER_PORT}/{CELERY_BROKER_VHOST}"
@@ -494,7 +515,6 @@ if CELERY_ENABLED:
     #         'edc_data_manager.tasks.*': {'queue': 'normal'},
     #     }
 
-
 if "test" in sys.argv or "runtests.py" in sys.argv:
 
     class DisableMigrations:
@@ -508,6 +528,6 @@ if "test" in sys.argv or "runtests.py" in sys.argv:
     PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
     DEFAULT_FILE_STORAGE = "inmemorystorage.InMemoryStorage"
 
-    if env("SAUCE_ENABLED"):
-        SAUCE_USERNAME = env.str("SAUCE_USERNAME")
-        SAUCE_ACCESS_KEY = env.str("SAUCE_ACCESS_KEY")
+if env("SAUCE_ENABLED"):
+    SAUCE_USERNAME = env.str("SAUCE_USERNAME")
+    SAUCE_ACCESS_KEY = env.str("SAUCE_ACCESS_KEY")

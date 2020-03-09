@@ -1,6 +1,6 @@
 from django.contrib import admin
 from edc_fieldsets import Fieldset
-from edc_model_admin import audit_fieldset_tuple, StackedInlineMixin
+from edc_model_admin import audit_fieldset_tuple, StackedInlineModelAdminMixin
 
 from ..admin_site import ambition_subject_admin
 from ..constants import DAY1, DAY7, DAY14
@@ -39,7 +39,7 @@ day14_samples = Fieldset(
 )
 
 
-class PkPdExtraSamplesAdmin(StackedInlineMixin, admin.StackedInline):
+class PkPdExtraSamplesAdmin(StackedInlineModelAdminMixin, admin.StackedInline):
 
     model = PkPdExtraSamples
     form = PkPdExtraSamplesForm

@@ -5,6 +5,7 @@ from edc_constants.constants import FEMALE, YES, NORMAL, NO, MALE, NOT_APPLICABL
 from edc_form_validators.base_form_validator import NOT_APPLICABLE_ERROR
 from model_bakery import baker
 
+
 @tag("ambition_screening")
 class TestSubjectScreening(AmbitionTestCaseMixin, TestCase):
     def test_eligible_with_default_recipe_criteria(self):

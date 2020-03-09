@@ -22,7 +22,6 @@ from ambition_sites import ambition_sites
 from edc_sites import get_site_id
 from edc_visit_schedule import FormsCollection, Requisition
 
-
 requisitions_prn = FormsCollection(
     Requisition(show_order=10, panel=fbc_panel, required=False, additional=False),
     Requisition(show_order=20, panel=chemistry_panel, required=False, additional=False),
@@ -109,7 +108,7 @@ requisitions_d1 = FormsCollection(
         panel=urine_storage_panel,
         required=True,
         additional=False,
-        site_ids=[get_site_id("capetown", sites=ambition_sites),],
+        site_ids=[get_site_id("capetown", sites=ambition_sites)],
     ),
     name="requisitions_day1",
 )
@@ -125,7 +124,7 @@ requisitions_d3 = FormsCollection(
         panel=urine_storage_panel,
         required=True,
         additional=False,
-        site_ids=[get_site_id("capetown", sites=ambition_sites),],
+        site_ids=[get_site_id("capetown", sites=ambition_sites)],
     ),
     name="requisitions_day3",
 )
@@ -152,7 +151,7 @@ requisitions_d7 = FormsCollection(
         panel=urine_storage_panel,
         required=True,
         additional=False,
-        site_ids=[get_site_id("capetown", sites=ambition_sites),],
+        site_ids=[get_site_id("capetown", sites=ambition_sites)],
     ),
     name="requisitions_day7",
 )

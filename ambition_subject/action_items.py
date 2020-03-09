@@ -22,8 +22,8 @@ class BloodResultAction(Action):
     def get_next_actions(self):
         next_actions = []
         if (
-                self.reference_obj.subject_visit.visit_code == DAY1
-                and self.reference_obj.subject_visit.visit_code_sequence == 0
+            self.reference_obj.subject_visit.visit_code == DAY1
+            and self.reference_obj.subject_visit.visit_code_sequence == 0
         ):
             # early withdrawal if qualifying blood results
             # are abnormal on DAY1.0
@@ -34,8 +34,8 @@ class BloodResultAction(Action):
             if not evaluator.eligible:
                 next_actions = [STUDY_TERMINATION_CONCLUSION_ACTION]
         elif (
-                self.reference_obj.results_abnormal == YES
-                and self.reference_obj.results_reportable == YES
+            self.reference_obj.results_abnormal == YES
+            and self.reference_obj.results_reportable == YES
         ):
             # AE for reportable result, though not on DAY1.0
             next_actions = [AE_INITIAL_ACTION]

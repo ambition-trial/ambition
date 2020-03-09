@@ -1,16 +1,19 @@
 #!/usr/bin/env python
+from datetime import datetime
+
 import django
 import logging
 import os
 import sys
 
 from ambition_rando import CONTROL, SINGLE_DOSE
+from dateutil.tz import gettz
 from django.conf import settings
 from django.test.runner import DiscoverRunner
 from edc_test_utils import DefaultTestSettings
 from os.path import abspath, dirname, join
 
-app_name = 'ambition_edc'
+app_name = "ambition_edc"
 base_dir = dirname(abspath(__file__))
 
 DEFAULT_SETTINGS = DefaultTestSettings(
@@ -29,6 +32,12 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     ADVERSE_EVENT_ADMIN_SITE="ambition_ae_admin",
     ADVERSE_EVENT_APP_LABEL="ambition_ae",
     EDC_NAVBAR_DEFAULT="ambition_dashboard",
+    EDC_PROTOCOL_STUDY_OPEN_DATETIME=datetime(
+        2016, 12, 31, 0, 0, 0, tzinfo=gettz("UTC")
+    ),
+    EDC_PROTOCOL_STUDY_CLOSE_DATETIME=datetime(
+        2022, 12, 31, 23, 59, 59, tzinfo=gettz("UTC")
+    ),
     DJANGO_LANGUAGES=dict(
         af="Afrikaans",
         ny="Chichewa",
@@ -39,13 +48,15 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         tn="Setswana",
         sn="Shona",
     ),
-    DASHBOARD_BASE_TEMPLATES=dict(edc_base_template="edc_dashboard/base.html",
-                                  listboard_base_template="ambition_edc/base.html",
-                                  dashboard_base_template="ambition_edc/base.html",
-                                  screening_listboard_template="ambition_dashboard/screening/listboard.html",
-                                  subject_listboard_template="ambition_dashboard/subject/listboard.html",
-                                  subject_dashboard_template="ambition_dashboard/subject/dashboard.html",
-                                  subject_review_listboard_template="edc_review_dashboard/subject_review_listboard.html"),
+    DASHBOARD_BASE_TEMPLATES=dict(
+        edc_base_template="edc_dashboard/base.html",
+        listboard_base_template="ambition_edc/base.html",
+        dashboard_base_template="ambition_edc/base.html",
+        screening_listboard_template="ambition_dashboard/screening/listboard.html",
+        subject_listboard_template="ambition_dashboard/subject/listboard.html",
+        subject_dashboard_template="ambition_dashboard/subject/dashboard.html",
+        subject_review_listboard_template="edc_review_dashboard/subject_review_listboard.html",
+    ),
     ETC_DIR=os.path.join(base_dir, "tests", "etc"),
     EDC_BOOTSTRAP=3,
     EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
@@ -60,7 +71,6 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     EDC_RANDOMIZATION_ASSIGNMENT_MAP={CONTROL: 1, SINGLE_DOSE: 2},
     EDC_RANDOMIZATION_LIST_MODEL="ambition_rando.randomizationlist",
     EDC_RANDOMIZATION_LIST_PATH=join(base_dir, "tests", "etc"),
-    EDC_RANDOMIZATION_REGISTER_DEFAULT=False,
     EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER=False,
     INSTALLED_APPS=[
         "django.contrib.admin",
@@ -86,12 +96,14 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "django_collect_offline_files.apps.AppConfig",
         "edc_action_item.apps.AppConfig",
         "edc_adverse_event.apps.AppConfig",
+        "edc_appointment.apps.AppConfig",
         "edc_auth.apps.AppConfig",
         "edc_model_wrapper.apps.AppConfig",
         "edc_data_manager.apps.AppConfig",
         "edc_consent.apps.AppConfig",
         "edc_dashboard.apps.AppConfig",
         "edc_export.apps.AppConfig",
+        "edc_facility.apps.AppConfig",
         "edc_fieldsets.apps.AppConfig",
         "edc_form_validators.apps.AppConfig",
         "edc_lab_dashboard.apps.AppConfig",
@@ -130,14 +142,12 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "ambition_prn.apps.AppConfig",
         "ambition_export.apps.AppConfig",
         "ambition_screening.apps.AppConfig",
-        "ambition_edc.apps.EdcAppointmentAppConfig",
         "ambition_edc.apps.EdcDeviceAppConfig",
         "ambition_edc.apps.EdcIdentifierAppConfig",
         "ambition_edc.apps.EdcLabAppConfig",
         "ambition_edc.apps.EdcMetadataAppConfig",
         "ambition_edc.apps.EdcProtocolAppConfig",
         "ambition_edc.apps.EdcVisitTrackingAppConfig",
-        "ambition_edc.apps.EdcFacilityAppConfig",
         "ambition_edc.apps.AppConfig",
     ],
     add_dashboard_middleware=True,
@@ -150,8 +160,8 @@ def main():
     if not settings.configured:
         settings.configure(**DEFAULT_SETTINGS)
     django.setup()
-    tags = [t.split('=')[1] for t in sys.argv if t.startswith('--tag')]
-    failfast = True if [t for t in sys.argv if t == '--failfast'] else False
+    tags = [t.split("=")[1] for t in sys.argv if t.startswith("--tag")]
+    failfast = True if [t for t in sys.argv if t == "--failfast"] else False
     failures = DiscoverRunner(failfast=failfast, tags=tags).run_tests(
         [
             "tests",
@@ -170,7 +180,8 @@ def main():
             "ambition_prn.tests",
             "ambition_export.tests",
             "ambition_screening.tests",
-        ])
+        ]
+    )
     sys.exit(bool(failures))
 
 

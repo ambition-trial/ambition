@@ -123,6 +123,4 @@ list_data = {
     ],
 }
 
-
-if settings.APP_NAME != "ambition_lists":
-    preload_data = PreloadData(list_data=list_data)
+preload_data = PreloadData(list_data=list_data)

@@ -29,7 +29,7 @@ class TestDataManager(AmbitionTestCaseMixin, TestCase):
             username="erikvw", is_staff=True, is_active=True
         )
         for permission in Permission.objects.filter(
-                content_type__app_label="ambition_subject", content_type__model="followup"
+            content_type__app_label="ambition_subject", content_type__model="followup"
         ):
             self.user.user_permissions.add(permission)
 
@@ -43,7 +43,7 @@ class TestDataManager(AmbitionTestCaseMixin, TestCase):
         self.subject_identifier = consent.subject_identifier
 
         for appointment in Appointment.objects.filter(
-                subject_identifier=self.subject_identifier
+            subject_identifier=self.subject_identifier
         ).order_by("timepoint"):
             SubjectVisit.objects.create(
                 appointment=appointment,

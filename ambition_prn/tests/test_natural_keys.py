@@ -30,7 +30,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier,
         )
         for outgoing_transaction in OutgoingTransaction.objects.filter(
-                tx_name=protocol_deviation._meta.label_lower
+            tx_name=protocol_deviation._meta.label_lower
         ):
             self.offline_test_helper.offline_test_deserialize(
                 protocol_deviation, outgoing_transaction

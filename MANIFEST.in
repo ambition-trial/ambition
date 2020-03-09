@@ -7,3 +7,4 @@ recursive-include ambition_edc/templates *
 recursive-include ambition_edc/static *
 recursive-include label_templates *.*
 recursive-exclude etc *.*
+

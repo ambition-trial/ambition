@@ -110,16 +110,14 @@ class TestDeathFormValidations(AmbitionTestCaseMixin, TestCase):
 
     def test_study_day_of_death(self):
 
-        # mid-day
-        dte = get_utcnow() + relativedelta(days=4)
-
-        subject_identifier = self.create_subject(
-            consent_datetime=dte - relativedelta(days=3)
-        )
+        day0 = get_utcnow()
+        day1 = day0 + relativedelta(days=1)
+        day4 = day0 + relativedelta(days=4)
+        subject_identifier = self.create_subject(consent_datetime=day1)
 
         cleaned_data = {
             "subject_identifier": subject_identifier,
-            "death_datetime": dte,
+            "death_datetime": day4,
             "study_day": 4,
         }
         form_validator = DeathReportFormValidator(cleaned_data=cleaned_data)
@@ -130,7 +128,7 @@ class TestDeathFormValidations(AmbitionTestCaseMixin, TestCase):
 
         cleaned_data = {
             "subject_identifier": subject_identifier,
-            "death_datetime": dte,
+            "death_datetime": day4,
             "study_day": 3,
         }
         form_validator = DeathReportFormValidator(cleaned_data=cleaned_data)
@@ -139,7 +137,7 @@ class TestDeathFormValidations(AmbitionTestCaseMixin, TestCase):
 
         cleaned_data = {
             "subject_identifier": subject_identifier,
-            "death_datetime": dte - relativedelta(hours=1),
+            "death_datetime": day4 - relativedelta(hours=1),
             "study_day": 3,
         }
         form_validator = DeathReportFormValidator(cleaned_data=cleaned_data)
@@ -148,7 +146,7 @@ class TestDeathFormValidations(AmbitionTestCaseMixin, TestCase):
 
         cleaned_data = {
             "subject_identifier": subject_identifier,
-            "death_datetime": dte - relativedelta(hours=1),
+            "death_datetime": day4 - relativedelta(hours=1),
             "study_day": 4,
         }
         form_validator = DeathReportFormValidator(cleaned_data=cleaned_data)

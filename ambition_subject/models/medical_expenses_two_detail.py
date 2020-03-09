@@ -6,9 +6,9 @@ from edc_constants.constants import NOT_APPLICABLE
 from edc_model.models import BaseUuidModel
 from edc_model.models import HistoricalRecords
 from edc_model_fields.fields import OtherCharField
+from edc_model.validators import hm_validator2
 
 from ..choices import LOCATION_CARE, CARE_PROVIDER, TRANSPORT
-from ..validators import hm_validator
 from .medical_expenses_two import MedicalExpensesTwo
 
 
@@ -31,7 +31,6 @@ class ModelManager(models.Manager):
 
 
 class MedicalExpensesTwoDetail(BaseUuidModel):
-
     medical_expenses_two = models.ForeignKey(MedicalExpensesTwo, on_delete=PROTECT)
 
     location_care = models.CharField(
@@ -60,7 +59,7 @@ class MedicalExpensesTwoDetail(BaseUuidModel):
 
     transport_duration = models.CharField(
         verbose_name="How long did it take you to reach there?",
-        validators=[hm_validator],
+        validators=[hm_validator2],
         max_length=8,
         help_text="Specify as hours:minutes (format HH:MM)",
         null=True,

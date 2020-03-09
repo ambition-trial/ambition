@@ -8,11 +8,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.urls.conf import path, include
-from django.views.defaults import page_not_found, server_error  # noqa
 from django.views.generic.base import RedirectView
-
 from django_collect_offline.admin import django_collect_offline_admin
-# from django_collect_offline_files.admin_site import django_collect_offline_files_admin
 from django_collect_offline_files.admin_site import django_collect_offline_files_admin
 from edc_action_item.admin_site import edc_action_item_admin
 from edc_adverse_event.admin_site import edc_adverse_event_admin

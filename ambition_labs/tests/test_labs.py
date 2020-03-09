@@ -22,7 +22,7 @@ class TestLabs(TestCase):
 
     def test_panel_model(self):
         for panel in site_labs.get(
-                lab_profile_name="subject_lab_profile"
+            lab_profile_name="subject_lab_profile"
         ).panels.values():
             self.assertEqual(
                 panel.requisition_model, "ambition_subject.subjectrequisition"

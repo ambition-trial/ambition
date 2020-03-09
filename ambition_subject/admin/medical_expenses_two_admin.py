@@ -1,5 +1,6 @@
 from django.contrib import admin
-from edc_model_admin import audit_fieldset_tuple, StackedInlineMixin
+from edc_model_admin import audit_fieldset_tuple
+from edc_model_admin.inlines import StackedInlineModelAdminMixin
 
 from ..admin_site import ambition_subject_admin
 from ..forms import MedicalExpensesTwoDetailForm, MedicalExpensesTwoForm
@@ -7,8 +8,7 @@ from ..models import MedicalExpensesTwoDetail, MedicalExpensesTwo
 from .modeladmin import CrfModelAdmin
 
 
-class MedicalExpensesTwoDetailAdmin(StackedInlineMixin, admin.StackedInline):
-
+class MedicalExpensesTwoDetailAdmin(StackedInlineModelAdminMixin, admin.StackedInline):
     model = MedicalExpensesTwoDetail
     form = MedicalExpensesTwoDetailForm
     extra = 0
@@ -52,7 +52,6 @@ class MedicalExpensesTwoDetailAdmin(StackedInlineMixin, admin.StackedInline):
 
 @admin.register(MedicalExpensesTwo, site=ambition_subject_admin)
 class MedicalExpensesTwoAdmin(CrfModelAdmin):
-
     form = MedicalExpensesTwoForm
 
     inlines = [MedicalExpensesTwoDetailAdmin]

@@ -1,9 +1,3 @@
--e /Users/erikvw/source/edc_source/django-audit-fields
--e /Users/erikvw/source/edc_source/django-collect-offline  #develop#egg=django-collect-offline
--e /Users/erikvw/source/edc_source/django-collect-offline-files  #develop#egg=django-collect-offline-files
--e /Users/erikvw/source/edc_source/django-crypto-fields  #develop#egg=django-crypto-fields
--e /Users/erikvw/source/edc_source/django-revision  #develop#egg=django-revision
--e /Users/erikvw/source/edc_source/django-simple-history  #develop#egg=django-revision
 -e /Users/erikvw/source/edc_source/edc-action-item  #develop#egg=edc-action-item
 -e /Users/erikvw/source/edc_source/edc-adverse-event  #develop#egg=edc-base
 -e /Users/erikvw/source/edc_source/edc-appointment  #develop#egg=edc-appointment
@@ -52,5 +46,12 @@
 -e /Users/erikvw/source/edc_source/edc-subject-model-wrappers  #develop#egg=edc-subject-dashboard
 -e /Users/erikvw/source/edc_source/edc-test-utils
 -e /Users/erikvw/source/edc_source/edc-timepoint  #develop#egg=edc-timepoint
+-e /Users/erikvw/source/edc_source/edc-utils
 -e /Users/erikvw/source/edc_source/edc-visit-schedule  #develop#egg=edc-visit-schedule
 -e /Users/erikvw/source/edc_source/edc-visit-tracking  #develop#egg=edc-visit-tracking
+-e /Users/erikvw/source/edc_source/django-crypto-fields  #develop#egg=django-crypto-fields
+-e /Users/erikvw/source/edc_source/django-revision  #develop#egg=django-revision
+-e /Users/erikvw/source/edc_source/django-audit-fields
+-e /Users/erikvw/source/edc_source/django-collect-offline-files  #develop#egg=django-collect-offline-files
+-e /Users/erikvw/source/edc_source/django-collect-offline  #develop#egg=django-collect-offline
+-e /Users/erikvw/source/edc_source/django-simple-history  #develop#egg=django-revision

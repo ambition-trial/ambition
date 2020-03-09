@@ -1,12 +1,15 @@
 from ambition_rando.tests import AmbitionTestCaseMixin
-from ambition_subject.models import SubjectVisit, BloodResult
 from ambition_visit_schedule.constants import DAY1
 from django.test import TestCase, tag  # noqa
 from edc_reportable.units import IU_LITER, TEN_X_9_PER_LITER
 from model_bakery import baker
 
 from ..early_withdrawal_evaluator import (
-    EarlyWithdrawalEvaluator, alt_ref, neutrophil_ref, platelets_ref)
+    EarlyWithdrawalEvaluator,
+    alt_ref,
+    neutrophil_ref,
+    platelets_ref,
+)
 from .models import SubjectVisit, BloodResult
 
 EarlyWithdrawalEvaluator.blood_result_model = "ambition_screening.bloodresult"

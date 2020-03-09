@@ -6,16 +6,16 @@ from edc_model.models import BaseUuidModel
 from edc_offstudy.model_mixins import OffstudyCrfModelMixin
 from edc_reference.model_mixins import ReferenceModelMixin
 from edc_sites.models import SiteModelMixin
-from edc_visit_schedule.model_mixins import SubjectScheduleCrfModelMixin
-from edc_visit_tracking.model_mixins import CrfModelMixin as BaseCrfModelMixin
-from edc_visit_tracking.model_mixins import PreviousVisitModelMixin
+from edc_visit_tracking.model_mixins import (
+    VisitTrackingCrfModelMixin,
+    PreviousVisitModelMixin,
+)
 
 from .subject_visit import SubjectVisit
 
 
 class CrfModelMixin(
-    BaseCrfModelMixin,
-    SubjectScheduleCrfModelMixin,
+    VisitTrackingCrfModelMixin,
     RequiresConsentFieldsModelMixin,
     PreviousVisitModelMixin,
     UpdatesCrfMetadataModelMixin,
@@ -31,7 +31,7 @@ class CrfModelMixin(
     subject_visit = models.OneToOneField(SubjectVisit, on_delete=PROTECT)
 
     def natural_key(self):
-        return self.subject_visit.natural_key()
+        return self.visit.natural_key()
 
     natural_key.dependencies = [
         "ambition_subject.subjectvisit",
@@ -41,7 +41,7 @@ class CrfModelMixin(
 
     @property
     def subject_identifier(self):
-        return self.subject_visit.subject_identifier
+        return self.visit.subject_identifier
 
     class Meta:
         abstract = True

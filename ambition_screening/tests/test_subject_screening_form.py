@@ -72,10 +72,10 @@ class TestSubjectScreeningForm(AmbitionTestCaseMixin, TestCase):
         ]
         for pregnancy, preg_test_date, breast_feeding, error_key in options:
             with self.subTest(
-                    pregnancy=pregnancy,
-                    preg_test_date=preg_test_date,
-                    breast_feeding=breast_feeding,
-                    error_key=error_key,
+                pregnancy=pregnancy,
+                preg_test_date=preg_test_date,
+                breast_feeding=breast_feeding,
+                error_key=error_key,
             ):
                 data.update(
                     pregnancy=pregnancy,

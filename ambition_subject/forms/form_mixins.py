@@ -3,7 +3,7 @@ import arrow
 from django import forms
 from edc_form_validators import FormValidatorMixin
 from edc_sites.forms import SiteModelFormMixin
-from edc_visit_schedule.modelform_mixins import SubjectScheduleCrfModelFormMixin
+from edc_visit_schedule.modelform_mixins import SubjectScheduleModelFormMixin
 from edc_visit_tracking.modelform_mixins import VisitTrackingModelFormMixin
 
 from ..models import SubjectVisit
@@ -12,7 +12,7 @@ from ..models import SubjectVisit
 class SubjectModelFormMixin(
     SiteModelFormMixin,
     FormValidatorMixin,
-    SubjectScheduleCrfModelFormMixin,
+    SubjectScheduleModelFormMixin,
     VisitTrackingModelFormMixin,
     forms.ModelForm,
 ):

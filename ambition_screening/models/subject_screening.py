@@ -1,5 +1,6 @@
 from django.db import models
 from edc_constants.choices import YES_NO, YES_NO_NA, NORMAL_ABNORMAL, PREG_YES_NO_NA
+from edc_constants.constants import NOT_APPLICABLE
 from edc_model.models import BaseUuidModel
 from edc_reportable import IU_LITER, TEN_X_9_PER_LITER
 from edc_screening.model_mixins import ScreeningModelMixin, EligibilityModelMixin
@@ -12,7 +13,6 @@ class SubjectScreeningDeleteError(Exception):
 
 
 class SubjectScreening(ScreeningModelMixin, EligibilityModelMixin, BaseUuidModel):
-
     eligibility_cls = SubjectScreeningEligibility
 
     meningitis_dx = models.CharField(
@@ -112,4 +112,15 @@ class SubjectScreening(ScreeningModelMixin, EligibilityModelMixin, BaseUuidModel
             f"Leave blank if unknown. Units: '{TEN_X_9_PER_LITER}'. "
             f"Ineligible if < 50 {TEN_X_9_PER_LITER}"
         ),
+    )
+
+    unsuitable_agreed = models.CharField(
+        verbose_name=(
+            "Does the study coordinator agree that the patient "
+            "is not suitable for the study?"
+        ),
+        max_length=5,
+        choices=YES_NO_NA,
+        default=NOT_APPLICABLE,
+        editable=False,
     )

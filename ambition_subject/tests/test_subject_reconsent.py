@@ -129,6 +129,8 @@ class TestReconsent(AmbitionTestCaseMixin, TestCase):
     @override_settings(SITE_ID=10)
     def test_site_for_reconsent1(self):
         subject_screening = baker.make_recipe(
-            "ambition_screening.subjectscreening", mental_status=ABNORMAL, site=Site.objects.get_current(),
+            "ambition_screening.subjectscreening",
+            mental_status=ABNORMAL,
+            site=Site.objects.get_current(),
         )
         self.assertEqual(subject_screening.site.pk, 10)

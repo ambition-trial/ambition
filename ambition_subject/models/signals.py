@@ -1,4 +1,3 @@
-from ambition_rando.randomizer import Randomizer
 from ambition_screening.models import SubjectScreening
 from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save, post_delete
@@ -40,8 +39,8 @@ def subject_consent_on_post_save(sender, instance, raw, created, **kwargs):
             )
 
             # randomize
-            Randomizer = site_randomizers.get("ambition")
-            Randomizer(
+            randomizer_cls = site_randomizers.get("ambition")
+            randomizer_cls(
                 subject_identifier=instance.subject_identifier,
                 report_datetime=instance.consent_datetime,
                 site=instance.site,

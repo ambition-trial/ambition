@@ -4,9 +4,11 @@ from .constants import CONTROL, SINGLE_DOSE
 
 
 class Randomizer(Base):
-
     name = "ambition"
     assignment_map = {CONTROL: 1, SINGLE_DOSE: 2}
+    model = "ambition_rando.randomizationlist"
+    filename = "randomization_list.csv"
+    is_blinded_trial = False
 
     @classmethod
     def get_assignment(cls, row):

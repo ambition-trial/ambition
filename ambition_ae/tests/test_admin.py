@@ -23,8 +23,7 @@ class TestAdmin(AmbitionTestCaseMixin, TestCase):
         super().tearDownClass()
 
     def setUp(self):
-        self.subject_identifier = "12345"
-        RegisteredSubject.objects.create(subject_identifier=self.subject_identifier)
+        self.subject_identifier = self.create_subject()
 
     def test_ae_followup_status(self):
         modeladmin = ambition_ae_admin._registry.get(AeFollowup)

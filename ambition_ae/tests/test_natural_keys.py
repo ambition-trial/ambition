@@ -33,7 +33,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             "ambition_ae.aeinitial", subject_identifier=self.subject_identifier
         )
         for outgoing_transaction in OutgoingTransaction.objects.filter(
-                tx_name=ae_initial._meta.label_lower
+            tx_name=ae_initial._meta.label_lower
         ):
             self.offline_test_helper.offline_test_deserialize(
                 ae_initial, outgoing_transaction
@@ -49,7 +49,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             subject_identifier=self.subject_identifier,
         )
         for outgoing_transaction in OutgoingTransaction.objects.filter(
-                tx_name=ae_tmg._meta.label_lower
+            tx_name=ae_tmg._meta.label_lower
         ):
             self.offline_test_helper.offline_test_deserialize(
                 ae_tmg, outgoing_transaction
@@ -66,7 +66,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             outcome=RECOVERING,
         )
         for outgoing_transaction in OutgoingTransaction.objects.filter(
-                tx_name=ae_followup._meta.label_lower
+            tx_name=ae_followup._meta.label_lower
         ):
             self.offline_test_helper.offline_test_deserialize(
                 ae_followup, outgoing_transaction
@@ -77,7 +77,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             "ambition_ae.recurrencesymptom", subject_identifier=self.subject_identifier
         )
         for outgoing_transaction in OutgoingTransaction.objects.filter(
-                tx_name=recurrence_symptoms._meta.label_lower
+            tx_name=recurrence_symptoms._meta.label_lower
         ):
             self.offline_test_helper.offline_test_deserialize(
                 recurrence_symptoms, outgoing_transaction
@@ -94,7 +94,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
         )
 
         for outgoing_transaction in OutgoingTransaction.objects.filter(
-                tx_name=death_report._meta.label_lower
+            tx_name=death_report._meta.label_lower
         ):
             self.offline_test_helper.offline_test_deserialize(
                 death_report, outgoing_transaction
@@ -115,7 +115,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             cause_of_death=cause_of_death,
         )
         for outgoing_transaction in OutgoingTransaction.objects.filter(
-                tx_name=death_report_tmg._meta.label_lower
+            tx_name=death_report_tmg._meta.label_lower
         ):
             self.offline_test_helper.offline_test_deserialize(
                 death_report_tmg, outgoing_transaction

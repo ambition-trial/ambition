@@ -5,7 +5,6 @@ from edc_facility.import_holidays import import_holidays
 from edc_facility.models import Holiday
 from edc_randomization.randomization_list_importer import RandomizationListImporter
 from edc_randomization.site_randomizers import site_randomizers
-from edc_randomization.utils import get_randomizationlist_model
 from edc_sites import add_or_update_django_sites
 from edc_utils import get_utcnow
 from faker import Faker
@@ -20,6 +19,7 @@ fake = Faker()
 
 class AmbitionTestCaseMixin:
     import_randomization_list = True
+    randomizer_name = "ambition"
 
     @classmethod
     def setUpClass(cls):
@@ -60,14 +60,19 @@ class AmbitionTestCaseMixin:
         return consent.subject_identifier
 
     def get_subject_by_assignment(self, assignment):
-        get_randomizationlist_model
-        RandomizationList = get_randomizationlist_model()
+        randomization_list_model_cls = site_randomizers.get(
+            self.randomizer_name
+        ).model_cls()
         for _ in range(0, 4):
             subject_identifier = self.create_subject()
-            obj = RandomizationList.objects.get(subject_identifier=subject_identifier)
+            obj = randomization_list_model_cls.objects.get(
+                subject_identifier=subject_identifier
+            )
             if Randomizer.get_assignment({"assignment": obj.assignment}) == assignment:
                 return subject_identifier
-        return None
+        raise ValueError(
+            f"Subject identifier cannot be None. Git assignment={assignment}"
+        )
 
     def get_single_dose_subject(self):
         return self.get_subject_by_assignment(SINGLE_DOSE)

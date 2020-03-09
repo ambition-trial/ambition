@@ -6,14 +6,12 @@ from edc_adverse_event.form_validators import ValidateDeathReportMixin
 from edc_constants.constants import DEAD, NONE, OTHER
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
 from edc_form_validators import FormValidator
-from edc_randomization.utils import get_randomizationlist_model
 
 from ..constants import CONSENT_WITHDRAWAL
 from edc_randomization.site_randomizers import site_randomizers
 
 
 class StudyTerminationConclusionFormValidator(ValidateDeathReportMixin, FormValidator):
-
     week2_model = "ambition_subject.week2"
     randomizer_name = "ambition"
 
@@ -247,9 +245,13 @@ class StudyTerminationConclusionFormValidator(ValidateDeathReportMixin, FormVali
 
     @property
     def assignment(self):
-        RandomizationList = get_randomizationlist_model()
+        randomization_list_model_cls = site_randomizers.get(
+            self.randomizer_name
+        ).model_cls()
         subject_identifier = self.cleaned_data.get("subject_identifier")
-        obj = RandomizationList.objects.get(subject_identifier=subject_identifier)
+        obj = randomization_list_model_cls.objects.get(
+            subject_identifier=subject_identifier
+        )
         return site_randomizers.get(self.randomizer_name).get_assignment(
             {"assignment": obj.assignment}
         )

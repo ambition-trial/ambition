@@ -83,6 +83,7 @@ class TestNaturalKey(AmbitionTestCaseMixin, TestCase):
             )
             self.offline_test_helper.offline_test_natural_keys(complete_required_crfs)
 
+
 #     def test_offline_deserialize(self):
 #         complete_required_crfs = {}
 #         visit = self.complete_all_subject_visits()

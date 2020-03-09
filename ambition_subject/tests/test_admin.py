@@ -1,21 +1,21 @@
 # import django
-# from django.apps import apps as django_apps
+# from django.apps import apps as django-apps
 # from django.test import tag
 #
 # from datetime import datetime, timedelta
 # from django.conf import settings
 # from django.contrib.admin import AdminSite
 # from django.contrib.admin.utils import quote
-# from django.contrib.auth import get_user_model
+# from django.contrib.auth import get-user-model
 # from django.contrib.auth.models import Permission
 # from django.contrib.messages.storage.fallback import FallbackStorage
 # from django.core.exceptions import ObjectDoesNotExist
 # from django.test.client import RequestFactory
-# from django.test.utils import override_settings
+# from django.test.utils import override-settings
 # from django.urls import reverse
-# from django_webtest import WebTest
+# from django-webtest import WebTest
 # from mock import ANY, patch
-# from ambition_rando.tests import AmbitionTestCaseMixin
+# from ambition-rando.tests import AmbitionTestCaseMixin
 #
 # User = get_user_model()
 #
