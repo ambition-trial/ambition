@@ -491,29 +491,29 @@ if CELERY_ENABLED:
     CELERY_BROKER_PASSWORD = env.str("CELERY_BROKER_PASSWORD")
     CELERY_BROKER_HOST = env.str("CELERY_BROKER_HOST")
     CELERY_BROKER_PORT = env.str("CELERY_BROKER_PORT")
-if DEBUG:
-    CELERY_BROKER_VHOST = f"{APP_NAME}_debug"
-elif LIVE_SYSTEM:
-    CELERY_BROKER_VHOST = f"{APP_NAME}_production"
-else:
-    CELERY_BROKER_VHOST = f"{APP_NAME}_uat"
-    CELERY_BROKER_URL = (
-        f"amqp://{CELERY_BROKER_USER}:{CELERY_BROKER_PASSWORD}@"
-        f"{CELERY_BROKER_HOST}:{CELERY_BROKER_PORT}/{CELERY_BROKER_VHOST}"
-    )
-    DJANGO_CELERY_RESULTS_TASK_ID_MAX_LENGTH = 191
-    CELERY_RESULT_BACKEND = "django-db"
-    #     CELERY_QUEUES = (
-    #         Queue('high', Exchange('high'), routing_key='high'),
-    #         Queue('normal', Exchange('normal'), routing_key='normal'),
-    #         Queue('low', Exchange('low'), routing_key='low'),
-    #     )
-    #     CELERY_DEFAULT_QUEUE = 'normal'
-    #     CELERY_DEFAULT_EXCHANGE = 'normal'
-    #     CELERY_DEFAULT_ROUTING_KEY = 'normal'
-    #     CELERY_ROUTES = {
-    #         'edc_data_manager.tasks.*': {'queue': 'normal'},
-    #     }
+    if DEBUG:
+        CELERY_BROKER_VHOST = f"{APP_NAME}_debug"
+    elif LIVE_SYSTEM:
+        CELERY_BROKER_VHOST = f"{APP_NAME}_production"
+    else:
+        CELERY_BROKER_VHOST = f"{APP_NAME}_uat"
+        CELERY_BROKER_URL = (
+            f"amqp://{CELERY_BROKER_USER}:{CELERY_BROKER_PASSWORD}@"
+            f"{CELERY_BROKER_HOST}:{CELERY_BROKER_PORT}/{CELERY_BROKER_VHOST}"
+        )
+        DJANGO_CELERY_RESULTS_TASK_ID_MAX_LENGTH = 191
+        CELERY_RESULT_BACKEND = "django-db"
+        #     CELERY_QUEUES = (
+        #         Queue('high', Exchange('high'), routing_key='high'),
+        #         Queue('normal', Exchange('normal'), routing_key='normal'),
+        #         Queue('low', Exchange('low'), routing_key='low'),
+        #     )
+        #     CELERY_DEFAULT_QUEUE = 'normal'
+        #     CELERY_DEFAULT_EXCHANGE = 'normal'
+        #     CELERY_DEFAULT_ROUTING_KEY = 'normal'
+        #     CELERY_ROUTES = {
+        #         'edc_data_manager.tasks.*': {'queue': 'normal'},
+        #     }
 
 if "test" in sys.argv or "runtests.py" in sys.argv:
 
