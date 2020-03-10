@@ -10,7 +10,7 @@ read -p "Version? [master]" version
 if [ "${version}" = "" ]; then
   version="master"
 fi
-echo "Selected ${version}"
+echo $version
 
 while true; do
     read -p "Continue with version ${version}? [y/n]" yn
@@ -31,11 +31,11 @@ while true; do
 done
 
 if [ "${update_script}" = "y" ]; then
-  echo "${green}Copying script ... ${reset}" 
+  echo "${green}Copying script ... ${reset}"
   cd ~/app \
-  && git checkout docs/forms_reference.md \
   && git checkout master \
   && git pull \
+  && git checkout ${version} \
   && cp bin/scripts/update_edc.sh ~/
   echo "${green}Done ... ${reset}"
   exit
@@ -49,6 +49,7 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+
 while true; do
     read -p "Run migrations? [y/n]" yn
     case $yn in
@@ -57,6 +58,7 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+
 while true; do
     read -p "Update static files? [y/n]" yn
     case $yn in
@@ -65,6 +67,7 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+
 while true; do
     read -p "Update UBUNTU? [y/n]" yn
     case $yn in
@@ -78,16 +81,20 @@ echo "${green}Start ... ${reset}"
 cd ~/app \
   && git checkout master \
   && git pull \
+  && git checkout ${version} \
   && version=$(head -n 1 VERSION) \
   && echo "Version ${version}"
 
 cd ~/app \
   && git checkout master \
   && git pull \
+  && git checkout ${version} \
+  && conda create -y -n edc python=3.7
   && conda activate edc \
   && pip install -U pip \
-  && pip install --no-cache-dir --upgrade-strategy eager --upgrade -r requirements/stable-v${version}.txt \
-  && pip install -e . --no-cache-dir --upgrade-strategy eager --upgrade
+  && pip install --no-cache-dir --upgrade-strategy eager --upgrade -r requirements.txt
+  # && pip install --no-cache-dir --upgrade-strategy eager --upgrade -r requirements/stable-v${version}.txt \
+  # && pip install -e . --no-cache-dir --upgrade-strategy eager --upgrade
 
 if [ "${migrate}" = "y" ]; then
   echo "${green}Running migrations ... ${reset}"
