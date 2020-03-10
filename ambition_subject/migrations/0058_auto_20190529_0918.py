@@ -5,7 +5,7 @@ from django.db import migrations
 
 def remove_azt(apps, schema_editor):
     ArvRegimens = apps.get_model("ambition_lists", "arvregimens")
-    ArvRegimens.objects.filter(short_name="AZT_r").delete()
+    ArvRegimens.objects.filter(name="AZT_r").delete()
 
 
 class Migration(migrations.Migration):
