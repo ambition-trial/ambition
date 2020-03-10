@@ -1,2 +1,2 @@
-edc==0.1.5
+edc==0.1.7
 git+https://github.com/erikvw/django-simple-history@admin_revert_permissions
