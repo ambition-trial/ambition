@@ -39,7 +39,7 @@ setup(
         "python-memcached",
         "pyrabbit",
         "sentry_sdk",
-        "edc==0.1.5",
+        "edc==0.1.7",
     ],
     classifiers=[
         "Environment :: Web Environment",
