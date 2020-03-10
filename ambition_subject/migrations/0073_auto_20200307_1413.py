@@ -6,18 +6,42 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ambition_subject', '0072_auto_20200302_1918'),
+        ("ambition_subject", "0072_auto_20200302_1918"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='historicalsubjectconsent',
-            name='identity_type',
-            field=models.CharField(choices=[('country_id', 'Country ID number'), ('drivers', "Driver's license"), ('passport', 'Passport'), ('hospital_no', 'Hospital number'), ('country_id_rcpt', 'Country ID receipt'), ('mobile_no', 'Mobile number'), ('OTHER', 'Other')], max_length=25, verbose_name='What type of identity number is this?'),
+            model_name="historicalsubjectconsent",
+            name="identity_type",
+            field=models.CharField(
+                choices=[
+                    ("country_id", "Country ID number"),
+                    ("drivers", "Driver's license"),
+                    ("passport", "Passport"),
+                    ("hospital_no", "Hospital number"),
+                    ("country_id_rcpt", "Country ID receipt"),
+                    ("mobile_no", "Mobile number"),
+                    ("OTHER", "Other"),
+                ],
+                max_length=25,
+                verbose_name="What type of identity number is this?",
+            ),
         ),
         migrations.AlterField(
-            model_name='subjectconsent',
-            name='identity_type',
-            field=models.CharField(choices=[('country_id', 'Country ID number'), ('drivers', "Driver's license"), ('passport', 'Passport'), ('hospital_no', 'Hospital number'), ('country_id_rcpt', 'Country ID receipt'), ('mobile_no', 'Mobile number'), ('OTHER', 'Other')], max_length=25, verbose_name='What type of identity number is this?'),
+            model_name="subjectconsent",
+            name="identity_type",
+            field=models.CharField(
+                choices=[
+                    ("country_id", "Country ID number"),
+                    ("drivers", "Driver's license"),
+                    ("passport", "Passport"),
+                    ("hospital_no", "Hospital number"),
+                    ("country_id_rcpt", "Country ID receipt"),
+                    ("mobile_no", "Mobile number"),
+                    ("OTHER", "Other"),
+                ],
+                max_length=25,
+                verbose_name="What type of identity number is this?",
+            ),
         ),
     ]

@@ -3,7 +3,6 @@ from unittest import skip
 from django.test import TestCase, tag
 from edc_list_data.preload_data import PreloadData
 
-from ..list_data import list_data
 from ..models import (
     AbnormalResultsReason,
     Antibiotic,
@@ -19,10 +18,12 @@ from ..models import (
     Symptom,
 )
 
-# @skip
+
 @tag("ambition_lists")
 class TestPreload(TestCase):
     def test_preload(self):
+        from ..list_data import list_data
+
         PreloadData(list_data=list_data)
         self.assertGreater(AbnormalResultsReason.objects.count(), 0)
         self.assertGreater(ArvRegimens.objects.count(), 0)
