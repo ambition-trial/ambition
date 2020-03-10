@@ -1,21 +1,21 @@
-from edc-pdutils import CrfDfHandler as BaseCrfDfHandler
-from edc-pdutils import NonCrfDfHandler as BaseNonCrfDfHandler
-from edc-randomization.site-randomizers import site-randomizers
-from edc-visit-tracking.models import get-visit-tracking-model
+from edc_pdutils import CrfDfHandler as BaseCrfDfHandler
+from edc_pdutils import NonCrfDfHandler as BaseNonCrfDfHandler
+from edc_randomization.site_randomizers import site_randomizers
+from edc_visit_tracking.models import get_visit_tracking_model
 
-from .column-handlers import ColumnHandler
+from .column_handlers import ColumnHandler
 
 
 class CrfDfHandler(BaseCrfDfHandler):
-    column-handler-cls = ColumnHandler
-    na-value = "."
+    column_handler_cls = ColumnHandler
+    na_value = "."
 
-    visit-tbl = get-visit-tracking-model().replace(".", "-")
-    enrollment-tbl = "ambition-screening-subjectscreening"
-    rando-tbl = site-randomizers.get("default").model.replace(".", "-")
-    sort-by = ["subject-identifier", "visit-datetime"]
+    visit_tbl = get_visit_tracking_model().replace(".", "_")
+    enrollment_tbl = "ambition_screening_subjectscreening"
+    rando_tbl = site_randomizers.get("default").model.replace(".", "_")
+    sort_by = ["subject_identifier", "visit_datetime"]
 
 
 class NonCrfDfHandler(BaseNonCrfDfHandler):
-    column-handler-cls = ColumnHandler
-    na-value = "."
+    column_handler_cls = ColumnHandler
+    na_value = "."

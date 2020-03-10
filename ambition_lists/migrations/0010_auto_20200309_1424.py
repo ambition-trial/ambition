@@ -6,44 +6,80 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ambition_lists', '0009_auto_20191120_0418'),
+        ("ambition_lists", "0009_auto_20191120_0418"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='abnormalresultsreason',
-            options={'ordering': ['display_index', 'display_name'], 'verbose_name': 'Abnormal Results Reason', 'verbose_name_plural': 'Abnormal Results Reasons'},
+            name="abnormalresultsreason",
+            options={
+                "ordering": ["display_index", "display_name"],
+                "verbose_name": "Abnormal Results Reason",
+                "verbose_name_plural": "Abnormal Results Reasons",
+            },
         ),
         migrations.AlterModelOptions(
-            name='antibiotic',
-            options={'ordering': ['display_index', 'display_name'], 'verbose_name': 'Antibiotic', 'verbose_name_plural': 'Antibiotics'},
+            name="antibiotic",
+            options={
+                "ordering": ["display_index", "display_name"],
+                "verbose_name": "Antibiotic",
+                "verbose_name_plural": "Antibiotics",
+            },
         ),
         migrations.AlterModelOptions(
-            name='cxrtype',
-            options={'ordering': ['display_index', 'display_name'], 'verbose_name': 'CXR Type', 'verbose_name_plural': 'CXR Types'},
+            name="cxrtype",
+            options={
+                "ordering": ["display_index", "display_name"],
+                "verbose_name": "CXR Type",
+                "verbose_name_plural": "CXR Types",
+            },
         ),
         migrations.AlterModelOptions(
-            name='day14medication',
-            options={'ordering': ['display_index', 'display_name'], 'verbose_name': 'Day 14 Medication', 'verbose_name_plural': 'Day 14 Medications'},
+            name="day14medication",
+            options={
+                "ordering": ["display_index", "display_name"],
+                "verbose_name": "Day 14 Medication",
+                "verbose_name_plural": "Day 14 Medications",
+            },
         ),
         migrations.AlterModelOptions(
-            name='infiltratelocation',
-            options={'ordering': ['display_index', 'display_name'], 'verbose_name': 'Infiltrate Location', 'verbose_name_plural': 'Infiltrate Locations'},
+            name="infiltratelocation",
+            options={
+                "ordering": ["display_index", "display_name"],
+                "verbose_name": "Infiltrate Location",
+                "verbose_name_plural": "Infiltrate Locations",
+            },
         ),
         migrations.AlterModelOptions(
-            name='medication',
-            options={'ordering': ['display_index', 'display_name'], 'verbose_name': 'Medication', 'verbose_name_plural': 'Medications'},
+            name="medication",
+            options={
+                "ordering": ["display_index", "display_name"],
+                "verbose_name": "Medication",
+                "verbose_name_plural": "Medications",
+            },
         ),
         migrations.AlterModelOptions(
-            name='neurological',
-            options={'ordering': ['display_index', 'display_name'], 'verbose_name': 'Neurological', 'verbose_name_plural': 'Neurological'},
+            name="neurological",
+            options={
+                "ordering": ["display_index", "display_name"],
+                "verbose_name": "Neurological",
+                "verbose_name_plural": "Neurological",
+            },
         ),
         migrations.AlterModelOptions(
-            name='otherdrug',
-            options={'ordering': ['display_index', 'display_name'], 'verbose_name': 'Othe Drug', 'verbose_name_plural': 'Other Drugs'},
+            name="otherdrug",
+            options={
+                "ordering": ["display_index", "display_name"],
+                "verbose_name": "Othe Drug",
+                "verbose_name_plural": "Other Drugs",
+            },
         ),
         migrations.AlterModelOptions(
-            name='symptom',
-            options={'ordering': ['display_index', 'display_name'], 'verbose_name': 'Symptom', 'verbose_name_plural': 'Symptoms'},
+            name="symptom",
+            options={
+                "ordering": ["display_index", "display_name"],
+                "verbose_name": "Symptom",
+                "verbose_name_plural": "Symptoms",
+            },
         ),
     ]
