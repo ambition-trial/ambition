@@ -89,7 +89,7 @@ cd ~/app \
   && git checkout master \
   && git pull \
   && git checkout ${version} \
-  && conda create -y -n edc python=3.7
+  && conda create -y -n edc python=3.7 \
   && conda activate edc \
   && pip install -U pip \
   && pip install --no-cache-dir --upgrade-strategy eager --upgrade -r requirements.txt
