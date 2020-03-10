@@ -1,0 +1,57 @@
+-e /Users/erikvw/source/edc_source/edc-action-item  #develop#egg=edc-action-item
+-e /Users/erikvw/source/edc_source/edc-adverse-event  #develop#egg=edc-base
+-e /Users/erikvw/source/edc_source/edc-appointment  #develop#egg=edc-appointment
+-e /Users/erikvw/source/edc_source/edc-auth  #develop#egg=edc-auth
+-e /Users/erikvw/source/edc_source/edc-consent  #develop#egg=edc-consent
+-e /Users/erikvw/source/edc_source/edc-constants  #develop#egg=edc-constants
+-e /Users/erikvw/source/edc_source/edc-crf
+-e /Users/erikvw/source/edc_source/edc-dashboard  #develop#egg=edc-dashboard
+-e /Users/erikvw/source/edc_source/edc-data-manager  #develop#egg=edc-dashboard
+-e /Users/erikvw/source/edc_source/edc-device  #develop#egg=edc-device
+-e /Users/erikvw/source/edc_source/edc-export  #develop#egg=edc-export
+-e /Users/erikvw/source/edc_source/edc-facility  #develop#egg=edc-facility
+-e /Users/erikvw/source/edc_source/edc-fieldsets  #develop#egg=edc-fieldsets
+-e /Users/erikvw/source/edc_source/edc-form-label  #develop#egg=edc-fieldsets
+-e /Users/erikvw/source/edc_source/edc-form-validators  #develop#egg=edc-form-validators
+-e /Users/erikvw/source/edc_source/edc-identifier  #develop#egg=edc-identifier
+-e /Users/erikvw/source/edc_source/edc-lab  #develop#egg=edc-lab
+-e /Users/erikvw/source/edc_source/edc-lab-dashboard  #develop#egg=edc-lab-dashboard
+-e /Users/erikvw/source/edc_source/edc-label  #develop#egg=edc-label
+-e /Users/erikvw/source/edc_source/edc-list-data  #develop#egg=edc-list-data
+-e /Users/erikvw/source/edc_source/edc-locator  #develop#egg=edc-locator
+-e /Users/erikvw/source/edc_source/edc-metadata  #develop#egg=edc-metadata
+-e /Users/erikvw/source/edc_source/edc-metadata-rules  #develop#egg=edc-metadata-rules
+-e /Users/erikvw/source/edc_source/edc-model  #develop#egg=edc-model-admin
+-e /Users/erikvw/source/edc_source/edc-model-admin  #develop#egg=edc-model-admin
+-e /Users/erikvw/source/edc_source/edc-model-fields  #develop#egg=edc-model-fields
+-e /Users/erikvw/source/edc_source/edc-model-wrapper  #develop#egg=edc-model-wrapper
+-e /Users/erikvw/source/edc_source/edc-navbar  #develop#egg=edc-navbar
+-e /Users/erikvw/source/edc_source/edc-notification  #develop#egg=edc-navbar
+-e /Users/erikvw/source/edc_source/edc-offstudy  #develop#egg=edc-offstudy
+-e /Users/erikvw/source/edc_source/edc-pdutils  #develop#egg=edc-pharmacy
+-e /Users/erikvw/source/edc_source/edc-pharmacy  #develop#egg=edc-pharmacy
+-e /Users/erikvw/source/edc_source/edc-pharmacy-dashboard  #develop#egg=edc-pharmacy-dashboard
+-e /Users/erikvw/source/edc_source/edc-prn  #develop#egg=edc-prn
+-e /Users/erikvw/source/edc_source/edc-protocol  #develop#egg=edc-protocol
+-e /Users/erikvw/source/edc_source/edc-randomization  #develop#egg=edc-reference
+-e /Users/erikvw/source/edc_source/edc-reference  #develop#egg=edc-reference
+-e /Users/erikvw/source/edc_source/edc-registration  #develop#egg=edc-registration
+-e /Users/erikvw/source/edc_source/edc-reportable  #develop#egg=edc-reportable
+-e /Users/erikvw/source/edc_source/edc-reports  #develop#egg=edc-reports
+-e /Users/erikvw/source/edc_source/edc-review-dashboard  #develop#egg=edc-reports
+-e /Users/erikvw/source/edc_source/edc-screening
+-e /Users/erikvw/source/edc_source/edc-search  #develop#egg=edc-search
+-e /Users/erikvw/source/edc_source/edc-sites  #develop#egg=edc-selenium
+-e /Users/erikvw/source/edc_source/edc-subject-dashboard  #develop#egg=edc-subject-dashboard
+-e /Users/erikvw/source/edc_source/edc-subject-model-wrappers  #develop#egg=edc-subject-dashboard
+-e /Users/erikvw/source/edc_source/edc-test-utils
+-e /Users/erikvw/source/edc_source/edc-timepoint  #develop#egg=edc-timepoint
+-e /Users/erikvw/source/edc_source/edc-utils
+-e /Users/erikvw/source/edc_source/edc-visit-schedule  #develop#egg=edc-visit-schedule
+-e /Users/erikvw/source/edc_source/edc-visit-tracking  #develop#egg=edc-visit-tracking
+-e /Users/erikvw/source/edc_source/django-crypto-fields  #develop#egg=django-crypto-fields
+-e /Users/erikvw/source/edc_source/django-revision  #develop#egg=django-revision
+-e /Users/erikvw/source/edc_source/django-audit-fields
+-e /Users/erikvw/source/edc_source/django-collect-offline-files  #develop#egg=django-collect-offline-files
+-e /Users/erikvw/source/edc_source/django-collect-offline  #develop#egg=django-collect-offline
+-e /Users/erikvw/source/edc_source/django-simple-history  #develop#egg=django-revision

@@ -1,15 +1,11 @@
 from datetime import datetime
-from dateutil.relativedelta import MO, TU, WE, TH, FR, SA, SU
 from dateutil.tz import gettz
 from django.apps import AppConfig as DjangoAppConfig, apps as django_apps
 from django.core.checks import register
 from django.core.management.color import color_style
 from django_collect_offline.apps import AppConfig as BaseDjangoCollectOfflineAppConfig
-from edc_appointment.appointment_config import AppointmentConfig
-from edc_appointment.apps import AppConfig as BaseEdcAppointmentAppConfig
 from edc_device.apps import AppConfig as BaseEdcDeviceAppConfig
 from edc_device.constants import CENTRAL_SERVER
-from edc_facility.apps import AppConfig as BaseEdcFacilityAppConfig
 from edc_identifier.apps import AppConfig as BaseEdcIdentifierAppConfig
 from edc_lab.apps import AppConfig as BaseEdcLabAppConfig
 from edc_metadata.apps import AppConfig as BaseEdcMetadataAppConfig
@@ -18,9 +14,7 @@ from edc_visit_tracking.apps import AppConfig as BaseEdcVisitTrackingAppConfig
 from django.db.models.signals import post_migrate
 from edc_auth.group_permissions_updater import GroupPermissionsUpdater
 
-
 from .system_checks import ambition_check
-
 
 style = color_style()
 
@@ -80,28 +74,6 @@ class EdcIdentifierAppConfig(BaseEdcIdentifierAppConfig):
 
 class EdcMetadataAppConfig(BaseEdcMetadataAppConfig):
     reason_field = {"ambition_subject.subjectvisit": "reason"}
-
-
-class EdcAppointmentAppConfig(BaseEdcAppointmentAppConfig):
-    configurations = [
-        AppointmentConfig(
-            model="edc_appointment.appointment",
-            related_visit_model="ambition_subject.subjectvisit",
-            appt_type="hospital",
-        )
-    ]
-
-
-class EdcFacilityAppConfig(BaseEdcFacilityAppConfig):
-    country = "botswana"
-    definitions = {
-        "7-day clinic": dict(
-            days=[MO, TU, WE, TH, FR, SA, SU], slots=[100, 100, 100, 100, 100, 100, 100]
-        ),
-        "5-day clinic": dict(
-            days=[MO, TU, WE, TH, FR], slots=[100, 100, 100, 100, 100]
-        ),
-    }
 
 
 class DjangoCollectOfflineAppConfig(BaseDjangoCollectOfflineAppConfig):

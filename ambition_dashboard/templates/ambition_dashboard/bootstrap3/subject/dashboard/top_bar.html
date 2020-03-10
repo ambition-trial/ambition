@@ -1,0 +1,3 @@
+{% extends 'edc_subject_dashboard/bootstrap3/dashboard/topbar.html' %}
+
+{% block close_url %}href="{% url subject_listboard_url|default:'subject_listboard_url_cannot_be_none' %}?q={{ subject_identifier }}"{% endblock close_url %}

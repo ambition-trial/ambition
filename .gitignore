@@ -1,3 +1,12 @@
+.etc/*
+.envs/*
+.env
+.env-live
+.pydevproject
+.project
+.settings/
+.DS_Store
+db.sqlite3
 django_crypto_fields
 celerybeat-schedule.db
 export/*
@@ -5,9 +14,6 @@ geckodriver.log
 freeze*
 fabfile/.hosts
 static/*
-.etc/*
-.envs/*
-.env
 secrets.json
 notebooks/*
 etc/*
@@ -33,12 +39,6 @@ Session.vim
 *~
 # Auto-generated tag files
 tags
-
-.pydevproject
-.project
-.settings/
-db.sqlite3
-.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,0 +1,56 @@
+{% extends edc_listboard_template %}
+{% load admin_urls %}
+{% load edc_dashboard_extras %}
+{% load ambition_dashboard_extras %}
+             
+{% block listboard_panel %}
+    {% if perms.ambition_screening.add_subjectscreening %}
+    <a id="subjectscreening_add" title="add screening" class="btn btn-sm btn-default" role="button" 
+        href="{{ subject_screening_add_url }}?next={{ screening_listboard_url }}">
+            <i class="fas fa-plus fa-sm"></i> Add Subject Screening
+    </a>
+    {% endif %}
+{% endblock listboard_panel %}
+
+
+{% block listboard_table_header %}
+    <!-- begin results header -->
+    <th>#</th>
+    <th></th>
+    <th>Screening Identifier</th>
+    <th>Subject Identifier</th>
+    <th>Age</th>
+    <th>User</th>
+    <th>Modified</th>
+    <th>Host</th>
+    <!-- end results header -->
+{% endblock listboard_table_header %}
+
+
+{% block listboard_table_button_column %}
+    <td style="white-space: nowrap">
+    <div class="btn-group">
+    {% screening_button result %}
+    {% eligibility_button result %}
+    {% if result.eligible %}
+        {% if result.consent %}
+            {% dashboard_button result %}
+        {% else %}
+            {% add_consent_button result %}
+        {% endif %}
+    {% endif %}
+    </div>
+    </td>
+{% endblock listboard_table_button_column %}
+
+
+{% block listboard_table_columns %}
+
+    <td>{{ result.screening_identifier }} </td>
+    <td nowrap>{% if "092" in result.consent.subject_identifier %}{{ result.consent.subject_identifier }}{% endif %}</td>
+    <td nowrap>{{ result.age_in_years }} yrs</td>
+    <td nowrap>{{ result.user_created }}</td>
+    <td nowrap>{{ result.object.modified|date:"SHORT_DATETIME_FORMAT" }}</td>  
+    <td nowrap>{{ result.hostname_created }}</td>
+
+{% endblock listboard_table_columns %}

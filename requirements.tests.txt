@@ -1,6 +1,5 @@
-edc-test-utils
 django-storages
-model-mommy
+model-bakery
 faker
 django-environ
 django-webtest

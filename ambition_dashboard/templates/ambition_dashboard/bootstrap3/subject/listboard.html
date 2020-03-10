@@ -1,0 +1,36 @@
+{% extends edc_listboard_template %}
+{% load edc_dashboard_extras %}
+
+
+{% block listboard_table_header %}
+
+    <!-- begin results header -->
+    <th>#</th>
+    <th></th>
+    <th>Identifier</th>
+    <th>Subject</th>
+    <th>Age / Born</th>
+    <th>Consented</th>
+    <th>Modified</th>
+    <th>Host</th>
+    <!-- end results header -->
+
+{% endblock listboard_table_header %}
+
+{% block listboard_table_columns %}
+
+    <td>{{ result.subject_identifier }}
+    </td>
+    <td>
+       {% if result.gender == MALE %}
+           <i class="fas fa-male fa-lg"></i>
+       {% else %}
+           <i class="fas fa-female fa-lg"></i>
+       {% endif %}
+       {% if perms.edc_registration.display_firstname %}{{ result.first_name }}{% else %}******{% endif %} {% if perms.edc_registration.display_lastname %}{{ result.initials }}{% else %}******{% endif %}
+    </td>
+    <td>{% age_in_years result.object.dob %}yrs {% if perms.edc_registration.display_dob %}{{ result.object.dob|date:"SHORT_DATE_FORMAT" }}{% else %}**/**/****{% endif %}</td>
+    <td>{{ result.object.consent_datetime|date:"SHORT_DATE_FORMAT" }}</td>  
+    <td>{{ result.object.modified|date:"SHORT_DATETIME_FORMAT" }}</td>
+    <td>{{ result.hostname_created }}</td>
+{% endblock listboard_table_columns %}

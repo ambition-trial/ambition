@@ -26,7 +26,7 @@
 # from edc_sites.utils import add_or_update_django_sites
 # from edc_utils import get_utcnow
 # from edc_visit_schedule.site_visit_schedules import site_visit_schedules
-# from model_mommy import mommy
+# from model_bakery import baker
 # from selenium.common.exceptions import NoSuchElementException
 # from selenium.webdriver import Firefox
 # from selenium.webdriver.common.by import By
@@ -157,7 +157,7 @@
 #         )
 #
 #         # clinic user completes AE
-#         mommy.make_recipe(
+#         baker.make_recipe(
 #             "ambition_ae.aeinitial",
 #             subject_identifier=subject_identifier,
 #             ae_classification="anaemia",
@@ -350,7 +350,7 @@
 #         ).click()
 #
 #         # fill form, AE Initial
-#         obj = mommy.prepare_recipe(action_item.reference_model)
+#         obj = baker.prepare_recipe(action_item.reference_model)
 #         model_obj = self.fill_form(
 #             model=action_item.reference_model, obj=obj, verbose=False
 #         )

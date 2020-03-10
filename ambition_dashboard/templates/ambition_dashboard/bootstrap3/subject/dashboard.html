@@ -1,0 +1,28 @@
+{% extends 'edc_subject_dashboard/bootstrap3/dashboard.html' %}
+
+{% load static %}
+
+{% block locator_information %}{% endblock locator_information %}
+
+{% block top_bar %}
+
+    {% include "ambition_dashboard/bootstrap3/subject/dashboard/top_bar.html" %}
+
+{% endblock top_bar %}
+
+
+{% block side_bar %}
+	{{ block.super }}	
+    {% if perms.ambition_rando.display_assignment %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <h6 class="panel-title">
+              <i class="fas fa-random fa-lg fa-fw"></i> Randomization
+          </h6>
+      </div>
+      <div id="treatment-panel" class="panel-body">
+	      <span class="text text-default"><small>{{ assignment_description }}</small></span>
+      </div>
+  </div>
+  {% endif %}
+{% endblock side_bar %}

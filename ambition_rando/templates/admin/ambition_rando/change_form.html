@@ -1,0 +1,31 @@
+{% extends 'admin/change_form.html' %}
+
+
+{% load edc_dashboard_extras edc_admin_modify %}
+{% load static %}
+
+{% block extrastyle %}{{ block.super }}
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">    
+
+{% endblock %}
+
+
+{% block field_sets %}
+
+  {% instructions %}
+
+  {% additional_instructions %}
+
+  {{ block.super }}
+
+{% endblock field_sets %}
+
+
+{% block submit_buttons_bottom %}
+
+  {% edc_submit_row %}
+
+  {% revision_row %}
+
+{% endblock submit_buttons_bottom %}
