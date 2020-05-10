@@ -8,6 +8,8 @@ Ambition Edc
 
 http://www.isrctn.com/ISRCTN72509687
 
+See also https://github.com/clinicedc/edc
+
 See requirements and docs folder.
 
 
